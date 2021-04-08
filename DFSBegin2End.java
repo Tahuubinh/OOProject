@@ -1,6 +1,10 @@
 package OOProject;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+
+import org.graphstream.graph.Edge;
+import org.graphstream.graph.implementations.SingleGraph;
 
 public class DFSBegin2End extends GraphLinkedList{
 	
@@ -14,10 +18,43 @@ public class DFSBegin2End extends GraphLinkedList{
 	    visited[vertex] = true;
 	    stack.add(vertex);
 	    if (vertex == vertices) {
+	    	
+	    	graph = new SingleGraph("Use");
+	    	graphDraw();
+	    	
 	    	count++;
 	    	for (int i:stack)
 		    	System.out.print(i + " ");
 	    	System.out.println();
+	    	
+	    	for (int i = 0; i < stack.size(); ++i) {
+	    		
+	    		//take the node
+	    		int node_index_temp = stack.get(i);
+	    		
+	    		v[node_index_temp].setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px; stroke-mode: plain;");
+	    		
+	    		if (i == stack.size() - 1)
+	    			continue;
+	    		int node_index_next = stack.get(i + 1);
+	    		String a = Integer.toString(node_index_temp);
+	    		System.err.println(a);
+	    		String b = Integer.toString(node_index_next);
+	    		System.err.println(b);
+	    		Edge edge=graph.getEdge(a + " " + b);
+	    		edge.setAttribute("ui.style", "fill-color: purple; size: 3px;");
+	    	}
+	    	graph.display();
+
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			graph.setAttribute("ui.screenshot", "D:\\Projects\\Eclipse Projects\\gs-ui-swing\\src\\OOProject\\Pict\\"
+								+Integer.toString(count)+".jpg");
+	    	
 	    	visited[vertex] = false;
 		    stack.remove(stack.size() - 1);
 	    	return;
@@ -36,6 +73,7 @@ public class DFSBegin2End extends GraphLinkedList{
     	if (count == 0){
     		System.out.println("No path!");
     	}
+    	stack.clear();
     	count = 0;
     }
 

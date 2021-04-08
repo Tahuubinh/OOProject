@@ -76,14 +76,32 @@ public class Main {
         }
 
         //graph
-        DFSArbitary g = new DFSArbitary(max);
+        /*DFSArbitary g = new DFSArbitary(max);
         for (int i = 0; i < size; i++) {
         	for (int j = 1; j < allIntArr[i].length; j++) {
         		g.addEdge(allIntArr[i][0], allIntArr[i][j]);
         	}
         }
-        g.graphShow();
+        g.graphShow();*/
         
-        g.runDFS(2, 4);
+        //g.runDFS(2, 4);
+        DFSBegin2End g2 = new DFSBegin2End(max);
+        
+        for (int i = 0; i < size; i++) {
+        	for (int j = 1; j < allIntArr[i].length; j++) {
+        		g2.addEdge(allIntArr[i][0], allIntArr[i][j]);
+        	}
+        }
+        g2.graphShow();
+        g2.runDFS();
+        
     }
 }
+
+
+
+
+
+
+
+

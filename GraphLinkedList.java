@@ -38,7 +38,7 @@ public class GraphLinkedList {
 	void addEdge(int src, int dest) {
 		adjLists[src].add(dest);
 	}
-	void graphDraw() {
+	public void graphDraw() {
 		System.setProperty("org.graphstream.ui", "swing");
 		graph = new SingleGraph("Use");
 		for (int i = 1; i <= vertices; ++i) {
