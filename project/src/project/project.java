@@ -66,6 +66,8 @@ import org.graphstream.ui.view.camera.Camera;
 
 public class project {
 	private static OnMyWayabc omw;
+	private static OnMyWay omw4;
+	private static OnMyWay2 omw5;
 	private static DFS g;
 	
 	private static Graph graph;
@@ -133,6 +135,9 @@ public class project {
 		dirPanel.add(dirText);
 		dirPanel.add(finishButton);
 		dirPanel.add(directoryButton);
+		
+		//Take the current dir
+		
 		String curentDir = System.getProperty("user.dir");
 		JFileChooser fileDialog = new JFileChooser(curentDir + "\\DataGraph"); //xử lý việc chọn directory
 		
@@ -186,7 +191,7 @@ public class project {
 				}
 				else {
 				welcomeFrame.setVisible(false);
-				frame.setVisible(true);
+
 				console();
 				}
 			}
@@ -206,6 +211,8 @@ public class project {
         JButton showButton = new JButton("Bài 1"); // xử lý bài 1
         JButton AllPAthButton = new JButton("Bài 2"); // xử lý bài 2
         JButton QuestionsPathButton = new JButton("Bài 3");  // xử lý bài 3
+        JButton bai4 = new JButton("Bài 4* (Hamilton)");
+        JButton bai5 = new JButton("Bài 5* (Euler)");
         JButton homeButton = new JButton("Home"); // quay trở về welcomeframe
         
         
@@ -214,6 +221,8 @@ public class project {
         buttonJPanel.add(showButton);
         buttonJPanel.add(AllPAthButton);
         buttonJPanel.add(QuestionsPathButton);
+        buttonJPanel.add(bai4);
+        buttonJPanel.add(bai5);
         buttonJPanel.setBackground(Color.orange);
         
 
@@ -232,6 +241,8 @@ public class project {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				frame.setVisible(false);
+				frame = new JFrame();
+				max = 0;
 				welcomeFrame.setVisible(true);
 			}
 		});
@@ -270,10 +281,357 @@ public class project {
 							}
 		});
         frame.pack();
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        frame.setVisible(true);
+        
+        bai4.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				QuestionsPath4(); // phần mô phỏng bài 3
+							}
+		});
+        frame.pack();
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        frame.setVisible(true);
+        
+        bai5.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				QuestionsPath5(); // phần mô phỏng bài 3
+							}
+		});
+        frame.pack();
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
         frame.setVisible(true);
 	}
 	
+	protected static void QuestionsPath4() {
+		// TODO Auto-generated method stub
+		JFrame AllPathFrame = new JFrame();
+		JPanel vPanel = new JPanel();
+		JButton clearButton = new JButton("Clear");
+		JButton backButton = new JButton("Back");
+		JButton btnNewButton = new JButton("Menu");
+		btnNewButton.setBounds(10, 10, 208, 29);
+		btnNewButton.setBackground(Color.CYAN);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							omw4.clear();
+							console();
+							AllPathFrame.dispose();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
+		vPanel.add(btnNewButton);
+		vPanel.add(clearButton);
+		vPanel.add(backButton);
+		JButton[] vButtons = new JButton[max];
+		for(int i = 0; i < max; ++i) {
+			vButtons[i] = new JButton(Integer.toString(i+1));
+			vPanel.add(vButtons[i]);
+		}
+		
+		vPanel.setForeground(Color.GREEN);
+		
+		AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
+		AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		AllPathFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		AllPathFrame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent windowEvent) {
+				AllPathFrame.dispose();
+				omw4.clear();
+			}
+		});
+		setLabel(AllPathFrame);
+		
+		getView(AllPathFrame);
+		
+		view = omw4.getViewer();
+		AllPathFrame.add(view);
+		
+
+		for(int i = 0; i < max; ++i) {
+			vButtons[i].addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					for(int i = 1; i <= max; ++i) {
+						if(e.getActionCommand().equals(Integer.toString(i))) {
+							try {
+								i3 = i;
+								omw4.addOption(1, i3);
+								for(int j = 0; j < max; ++j) {
+									
+									vPanel.add(vButtons[j]);
+								}
+								vertex = omw4.getVertex();
+								for(int j = 0; j < max; ++j) {
+									if(!vertex.contains(j+1)) {
+										vPanel.remove(vButtons[j]);
+									}
+								}
+								
+								AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
+								AllPathFrame.getContentPane().remove(view);
+								view = omw4.getViewer();
+								AllPathFrame.add(view);
+								AllPathFrame.pack();
+								AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+								AllPathFrame.setVisible(true);
+								frame.dispose();
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+					}
+				}
+			});
+			
+		}
+		
+		backButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				try {
+					omw4.addOption(0, i3);
+					for(int j = 0; j < max; ++j) {
+						if(vertex.contains(j+1)) {
+							vPanel.remove(vButtons[j]);
+						}
+							vPanel.add(vButtons[j]);
+
+					}
+					vertex = omw4.getVertex();
+					for(int j = 0; j < max; ++j) {
+						if(!vertex.contains(j+1)) {
+							vPanel.remove(vButtons[j]);
+						}
+					}
+					AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
+					AllPathFrame.getContentPane().remove(view);
+					view = omw4.getViewer();
+					AllPathFrame.add(view);
+					AllPathFrame.pack();
+					AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+					AllPathFrame.setVisible(true);
+					frame.dispose();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		clearButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				omw4.clear();
+				for(int j = 0; j < max; ++j) {
+					if(vertex.contains(j+1)) {
+						vPanel.remove(vButtons[j]);
+					}
+					vPanel.add(vButtons[j]);
+				}
+				AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
+				AllPathFrame.getContentPane().remove(view);
+				view = omw4.getViewer();
+				AllPathFrame.add(view);
+				AllPathFrame.pack();
+				AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+				AllPathFrame.setVisible(true);
+				frame.dispose();
+			}
+		});
+		
+		
+		AllPathFrame.pack();
+		AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		AllPathFrame.setVisible(true);
+		frame.dispose();
+	}
 	
+	protected static void QuestionsPath5() {
+		// TODO Auto-generated method stub
+		JFrame AllPathFrame = new JFrame();
+		JPanel vPanel = new JPanel();
+		JButton clearButton = new JButton("Clear");
+		JButton backButton = new JButton("Back");
+		JButton btnNewButton = new JButton("Menu");
+		btnNewButton.setBounds(10, 10, 208, 29);
+		btnNewButton.setBackground(Color.CYAN);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							omw5.clear();
+							console();
+							AllPathFrame.dispose();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
+		vPanel.add(btnNewButton);
+		vPanel.add(clearButton);
+		vPanel.add(backButton);
+		JButton[] vButtons = new JButton[max];
+		for(int i = 0; i < max; ++i) {
+			vButtons[i] = new JButton(Integer.toString(i+1));
+			vPanel.add(vButtons[i]);
+		}
+		
+		vPanel.setForeground(Color.GREEN);
+		
+		AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
+		AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		AllPathFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		AllPathFrame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent windowEvent) {
+				AllPathFrame.dispose();
+				omw5.clear();
+			}
+		});
+		setLabel(AllPathFrame);
+		
+		getView(AllPathFrame);
+		
+		view = omw5.getViewer();
+		AllPathFrame.add(view);
+
+		for(int i = 0; i < max; ++i) {
+			vButtons[i].addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					for(int i = 1; i <= max; ++i) {
+						if(e.getActionCommand().equals(Integer.toString(i))) {
+							try {
+								i3 = i;
+								omw5.addOption(1, i3);
+								for(int j = 0; j < max; ++j) {
+									
+									vPanel.add(vButtons[j]);
+								}
+								/*vertex = omw5.getVertex();
+								for(int j = 0; j < max; ++j) {
+									if(!vertex.contains(j+1)) {
+										vPanel.remove(vButtons[j]);
+									}
+								}*/
+								if (!omw5.getSignal()) {
+									
+								}
+								
+								aIntegers = omw5.getPlaceAdj();
+								for(int j = 0; j < max; ++j) {
+									if(!aIntegers.contains(j+1)) {
+										vPanel.remove(vButtons[j]);
+									}
+								}
+								AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
+								AllPathFrame.getContentPane().remove(view);
+								view = omw5.getViewer();
+								AllPathFrame.add(view);
+								AllPathFrame.pack();
+								AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+								AllPathFrame.setVisible(true);
+								frame.dispose();
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+					}
+				}
+			});
+			
+		}
+		
+		backButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				try {
+					omw5.addOption(0, i3);
+					for(int j = 0; j < max; ++j) {
+						if(vertex.contains(j+1)) {
+							vPanel.remove(vButtons[j]);
+						}
+							vPanel.add(vButtons[j]);
+
+					}
+					vertex = omw5.getVertex();
+					for(int j = 0; j < max; ++j) {
+						if(!vertex.contains(j+1)) {
+							vPanel.remove(vButtons[j]);
+						}
+					}
+					AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
+					AllPathFrame.getContentPane().remove(view);
+					view = omw5.getViewer();
+					AllPathFrame.add(view);
+					AllPathFrame.pack();
+					AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+					AllPathFrame.setVisible(true);
+					frame.dispose();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		clearButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				omw5.clear();
+				for(int j = 0; j < max; ++j) {
+					if(vertex.contains(j+1)) {
+						vPanel.remove(vButtons[j]);
+					}
+					vPanel.add(vButtons[j]);
+				}
+				AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
+				AllPathFrame.getContentPane().remove(view);
+				view = omw5.getViewer();
+				AllPathFrame.add(view);
+				AllPathFrame.pack();
+				AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+				AllPathFrame.setVisible(true);
+				frame.dispose();
+			}
+		});
+		
+		
+		AllPathFrame.pack();
+		AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		AllPathFrame.setVisible(true);
+		frame.dispose();
+	}
 	
 	/// bài 3
 	protected static void QuestionsPath() {
@@ -285,6 +643,8 @@ public class project {
 		GridBagConstraints gc = new GridBagConstraints();// gridbag of graph
 		GridBagConstraints sc = new GridBagConstraints();// gridbag of scroll
 		
+		
+		//Scroll when overload
 		JScrollPane showPathScroll = new JScrollPane();
 		JTextArea pathTxt = new JTextArea();
 		showPathScroll.setViewportView(pathTxt);
@@ -657,6 +1017,22 @@ public class project {
         	}
         }
         omw.runner();
+        
+        omw4 = new OnMyWay(max);
+        for (int i = 0; i < size; i++) {
+        	for (int j = 1; j < allIntArr[i].length; j++) {
+        		omw4.addEdge(allIntArr[i][0], allIntArr[i][j]);
+        	}
+        }
+        omw4.runner();
+        
+        omw5 = new OnMyWay2(max);
+        for (int i = 0; i < size; i++) {
+        	for (int j = 1; j < allIntArr[i].length; j++) {
+        		omw5.addEdge(allIntArr[i][0], allIntArr[i][j]);
+        	}
+        }
+        omw5.runner();
         
         Node[] e = new Node[max];
         for(int i = 0; i < max; ++i) {
