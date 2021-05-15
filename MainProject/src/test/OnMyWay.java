@@ -11,32 +11,25 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.graphstream.graph.Edge;
+import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.ui.swing_viewer.SwingViewer;
+import org.graphstream.ui.swing_viewer.ViewPanel;
 import org.graphstream.ui.view.Viewer;
 import org.graphstream.ui.view.Viewer.CloseFramePolicy;
 
 public class OnMyWay extends GraphLinkedList{
 
-	private int place = 1;
-	private int prePlace = 0;
-	private String command;
-	private Scanner scanner;
-	private Scanner sc;
-	private Iterator<Integer> ite;
-	private Edge edge;
-	private String a;
-	private String b;
 	private ArrayList<Integer> vertex = new ArrayList<Integer>();
-	OnMyWay(int vertices) {
-		super(vertices);
+	OnMyWay(int vertices, Graph graph) {
+		super(vertices, graph);
 		// TODO Auto-generated constructor stub
 	}
 	
 	void runner() throws NoSuchElementException, IOException {
-		graph = new SingleGraph("Use");
-    	graphDraw();
+		//graph = new SingleGraph("Use");
+    	graphDraw1();
 	}
 	
 	void clear() {
@@ -130,10 +123,11 @@ public class OnMyWay extends GraphLinkedList{
 		return false;
 	}
 	
-	public JPanel getViewer() {
+	public ViewPanel getViewer() { //cập nhật đồ thị mới vào frame
 		SwingViewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-        viewer.enableAutoLayout();
-        JPanel view = (JPanel) viewer.addDefaultView(false);
+    	viewer.enableAutoLayout();
+        ViewPanel view = (ViewPanel) viewer.addDefaultView(false);
+        
         return view;
 	}
 	

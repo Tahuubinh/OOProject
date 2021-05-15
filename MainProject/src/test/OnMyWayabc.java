@@ -21,22 +21,9 @@ import org.graphstream.ui.view.Viewer.CloseFramePolicy;
 
 public class OnMyWayabc extends GraphLinkedList{
 
-	private ArrayList<Integer> vertexStack;
-	private ArrayList<String> edgeStack;
-	private ArrayList<String> stack2;
-	private int place = 1;
-	private int prePlace = 0;
-	private String command;
-	private Scanner scanner;
-	private Scanner sc;
-	private Iterator<Integer> ite;
-	private Edge edge;
-	private String a;
-	private String b;
-	private ArrayList<Integer> vertex = new ArrayList<Integer>();
-	private LinkedList<Integer> Walked[];
+	
 	HashMap<String, Integer> count = new HashMap<>(); // Count the times of edge that went
-	private boolean signal;
+	
 	
 	OnMyWayabc(int vertices) {
 		super(vertices);
@@ -53,7 +40,7 @@ public class OnMyWayabc extends GraphLinkedList{
 	}
 	
 	void runner() throws NoSuchElementException, IOException {
-		graph = new SingleGraph("Use");
+		//graph = new SingleGraph("Use");
     	graphDraw();
 	}
 	
