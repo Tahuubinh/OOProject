@@ -22,14 +22,13 @@ import org.graphstream.ui.view.Viewer.CloseFramePolicy;
 public class OnMyWay extends GraphLinkedList{
 
 	private ArrayList<Integer> vertex = new ArrayList<Integer>();
-	OnMyWay(int vertices, Graph graph) {
-		super(vertices, graph);
+	OnMyWay(int vertices) {
+		super(vertices);
 		// TODO Auto-generated constructor stub
 	}
 	
 	void runner() throws NoSuchElementException, IOException {
-		//graph = new SingleGraph("Use");
-    	graphDraw1();
+    	graphDraw();
 	}
 	
 	void clear() {
@@ -37,11 +36,28 @@ public class OnMyWay extends GraphLinkedList{
 			visited[i] = false;
 		}
 		stack.clear();
-		graph = new SingleGraph("Use");
-    	graphDraw();
+		
+		for (String tempEdgeString: stack2) {
+			Edge edge=graph.getEdge(tempEdgeString);
+			edge.setAttribute("ui.style", "fill-color: black; size: 1px;");
+		}
+		
+		stack2.clear();
+		vertexStack.clear();
+		edgeStack.clear();
+		for(int i = 1; i <= vertices; ++i) {
+
+        	v[i] = graph.getNode(Integer.toString(i));
+        	v[i].setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
+    		
+        }
 	}
 	void addOption(int i, int pl) throws IOException {
 		if(stack.size() > 0) {
+			if(!adjLists[place].contains(pl)) {
+				JOptionPane.showMessageDialog(null, "Can't move to node " + pl, "ERROR", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			prePlace = place;
 		}
 		
