@@ -258,6 +258,10 @@ public class project {
 				// TODO Auto-generated method stub
 				
 				try {
+					frame.setVisible(false);
+					frame = new JFrame();
+					prepare();
+					console();
 					g.graphString("Bai1"); // thực hiện bài 1
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -1166,42 +1170,40 @@ public class project {
 					try {
 
 						omw5.addOption(1, Integer.parseInt(nodeText.getText()));
+						for(int j = 0; j < max; ++j) {
+							
+							vPanel.add(vButtons[j]);
+						}
+						/*vertex = omw5.getVertex();
+						for(int j = 0; j < max; ++j) {
+							if(!vertex.contains(j+1)) {
+								vPanel.remove(vButtons[j]);
+							}
+						}*/
+						
+						aIntegers = omw5.getPlaceAdj();
+						for(int j = 0; j < max; ++j) {
+							if(!aIntegers.contains(j+1)) {
+								vPanel.remove(vButtons[j]);
+							}
+						}
+						vPanel.repaint();
+						AllPathFrame.getContentPane().add(vPanelScoll);
+						AllPathFrame.getContentPane().remove(view5);
+//						view = omw.getViewer();
+						
+						AllPathFrame.getContentPane().add(view5);
+						AllPathFrame.repaint();
+						AllPathFrame.revalidate();
+//						AllPathFrame.pack();
+//						AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+//						AllPathFrame.setVisible(true);
+						frame.dispose();
 					}  catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} // đi tới đỉnh đó
-					for(int j = 0; j < max; ++j) {
-						
-						vPanel.add(vButtons[j]);
-					}
-					/*vertex = omw5.getVertex();
-					for(int j = 0; j < max; ++j) {
-						if(!vertex.contains(j+1)) {
-							vPanel.remove(vButtons[j]);
-						}
-					}*/
-					if (!omw5.getSignal()) {
-						
-					}
 					
-					aIntegers = omw5.getPlaceAdj();
-					for(int j = 0; j < max; ++j) {
-						if(!aIntegers.contains(j+1)) {
-							vPanel.remove(vButtons[j]);
-						}
-					}
-					vPanel.repaint();
-					AllPathFrame.getContentPane().add(vPanelScoll);
-					AllPathFrame.getContentPane().remove(view4);
-//					view = omw.getViewer();
-					
-					AllPathFrame.getContentPane().add(view4);
-					AllPathFrame.repaint();
-					AllPathFrame.revalidate();
-//					AllPathFrame.pack();
-//					AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-//					AllPathFrame.setVisible(true);
-					frame.dispose();
 				}
 			}
 		});
