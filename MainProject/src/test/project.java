@@ -17,6 +17,8 @@ import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.event.WindowAdapter;
@@ -37,14 +39,17 @@ import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -335,6 +340,7 @@ public class project {
 		pathTxt.setText("Edge has passed:\n");
 		JPanel vPanel = new JPanel();
 		JPanel nPanel = new JPanel();
+		JScrollPane vnScrollPane = new JScrollPane(nPanel);
 		JScrollPane vPanelScoll = new JScrollPane(vPanel);
 		vPanelScoll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		
@@ -344,13 +350,38 @@ public class project {
 		btnNewButton.setBounds(10, 10, 208, 29);
 		btnNewButton.setBackground(Color.CYAN);
 		JLabel nodeLabel = new JLabel("Enter node");
-		JTextField nodeText = new JTextField(3);
+		DefaultComboBoxModel nodeComboBoxModel = new DefaultComboBoxModel();
+		nodeComboBoxModel.addElement("");
+		for(int i = 1; i <= max; ++i) {
+			nodeComboBoxModel.addElement(i+"");
+		}
+		JComboBox nodeComboBox = new JComboBox(nodeComboBoxModel);
+		nodeComboBox.setEditable(true);
+		final JTextField nodeText = (JTextField) nodeComboBox.getEditor().getEditorComponent();
+		nodeText.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent ke) {
+				LinkedList<String> filterNode = new LinkedList<String>();
+				for(int i = 0; i < nodeComboBoxModel.getSize(); ++i) {
+					if((nodeComboBoxModel.getElementAt(i)+"").contains(nodeText.getText())) {
+						filterNode.add(nodeComboBoxModel.getElementAt(i)+"");
+					}
+				}
+				if(filterNode.size() >0) {
+					nodeComboBox.setModel(new DefaultComboBoxModel(filterNode.toArray()));
+					nodeComboBox.setSelectedItem(nodeText.getText());
+					nodeComboBox.showPopup();
+				} else {
+					nodeComboBox.hidePopup();
+				}
+			}
+		});
+		
 		JButton fishButton = new JButton("Finish");
 		nPanel.add(btnNewButton);
 		nPanel.add(clearButton);
 		nPanel.add(stopButton);
 		nPanel.add(nodeLabel);
-		nPanel.add(nodeText);
+		nPanel.add(nodeComboBox);
 		nPanel.add(fishButton);
 		
 		btnNewButton.addActionListener(new ActionListener() {
@@ -361,11 +392,14 @@ public class project {
 							omw.clear();
 							pathTxt.setText("Edge has passed:\n");
 							y1 = 0;
-							frame.getContentPane().add(view);
 							AllPathFrame.repaint();
 							AllPathFrame.revalidate();
+							AllPathFrame.setVisible(false);
+							frame.remove(view);
+							frame.add(view);
+							frame.repaint();
+							frame.revalidate();
 							frame.setVisible(true);
-							AllPathFrame.dispose();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -418,10 +452,10 @@ public class project {
 					String a = omw.getLabel();
 					pathTxt.setText(pathTxt.getText() + a);
 					AllPathFrame.getContentPane().add(vPanelScoll, c);
-					AllPathFrame.getContentPane().remove(view);
-//					view = omw.getViewer();
-					
-					AllPathFrame.getContentPane().add(view, gc);
+//					AllPathFrame.getContentPane().remove(view);
+////					view = omw.getViewer();
+//					
+//					AllPathFrame.getContentPane().add(view, gc);
 					AllPathFrame.repaint();
 					AllPathFrame.revalidate();
 //					AllPathFrame.pack();
@@ -434,35 +468,35 @@ public class project {
 		vPanel.setForeground(Color.GREEN);
 		
        
-        gc.fill = GridBagConstraints.BOTH; // mở rộng panel cho khít với khoảng trống với cả chiều rộng và chiều cao
+		gc.fill = GridBagConstraints.BOTH; // mở rộng panel cho khít với khoảng trống với cả chiều rộng và chiều cao
         gc.weightx = 0.5; // khoảng cách tương đối giữa các đối tượng
-		gc.gridx = 1; // tọa độ (x, y) = 1, 1
+		gc.gridx = 0; // tọa độ (x, y) = 1, 1
 		gc.gridy = 1;
-		gc.ipadx = 100;
-		gc.ipady = 750; // mở rộng theo chiều dọc cả trên và dưới 
-        gc.anchor = GridBagConstraints.EAST; // vị trí tương đối của panel trong tọa độ đó
+		gc.ipadx =400;
+		gc.ipady = 50; // mở rộng theo chiều dọc cả trên và dưới 
+//        gc.anchor = GridBagConstraints.EAST; // vị trí tương đối của panel trong tọa độ đó
         
         sc.fill = GridBagConstraints.BOTH;
         sc.weightx = 0.5;
         sc.gridx = 0;
-        sc.gridy = 1;
+        sc.gridy = 0;
         sc.ipady = 750;
         sc.anchor = GridBagConstraints.WEST;
         
-        
-		c.gridx = 0;
-		c.gridy = 2;
-		c.ipadx = 30; 
-		c.ipady = 40;
-		
-		AllPathFrame.getContentPane().add(nPanel, c);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridwidth = 2;
-		c.gridx = 1;
-		c.anchor = GridBagConstraints.PAGE_END;
-		AllPathFrame.getContentPane().add(showPathScroll, sc);
-
-		AllPathFrame.getContentPane().add(vPanelScoll, c);
+//        
+//		c.gridx = 0;
+//		c.gridy = 2;
+//		c.ipadx = 30; 
+//		c.ipady = 40;
+//		
+//		AllPathFrame.getContentPane().add(nPanel, c);
+//		c.fill = GridBagConstraints.HORIZONTAL;
+//		c.gridwidth = 2;
+//		c.gridx = 1;
+//		c.anchor = GridBagConstraints.PAGE_END;
+//		AllPathFrame.getContentPane().add(showPathScroll, sc);
+//
+//		AllPathFrame.getContentPane().add(vPanelScoll, c);
 		AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		AllPathFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -476,11 +510,25 @@ public class project {
 				omw.clear();
 				AllPathFrame.repaint();
 				AllPathFrame.revalidate();
+				frame.remove(view);
+				frame.add(view);
+				frame.repaint();
+				frame.validate();
+				frame.setVisible(true);
 			}
 		});
 
-		
-		AllPathFrame.getContentPane().add(view, gc);
+		JSplitPane splitGraph = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, showPathScroll, view);
+		splitGraph.setOneTouchExpandable(true);
+		splitGraph.setContinuousLayout(true);
+		splitGraph.setDividerLocation(550);
+		JSplitPane splitMenu = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, vnScrollPane, vPanelScoll);
+		splitMenu.setOneTouchExpandable(true);
+		splitMenu.setContinuousLayout(true);
+		splitMenu.setDividerLocation(550);
+		AllPathFrame.add(splitMenu, gc);
+		AllPathFrame.add(splitGraph, sc);
+//		AllPathFrame.getContentPane().add(view, gc);
 
 		for(int i = 0; i < max; ++i) {
 			vButtons[i].addActionListener(new ActionListener() {
@@ -609,6 +657,9 @@ public class project {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
+							frame.getContentPane().add(view);
+							AllPathFrame.repaint();
+							AllPathFrame.revalidate();
 							frame.setVisible(true);
 							AllPathFrame.dispose();
 						} catch (Exception e) {
@@ -622,13 +673,61 @@ public class project {
 		vPanel.add(btnNewButton);
 		JLabel nodeLabel1 = new JLabel("Enter node 1st");
 		JLabel nodeLabel2 = new JLabel("Enter node 2nd");
-		JTextField nodeText1 = new JTextField(3);
-		JTextField nodeText2 = new JTextField(3);
+		DefaultComboBoxModel nodeComboBoxModel1 = new DefaultComboBoxModel();
+		nodeComboBoxModel1.addElement("");
+		for(int i = 1; i <= max; ++i) {
+			nodeComboBoxModel1.addElement(i+"");
+		}
+		JComboBox nodeComboBox1 = new JComboBox(nodeComboBoxModel1);
+		nodeComboBox1.setEditable(true);
+		final JTextField nodeText1 = (JTextField) nodeComboBox1.getEditor().getEditorComponent();
+		nodeText1.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent ke) {
+				LinkedList<String> filterNode = new LinkedList<String>();
+				for(int i = 0; i < nodeComboBoxModel1.getSize(); ++i) {
+					if((nodeComboBoxModel1.getElementAt(i)+"").contains(nodeText1.getText())) {
+						filterNode.add(nodeComboBoxModel1.getElementAt(i)+"");
+					}
+				}
+				if(filterNode.size() >0) {
+					nodeComboBox1.setModel(new DefaultComboBoxModel(filterNode.toArray()));
+					nodeComboBox1.setSelectedItem(nodeText1.getText());
+					nodeComboBox1.showPopup();
+				} else {
+					nodeComboBox1.hidePopup();
+				}
+			}
+		});
+		DefaultComboBoxModel nodeComboBoxModel2 = new DefaultComboBoxModel();
+		nodeComboBoxModel2.addElement("");
+		for(int i = 1; i <= max; ++i) {
+			nodeComboBoxModel2.addElement(i+"");
+		}
+		JComboBox nodeComboBox2 = new JComboBox(nodeComboBoxModel2);
+		nodeComboBox2.setEditable(true);
+		final JTextField nodeText2 = (JTextField) nodeComboBox2.getEditor().getEditorComponent();
+		nodeText2.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent ke) {
+				LinkedList<String> filterNode = new LinkedList<String>();
+				for(int i = 0; i < nodeComboBoxModel2.getSize(); ++i) {
+					if((nodeComboBoxModel2.getElementAt(i)+"").contains(nodeText2.getText())) {
+						filterNode.add(nodeComboBoxModel2.getElementAt(i)+"");
+					}
+				}
+				if(filterNode.size() >0) {
+					nodeComboBox2.setModel(new DefaultComboBoxModel(filterNode.toArray()));
+					nodeComboBox2.setSelectedItem(nodeText2.getText());
+					nodeComboBox2.showPopup();
+				} else {
+					nodeComboBox2.hidePopup();
+				}
+			}
+		});
 		JButton finishButton = new JButton("Finish");
 		vPanel.add(nodeLabel1);
-		vPanel.add(nodeText1);
+		vPanel.add(nodeComboBox1);
 		vPanel.add(nodeLabel2);
-		vPanel.add(nodeText2);
+		vPanel.add(nodeComboBox2);
 		vPanel.add(finishButton);
 		finishButton.addActionListener(new ActionListener() {
 			
@@ -895,14 +994,38 @@ public class project {
 		});
 		
 		JLabel nodeLabel = new JLabel("Enter node");
-		JTextField nodeText = new JTextField(3);
+		DefaultComboBoxModel nodeComboBoxModel = new DefaultComboBoxModel();
+		nodeComboBoxModel.addElement("");
+		for(int i = 1; i <= max; ++i) {
+			nodeComboBoxModel.addElement(i+"");
+		}
+		JComboBox nodeComboBox = new JComboBox(nodeComboBoxModel);
+		nodeComboBox.setEditable(true);
+		final JTextField nodeText = (JTextField) nodeComboBox.getEditor().getEditorComponent();
+		nodeText.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent ke) {
+				LinkedList<String> filterNode = new LinkedList<String>();
+				for(int i = 0; i < nodeComboBoxModel.getSize(); ++i) {
+					if((nodeComboBoxModel.getElementAt(i)+"").contains(nodeText.getText())) {
+						filterNode.add(nodeComboBoxModel.getElementAt(i)+"");
+					}
+				}
+				if(filterNode.size() >0) {
+					nodeComboBox.setModel(new DefaultComboBoxModel(filterNode.toArray()));
+					nodeComboBox.setSelectedItem(nodeText.getText());
+					nodeComboBox.showPopup();
+				} else {
+					nodeComboBox.hidePopup();
+				}
+			}
+		});
 		JButton fishButton = new JButton("Finish");
 		
 		vPanel.add(btnNewButton);
 		//vPanel.add(clearButton);
 		vPanel.add(backButton);
 		vPanel.add(nodeLabel);
-		vPanel.add(nodeText);
+		vPanel.add(nodeComboBox);
 		vPanel.add(fishButton);
 		
 		JButton[] vButtons = new JButton[max];
@@ -1120,14 +1243,38 @@ public class project {
 		});
 		
 		JLabel nodeLabel = new JLabel("Enter node");
-		JTextField nodeText = new JTextField(3);
+		DefaultComboBoxModel nodeComboBoxModel = new DefaultComboBoxModel();
+		nodeComboBoxModel.addElement("");
+		for(int i = 1; i <= max; ++i) {
+			nodeComboBoxModel.addElement(i+"");
+		}
+		JComboBox nodeComboBox = new JComboBox(nodeComboBoxModel);
+		nodeComboBox.setEditable(true);
+		final JTextField nodeText = (JTextField) nodeComboBox.getEditor().getEditorComponent();
+		nodeText.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent ke) {
+				LinkedList<String> filterNode = new LinkedList<String>();
+				for(int i = 0; i < nodeComboBoxModel.getSize(); ++i) {
+					if((nodeComboBoxModel.getElementAt(i)+"").contains(nodeText.getText())) {
+						filterNode.add(nodeComboBoxModel.getElementAt(i)+"");
+					}
+				}
+				if(filterNode.size() >0) {
+					nodeComboBox.setModel(new DefaultComboBoxModel(filterNode.toArray()));
+					nodeComboBox.setSelectedItem(nodeText.getText());
+					nodeComboBox.showPopup();
+				} else {
+					nodeComboBox.hidePopup();
+				}
+			}
+		});
 		JButton fishButton = new JButton("Finish");
 		
 		vPanel.add(btnNewButton);
 		//vPanel.add(clearButton);
 		vPanel.add(backButton);
 		vPanel.add(nodeLabel);
-		vPanel.add(nodeText);
+		vPanel.add(nodeComboBox);
 		vPanel.add(fishButton);
 		
 		JButton[] vButtons = new JButton[max];

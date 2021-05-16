@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="MainProject/src"/>
+	<classpathentry kind="src" path="MainProject/src-test"/>
+	<classpathentry kind="src" path="project/src"/>
+	<classpathentry kind="src" path="project/src-test"/>
+	<classpathentry kind="lib" path="Penguinson.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
