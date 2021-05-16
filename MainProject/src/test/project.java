@@ -1087,8 +1087,10 @@ public class project {
 	
 	protected static void QuestionsPath5() {
 		// TODO Auto-generated method stub
-		JFrame AllPathFrame = new JFrame();
+		JFrame AllPathFrame = new JFrame("Bai5");
 		JPanel vPanel = new JPanel();
+		JScrollPane vPanelScoll = new JScrollPane(vPanel);
+		vPanelScoll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		JButton clearButton = new JButton("Clear");
 		JButton backButton = new JButton("Back");
 		JButton btnNewButton = new JButton("Menu");
@@ -1099,7 +1101,7 @@ public class project {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							omw5.clear();
+							//omw4.clear();
 							frame.getContentPane().add(view);
 							AllPathFrame.repaint();
 							AllPathFrame.revalidate();
@@ -1112,9 +1114,18 @@ public class project {
 				});
 			}
 		});
+		
+		JLabel nodeLabel = new JLabel("Enter node");
+		JTextField nodeText = new JTextField(3);
+		JButton fishButton = new JButton("Finish");
+		
 		vPanel.add(btnNewButton);
-		vPanel.add(clearButton);
+		//vPanel.add(clearButton);
 		vPanel.add(backButton);
+		vPanel.add(nodeLabel);
+		vPanel.add(nodeText);
+		vPanel.add(fishButton);
+		
 		JButton[] vButtons = new JButton[max];
 		for(int i = 0; i < max; ++i) {
 			vButtons[i] = new JButton(Integer.toString(i+1));
@@ -1123,23 +1134,77 @@ public class project {
 		
 		vPanel.setForeground(Color.GREEN);
 		
-		AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
+		AllPathFrame.getContentPane().add(vPanelScoll, BorderLayout.SOUTH);
 		AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		AllPathFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		AllPathFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent) {
-				AllPathFrame.dispose();
-				omw5.clear();
+				//AllPathFrame.dispose();
+				//omw4.clear();
+				AllPathFrame.repaint();
+				AllPathFrame.revalidate();
 			}
 		});
 		setLabel(AllPathFrame);
 		
-		//getView(AllPathFrame);
+		//getview5(AllPathFrame);
 		
-		//view = omw5.getViewer();
-		AllPathFrame.add(view);
+		//view5 = omw5.getview5er();
+		AllPathFrame.add(view5);
+		
+		fishButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if(graph.getNode(nodeText.getText()) == null) {
+					JOptionPane.showMessageDialog(null, "Can't find node " + nodeText.getText(), "ERROR", JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					try {
+
+						omw5.addOption(1, Integer.parseInt(nodeText.getText()));
+					}  catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} // đi tới đỉnh đó
+					for(int j = 0; j < max; ++j) {
+						
+						vPanel.add(vButtons[j]);
+					}
+					/*vertex = omw5.getVertex();
+					for(int j = 0; j < max; ++j) {
+						if(!vertex.contains(j+1)) {
+							vPanel.remove(vButtons[j]);
+						}
+					}*/
+					if (!omw5.getSignal()) {
+						
+					}
+					
+					aIntegers = omw5.getPlaceAdj();
+					for(int j = 0; j < max; ++j) {
+						if(!aIntegers.contains(j+1)) {
+							vPanel.remove(vButtons[j]);
+						}
+					}
+					vPanel.repaint();
+					AllPathFrame.getContentPane().add(vPanelScoll);
+					AllPathFrame.getContentPane().remove(view4);
+//					view = omw.getViewer();
+					
+					AllPathFrame.getContentPane().add(view4);
+					AllPathFrame.repaint();
+					AllPathFrame.revalidate();
+//					AllPathFrame.pack();
+//					AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+//					AllPathFrame.setVisible(true);
+					frame.dispose();
+				}
+			}
+		});
 
 		for(int i = 0; i < max; ++i) {
 			vButtons[i].addActionListener(new ActionListener() {
@@ -1172,14 +1237,16 @@ public class project {
 										vPanel.remove(vButtons[j]);
 									}
 								}
-								AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
-								AllPathFrame.getContentPane().remove(view);
-								//view = omw5.getViewer();
-								AllPathFrame.add(view);
-								AllPathFrame.pack();
-								AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-								AllPathFrame.setVisible(true);
-								frame.dispose();
+								AllPathFrame.getContentPane().add(vPanelScoll, BorderLayout.SOUTH);
+								AllPathFrame.getContentPane().remove(view5);
+								//view5 = omw5.getview5er();
+								AllPathFrame.add(view5);
+								AllPathFrame.repaint();
+								AllPathFrame.revalidate();
+								//AllPathFrame.pack();
+								//AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+								//AllPathFrame.setVisible(true);
+								//frame.dispose();
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -1211,14 +1278,16 @@ public class project {
 							vPanel.remove(vButtons[j]);
 						}
 					}
-					AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
-					AllPathFrame.getContentPane().remove(view);
-					//view = omw5.getViewer();
-					AllPathFrame.add(view);
-					AllPathFrame.pack();
-					AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-					AllPathFrame.setVisible(true);
-					frame.dispose();
+					AllPathFrame.getContentPane().add(vPanelScoll, BorderLayout.SOUTH);
+					AllPathFrame.getContentPane().remove(view5);
+					//view = omw4.getViewer();
+					AllPathFrame.add(view5);
+					AllPathFrame.repaint();
+					AllPathFrame.revalidate();
+					//AllPathFrame.pack();
+					//AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+					//AllPathFrame.setVisible(true);
+					//frame.dispose();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -1238,9 +1307,9 @@ public class project {
 					vPanel.add(vButtons[j]);
 				}
 				AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
-				AllPathFrame.getContentPane().remove(view);
-				//view = omw5.getViewer();
-				AllPathFrame.add(view);
+				AllPathFrame.getContentPane().remove(view5);
+				//view5 = omw5.getview5er();
+				AllPathFrame.add(view5);
 				AllPathFrame.pack();
 				AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 				AllPathFrame.setVisible(true);

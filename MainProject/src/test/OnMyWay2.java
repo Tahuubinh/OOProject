@@ -36,7 +36,7 @@ public class OnMyWay2 extends GraphLinkedList{
 	}
 	
 	void runner() throws NoSuchElementException, IOException {
-		graph = new SingleGraph("Use");
+		//graph = new SingleGraph("Use");
     	graphDraw();
 	}
 	
@@ -52,11 +52,19 @@ public class OnMyWay2 extends GraphLinkedList{
     	graphDraw();
 	}
 	void addOption(int i, int pl) throws IOException {
+		if(stack.size() > 0 && (i==1)) {
+			if(!adjLists[place].contains(pl)) {
+				JOptionPane.showMessageDialog(null, "Can't move to node " + pl, "ERROR", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		}
+		
 		if(stack.size() > 0) {
 			prePlace = place;
 		}
 		
 		if(i ==1 ) {
+			
 			int templace = place;
 			place = pl;
 			stepForward();
