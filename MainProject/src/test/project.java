@@ -147,6 +147,21 @@ public class project {
 		
 		JLabel dirLabel = new JLabel("Enter path ");
 		JTextField dirText = new JTextField(50); // độ dài của phần được nhập là 50 ký tự
+		JButton finishButton = new JButton(); // hoàn tất việc điền đường path và xử lý file txt đó
+		JButton directoryButton = new JButton(); // chọn file txt thỏa mãn trong máy
+		
+		
+		BufferedImage finishBf = ImageIO.read(new File("label_button\\enter.png"));
+		Image finishdImg = finishBf.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+		ImageIcon finishImg = new ImageIcon(finishdImg);
+		finishButton.setIcon(finishImg);
+		
+		BufferedImage directoryBf = ImageIO.read(new File("label_button\\directory.jpg"));
+		Image directorydImg = directoryBf.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+		ImageIcon directoryImg = new ImageIcon(directorydImg);
+		directoryButton.setIcon(directoryImg);
+		
+=======
 		JButton finishButton = new JButton("Finish"); // hoàn tất việc điền đường path và xử lý file txt đó
 		JButton directoryButton = new JButton("Directory"); // chọn file txt thỏa mãn trong máy
 		dirPanel.add(dirLabel);
@@ -228,6 +243,19 @@ public class project {
         JButton QuestionsPathButton = new JButton("Bài 3");  // xử lý bài 3
         JButton bai4 = new JButton("Bài 4* (Hamilton)");
         JButton bai5 = new JButton("Bài 5* (Euler)");
+        JButton freezeButton = new JButton("Freeze");
+        JButton unfreezeButton = new JButton("Unfreeze");
+        JButton homeButton = new JButton(); // quay trở về welcomeframe
+       
+        BufferedImage menuBf = ImageIO.read(new File("label_button\\home.png"));
+		Image menudImg = menuBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+		ImageIcon menuImg = new ImageIcon(menudImg);
+		homeButton.setIcon(menuImg);
+
+        freezeButton.setBackground(Color.BLUE);
+        unfreezeButton.setBackground(Color.LIGHT_GRAY);
+//        JButton homeButton = new JButton("Home"); // quay trở về welcomeframe
+     
         freezeButton1 = new JButton("Freeze");
         unfreezeButton1 = new JButton("Unfreeze");
 
@@ -417,7 +445,15 @@ public class project {
 		nPanel.add(clearButton);
 		nPanel.add(stopButton);
 		nPanel.add(nodeLabel);
+<<<<<<< HEAD
 		nPanel.add(nodeText);
+=======
+		nPanel.add(nodeComboBox);
+		nPanel.add(finishButton);
+		nPanel.add(freezeButton);
+		nPanel.add(unfreezeButton);
+
+>>>>>>> 4185f23c9a6630f7617911075433fd7edbd3916e
 		nPanel.add(fishButton);
 		
 		if (freeze) {
@@ -966,13 +1002,13 @@ public class project {
 		    protected void mouseButtonPress(MouseEvent event) {
 		        super.mouseButtonPress(event);
 
-		        System.out.println("Press");
+//		        System.out.println("Press");
 		    }
 
 		    @Override
 		    public void mouseClicked(MouseEvent event) {
 		        super.mouseClicked(event);
-		        System.out.println("Clicked");
+//		        System.out.println("Clicked");
 		    }
 
 		    @Override
