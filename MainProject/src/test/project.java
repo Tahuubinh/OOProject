@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.event.WindowAdapter;
@@ -69,9 +70,11 @@ import org.graphstream.ui.layout.Layouts;
 import org.graphstream.ui.swing_viewer.DefaultView;
 import org.graphstream.ui.swing_viewer.SwingViewer;
 import org.graphstream.ui.swing_viewer.ViewPanel;
+import org.graphstream.ui.swing_viewer.util.DefaultMouseManager;
 import org.graphstream.ui.view.Viewer;
 import org.graphstream.ui.view.Viewer.CloseFramePolicy;
 import org.graphstream.ui.view.camera.Camera;
+import org.graphstream.ui.view.util.MouseManager;
 
 
 
@@ -225,6 +228,8 @@ public class project {
         JButton QuestionsPathButton = new JButton("Bài 3");  // xử lý bài 3
         JButton bai4 = new JButton("Bài 4* (Hamilton)");
         JButton bai5 = new JButton("Bài 5* (Euler)");
+        JButton freezeButton = new JButton("Freeze");
+        JButton unfreezeButton = new JButton("Unfreeze");
         JButton homeButton = new JButton("Home"); // quay trở về welcomeframe
         
         
@@ -235,6 +240,8 @@ public class project {
         buttonJPanel.add(QuestionsPathButton);
         buttonJPanel.add(bai4);
         buttonJPanel.add(bai5);
+        buttonJPanel.add(freezeButton);
+        buttonJPanel.add(unfreezeButton);
         buttonJPanel.setBackground(Color.orange);
         
 
@@ -314,6 +321,23 @@ public class project {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				QuestionsPath5(); // phần mô phỏng bài 3
+							}
+		});
+        frame.pack();
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        frame.setVisible(true);
+        freezeButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				view.setMouseManager(manager);
+							}
+		});
+        unfreezeButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				view.setMouseManager(manager1);
 							}
 		});
         frame.pack();
@@ -925,6 +949,38 @@ public class project {
 	            }
 	        }                     
 	    }
+		
+		static MouseManager manager1 = new DefaultMouseManager() {
+
+		};
+		
+		static MouseManager manager = new DefaultMouseManager() {
+
+		    @Override
+		    public void mouseDragged(MouseEvent event) {
+
+		    }
+
+		    @Override
+		    protected void mouseButtonPress(MouseEvent event) {
+		        super.mouseButtonPress(event);
+
+		        System.out.println("Press");
+		    }
+
+		    @Override
+		    public void mouseClicked(MouseEvent event) {
+		        super.mouseClicked(event);
+		        System.out.println("Clicked");
+		    }
+
+		    @Override
+		    public void mousePressed(MouseEvent event) {
+		        super.mousePressed(event);
+
+		    }
+
+		};
 	
 	public static String styleSheet = 
  			"graph {"+
