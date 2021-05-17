@@ -13,7 +13,6 @@ import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
@@ -149,19 +148,8 @@ public class project {
 		
 		JLabel dirLabel = new JLabel("Enter path ");
 		JTextField dirText = new JTextField(50); // độ dài của phần được nhập là 50 ký tự
-		JButton finishButton = new JButton(); // hoàn tất việc điền đường path và xử lý file txt đó
-		JButton directoryButton = new JButton(); // chọn file txt thỏa mãn trong máy
-		
-		BufferedImage finishBf = ImageIO.read(new File("label_button\\enter.png"));
-		Image finishdImg = finishBf.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-		ImageIcon finishImg = new ImageIcon(finishdImg);
-		finishButton.setIcon(finishImg);
-		
-		BufferedImage directoryBf = ImageIO.read(new File("label_button\\directory.jpg"));
-		Image directorydImg = directoryBf.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-		ImageIcon directoryImg = new ImageIcon(directorydImg);
-		directoryButton.setIcon(directoryImg);
-		
+		JButton finishButton = new JButton("Finish"); // hoàn tất việc điền đường path và xử lý file txt đó
+		JButton directoryButton = new JButton("Directory"); // chọn file txt thỏa mãn trong máy
 		dirPanel.add(dirLabel);
 		dirPanel.add(dirText);
 		dirPanel.add(finishButton);
@@ -195,12 +183,7 @@ public class project {
 						else {
 						welcomeFrame.setVisible(false);
 						frame.setVisible(true);
-						try {
-							console();
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+						console();
 						}
 					}
 				}
@@ -225,12 +208,7 @@ public class project {
 				else {
 				welcomeFrame.setVisible(false);
 				frame.setVisible(true);
-				try {
-					console();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				console();
 				}
 			}
 		});
@@ -244,7 +222,7 @@ public class project {
 	}
 	
 	/// console được gọi khi chọn xong file txt và xử lý xong phần prepare()
-	public static void console() throws IOException {
+	public static void console() {
 		
         JButton showButton = new JButton("Bài 1"); // xử lý bài 1
         JButton AllPAthButton = new JButton("Bài 2"); // xử lý bài 2
@@ -253,19 +231,11 @@ public class project {
         JButton bai5 = new JButton("Bài 5* (Euler)");
         JButton freezeButton = new JButton("Freeze");
         JButton unfreezeButton = new JButton("Unfreeze");
-<<<<<<< HEAD
-        JButton homeButton = new JButton(); // quay trở về welcomeframe
-        BufferedImage menuBf = ImageIO.read(new File("label_button\\home.png"));
-		Image menudImg = menuBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon menuImg = new ImageIcon(menudImg);
-		homeButton.setIcon(menuImg);
-=======
 
         freezeButton.setBackground(Color.BLUE);
         unfreezeButton.setBackground(Color.LIGHT_GRAY);
         JButton homeButton = new JButton("Home"); // quay trở về welcomeframe
         
->>>>>>> 2c6bcc37ffc863e5e430e113073633fe9231d1af
         
         buttonJPanel = new JPanel();
         buttonJPanel.add(homeButton);
@@ -338,12 +308,7 @@ public class project {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					QuestionsPath();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} // phần mô phỏng bài 3
+				QuestionsPath(); // phần mô phỏng bài 3
 							}
 		});
         frame.pack();
@@ -415,7 +380,7 @@ public class project {
 	
 	
 	/// bài 3
-	protected static void QuestionsPath() throws IOException {
+	protected static void QuestionsPath() {
 		// TODO Auto-generated method stub
 		JFrame AllPathFrame = new JFrame("Bai3"); // tạo 1 frame mới 
 		AllPathFrame.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
@@ -436,7 +401,7 @@ public class project {
 		vPanelScoll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		
 		JButton clearButton = new JButton("Clear"); // khôi phục lại đồ thị ban đầu
-		JButton btnNewButton = new JButton(); // quay lại frame chọn bài
+		JButton btnNewButton = new JButton("Menu"); // quay lại frame chọn bài
 		JButton stopButton = new JButton("Stop"); // stop simulation graph
 		JButton freezeButton = new JButton("Freeze");
         JButton unfreezeButton = new JButton("Unfreeze");
@@ -446,20 +411,6 @@ public class project {
         
 		btnNewButton.setBounds(10, 10, 208, 29);
 		btnNewButton.setBackground(Color.CYAN);
-		BufferedImage menuBf = ImageIO.read(new File("label_button\\menu.png"));
-		Image menudImg = menuBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon menuImg = new ImageIcon(menudImg);
-		btnNewButton.setIcon(menuImg);
-		
-		BufferedImage clearBf = ImageIO.read(new File("label_button\\reset.jpg"));
-		Image cleardImg = clearBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon clearImg = new ImageIcon(cleardImg);
-		clearButton.setIcon(clearImg);
-		
-		BufferedImage stopBf = ImageIO.read(new File("label_button\\stop.png"));
-		Image stopdImg = stopBf.getScaledInstance(20, 30, Image.SCALE_SMOOTH);
-		ImageIcon stopImg = new ImageIcon(stopdImg);
-		stopButton.setIcon(stopImg);
 		JLabel nodeLabel = new JLabel("Enter node");
 		DefaultComboBoxModel nodeComboBoxModel = new DefaultComboBoxModel();
 		nodeComboBoxModel.addElement("");
@@ -487,19 +438,12 @@ public class project {
 			}
 		});
 		
-		JButton finishButton = new JButton("Finish");
-		BufferedImage finishBf = ImageIO.read(new File("label_button\\find.png"));
-		Image finishdImg = finishBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon finishImg = new ImageIcon(finishdImg);
-		finishButton.setIcon(finishImg);
+		JButton fishButton = new JButton("Finish");
 		nPanel.add(btnNewButton);
 		nPanel.add(clearButton);
 		nPanel.add(stopButton);
 		nPanel.add(nodeLabel);
 		nPanel.add(nodeComboBox);
-<<<<<<< HEAD
-		nPanel.add(finishButton);
-=======
 		nPanel.add(fishButton);
 		if (freeze) {
         	nPanel.add(freezeButton);
@@ -546,7 +490,6 @@ public class project {
 				AllPathFrame.revalidate();
 							}
 		});
->>>>>>> 2c6bcc37ffc863e5e430e113073633fe9231d1af
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -579,7 +522,7 @@ public class project {
 			vPanel.add(vButtons[i]);
 		}
 		
-        finishButton.addActionListener(new ActionListener() {
+        fishButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -726,11 +669,11 @@ public class project {
 								vPanel.repaint();
 								String a = omw.getLabel();
 								pathTxt.setText(pathTxt.getText() + a);
-//								AllPathFrame.getContentPane().add(vPanelScoll, c);
-//								AllPathFrame.getContentPane().remove(view);
-////								view = omw.getViewer();
-//								
-//								AllPathFrame.getContentPane().add(view, gc);
+								AllPathFrame.getContentPane().add(vPanelScoll, c);
+								AllPathFrame.getContentPane().remove(view);
+//								view = omw.getViewer();
+								
+								AllPathFrame.getContentPane().add(view, gc);
 								AllPathFrame.repaint();
 								AllPathFrame.revalidate();
 //								AllPathFrame.pack();
@@ -764,10 +707,10 @@ public class project {
 				}
 				pathTxt.setText("Edge has passed:\n");
 				vPanel.repaint();
-//				AllPathFrame.getContentPane().add(vPanelScoll, c);
-//				AllPathFrame.getContentPane().remove(view);
-////				view = omw.getViewer();
-//				AllPathFrame.add(view, gc);
+				AllPathFrame.getContentPane().add(vPanelScoll, c);
+				AllPathFrame.getContentPane().remove(view);
+//				view = omw.getViewer();
+				AllPathFrame.add(view, gc);
 				AllPathFrame.repaint();
 				AllPathFrame.revalidate();
 //				AllPathFrame.pack();
@@ -789,10 +732,10 @@ public class project {
 					}
 				}
 				vPanel.repaint();
-//				AllPathFrame.getContentPane().add(vPanelScoll, c);
-//				AllPathFrame.getContentPane().remove(view);
-////				view = omw.getViewer();
-//				AllPathFrame.add(view, gc);
+				AllPathFrame.getContentPane().add(vPanelScoll, c);
+				AllPathFrame.getContentPane().remove(view);
+//				view = omw.getViewer();
+				AllPathFrame.add(view, gc);
 				AllPathFrame.repaint();
 				AllPathFrame.revalidate();
 //				AllPathFrame.pack();
@@ -813,19 +756,7 @@ public class project {
 		 c = new Integer[max + 1];
 		JFrame AllPathFrame = new JFrame();
 		JPanel vPanel = new JPanel();
-		JButton btnNewButton = new JButton();
-		btnNewButton.setBounds(10, 10, 208, 29);
-		btnNewButton.setBackground(Color.CYAN);
-		BufferedImage menuBf = null;
-		try {
-			menuBf = ImageIO.read(new File("label_button\\menu.png"));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		Image menudImg = menuBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon menuImg = new ImageIcon(menudImg);
-		btnNewButton.setIcon(menuImg);
+		JButton btnNewButton = new JButton("Menu");
 		btnNewButton.setBounds(10, 10, 208, 29);
 		btnNewButton.setBackground(Color.CYAN);
 		btnNewButton.addActionListener(new ActionListener() {
@@ -900,16 +831,6 @@ public class project {
 			}
 		});
 		JButton finishButton = new JButton("Finish");
-		BufferedImage finishBf = null;
-		try {
-			finishBf = ImageIO.read(new File("label_button\\find.png"));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		Image finishdImg = finishBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon finishImg = new ImageIcon(finishdImg);
-		finishButton.setIcon(finishImg);
 		vPanel.add(nodeLabel1);
 		vPanel.add(nodeComboBox1);
 		vPanel.add(nodeLabel2);
@@ -1188,46 +1109,10 @@ public class project {
 		JScrollPane vPanelScoll = new JScrollPane(vPanel);
 		vPanelScoll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		JButton clearButton = new JButton("Clear");
-		JButton backButton = new JButton();
-		JButton btnNewButton = new JButton();
+		JButton backButton = new JButton("Back");
+		JButton btnNewButton = new JButton("Menu");
 		btnNewButton.setBounds(10, 10, 208, 29);
 		btnNewButton.setBackground(Color.CYAN);
-		
-		BufferedImage menuBf = null;
-		try {
-			menuBf = ImageIO.read(new File("label_button\\menu.png"));
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		Image menudImg = menuBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon menuImg = new ImageIcon(menudImg);
-		btnNewButton.setIcon(menuImg);
-		
-		BufferedImage backBf = null;
-		try {
-			backBf = ImageIO.read(new File("label_button\\back.png"));
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		Image backdImg = backBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon backImg = new ImageIcon(backdImg);
-		backButton.setIcon(backImg);
-
-		BufferedImage clearBf = null;
-		try {
-			clearBf = ImageIO.read(new File("label_button\\reset.jpg"));
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		Image cleardImg = clearBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon clearImg = new ImageIcon(cleardImg);
-		clearButton.setIcon(clearImg);
-		
-		
-		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EventQueue.invokeLater(new Runnable() {
@@ -1273,24 +1158,14 @@ public class project {
 				}
 			}
 		});
-		JButton finishButton = new JButton("Finish");
-		BufferedImage finishBf = null;
-		try {
-			finishBf = ImageIO.read(new File("label_button\\find.png"));
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		Image finishdImg = finishBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon finishImg = new ImageIcon(finishdImg);
-		finishButton.setIcon(finishImg);
+		JButton fishButton = new JButton("Finish");
 		
 		vPanel.add(btnNewButton);
 		//vPanel.add(clearButton);
 		vPanel.add(backButton);
 		vPanel.add(nodeLabel);
 		vPanel.add(nodeComboBox);
-		vPanel.add(finishButton);
+		vPanel.add(fishButton);
 		
 		JButton[] vButtons = new JButton[max];
 		for(int i = 0; i < max; ++i) {
@@ -1320,7 +1195,7 @@ public class project {
 		//view = omw4.getViewer();
 		AllPathFrame.add(view4);
 		
-		finishButton.addActionListener(new ActionListener() {
+		fishButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1485,40 +1360,6 @@ public class project {
 		JButton clearButton = new JButton("Clear");
 		JButton backButton = new JButton("Back");
 		JButton btnNewButton = new JButton("Menu");
-		
-		BufferedImage menuBf = null;
-		try {
-			menuBf = ImageIO.read(new File("label_button\\menu.png"));
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		Image menudImg = menuBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon menuImg = new ImageIcon(menudImg);
-		btnNewButton.setIcon(menuImg);
-		
-		BufferedImage backBf = null;
-		try {
-			backBf = ImageIO.read(new File("label_button\\back.png"));
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		Image backdImg = backBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon backImg = new ImageIcon(backdImg);
-		backButton.setIcon(backImg);
-
-		BufferedImage clearBf = null;
-		try {
-			clearBf = ImageIO.read(new File("label_button\\reset.jpg"));
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		Image cleardImg = clearBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon clearImg = new ImageIcon(cleardImg);
-		clearButton.setIcon(clearImg);
-		
 		btnNewButton.setBounds(10, 10, 208, 29);
 		btnNewButton.setBackground(Color.CYAN);
 		btnNewButton.addActionListener(new ActionListener() {
@@ -1566,23 +1407,14 @@ public class project {
 				}
 			}
 		});
-		JButton finishButton = new JButton("Finish");
-		BufferedImage finishBf = null;
-		try {
-			finishBf = ImageIO.read(new File("label_button\\find.png"));
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		Image finishdImg = finishBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon finishImg = new ImageIcon(finishdImg);
-		finishButton.setIcon(finishImg);
+		JButton fishButton = new JButton("Finish");
+		
 		vPanel.add(btnNewButton);
 		//vPanel.add(clearButton);
 		vPanel.add(backButton);
 		vPanel.add(nodeLabel);
 		vPanel.add(nodeComboBox);
-		vPanel.add(finishButton);
+		vPanel.add(fishButton);
 		
 		JButton[] vButtons = new JButton[max];
 		for(int i = 0; i < max; ++i) {
@@ -1612,7 +1444,7 @@ public class project {
 		//view5 = omw5.getview5er();
 		AllPathFrame.add(view5);
 		
-		finishButton.addActionListener(new ActionListener() {
+		fishButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
