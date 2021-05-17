@@ -96,7 +96,7 @@ public class project {
 	
 	public static void welcome() throws IOException {
 		welcomeFrame = new JFrame();
-		BufferedImage myPicture = ImageIO.read(new File("project.jpg")); // ảnh logo đại học bách khoa
+		BufferedImage myPicture = ImageIO.read(new File("MainProject\\project.jpg")); // ảnh logo đại học bách khoa
 		JLabel picLabel = new JLabel(new ImageIcon(myPicture));
 		
 		JPanel nameMember = new JPanel(); // nameMember panel chứa các label tên và mssv của các member
@@ -139,7 +139,8 @@ public class project {
 		//Take the current dir
 		
 		String curentDir = System.getProperty("user.dir");
-		JFileChooser fileDialog = new JFileChooser(curentDir + "\\DataGraph"); //xử lý việc chọn directory
+//		System.out.println(curentDir);
+		JFileChooser fileDialog = new JFileChooser(curentDir + "\\MainProject\\DataGraph"); //xử lý việc chọn directory
 		
 		directoryButton.addActionListener(new ActionListener() {
 			
