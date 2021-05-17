@@ -151,6 +151,7 @@ public class project {
 		JButton finishButton = new JButton(); // hoàn tất việc điền đường path và xử lý file txt đó
 		JButton directoryButton = new JButton(); // chọn file txt thỏa mãn trong máy
 		
+		
 		BufferedImage finishBf = ImageIO.read(new File("label_button\\enter.png"));
 		Image finishdImg = finishBf.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 		ImageIcon finishImg = new ImageIcon(finishdImg);
@@ -252,19 +253,17 @@ public class project {
         JButton bai5 = new JButton("Bài 5* (Euler)");
         JButton freezeButton = new JButton("Freeze");
         JButton unfreezeButton = new JButton("Unfreeze");
-<<<<<<< HEAD
         JButton homeButton = new JButton(); // quay trở về welcomeframe
+       
         BufferedImage menuBf = ImageIO.read(new File("label_button\\home.png"));
 		Image menudImg = menuBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		ImageIcon menuImg = new ImageIcon(menudImg);
 		homeButton.setIcon(menuImg);
-=======
 
         freezeButton.setBackground(Color.BLUE);
         unfreezeButton.setBackground(Color.LIGHT_GRAY);
-        JButton homeButton = new JButton("Home"); // quay trở về welcomeframe
-        
->>>>>>> 2c6bcc37ffc863e5e430e113073633fe9231d1af
+//        JButton homeButton = new JButton("Home"); // quay trở về welcomeframe
+     
         
         buttonJPanel = new JPanel();
         buttonJPanel.add(homeButton);
@@ -468,10 +467,7 @@ public class project {
 		nPanel.add(stopButton);
 		nPanel.add(nodeLabel);
 		nPanel.add(nodeComboBox);
-<<<<<<< HEAD
 		nPanel.add(finishButton);
-=======
-		nPanel.add(fishButton);
 		nPanel.add(freezeButton);
 		nPanel.add(unfreezeButton);
 		
@@ -489,7 +485,6 @@ public class project {
 				view.setMouseManager(manager1);
 							}
 		});
->>>>>>> 2c6bcc37ffc863e5e430e113073633fe9231d1af
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -1070,13 +1065,13 @@ public class project {
 		    protected void mouseButtonPress(MouseEvent event) {
 		        super.mouseButtonPress(event);
 
-		        System.out.println("Press");
+//		        System.out.println("Press");
 		    }
 
 		    @Override
 		    public void mouseClicked(MouseEvent event) {
 		        super.mouseClicked(event);
-		        System.out.println("Clicked");
+//		        System.out.println("Clicked");
 		    }
 
 		    @Override
