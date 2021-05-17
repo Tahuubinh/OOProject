@@ -252,11 +252,19 @@ public class project {
         JButton bai5 = new JButton("Bài 5* (Euler)");
         JButton freezeButton = new JButton("Freeze");
         JButton unfreezeButton = new JButton("Unfreeze");
+<<<<<<< HEAD
         JButton homeButton = new JButton(); // quay trở về welcomeframe
         BufferedImage menuBf = ImageIO.read(new File("label_button\\home.png"));
 		Image menudImg = menuBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		ImageIcon menuImg = new ImageIcon(menudImg);
 		homeButton.setIcon(menuImg);
+=======
+
+        freezeButton.setBackground(Color.BLUE);
+        unfreezeButton.setBackground(Color.LIGHT_GRAY);
+        JButton homeButton = new JButton("Home"); // quay trở về welcomeframe
+        
+>>>>>>> 2c6bcc37ffc863e5e430e113073633fe9231d1af
         
         buttonJPanel = new JPanel();
         buttonJPanel.add(homeButton);
@@ -401,6 +409,12 @@ public class project {
 		JButton clearButton = new JButton("Clear"); // khôi phục lại đồ thị ban đầu
 		JButton btnNewButton = new JButton(); // quay lại frame chọn bài
 		JButton stopButton = new JButton("Stop"); // stop simulation graph
+		JButton freezeButton = new JButton("Freeze");
+        JButton unfreezeButton = new JButton("Unfreeze");
+
+        freezeButton.setBackground(Color.BLUE);
+        unfreezeButton.setBackground(Color.LIGHT_GRAY);
+        
 		btnNewButton.setBounds(10, 10, 208, 29);
 		btnNewButton.setBackground(Color.CYAN);
 		BufferedImage menuBf = ImageIO.read(new File("label_button\\menu.png"));
@@ -454,7 +468,28 @@ public class project {
 		nPanel.add(stopButton);
 		nPanel.add(nodeLabel);
 		nPanel.add(nodeComboBox);
+<<<<<<< HEAD
 		nPanel.add(finishButton);
+=======
+		nPanel.add(fishButton);
+		nPanel.add(freezeButton);
+		nPanel.add(unfreezeButton);
+		
+		freezeButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				view.setMouseManager(manager);
+							}
+		});
+        unfreezeButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				view.setMouseManager(manager1);
+							}
+		});
+>>>>>>> 2c6bcc37ffc863e5e430e113073633fe9231d1af
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
