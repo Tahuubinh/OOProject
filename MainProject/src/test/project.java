@@ -85,6 +85,7 @@ public class project {
 	private static OnMyWay omw4;
 	private static OnMyWay2 omw5;
 	private static DFS g;
+	private static boolean freeze = true;
 	
 	private static Graph graph;
 	private static String path = "";
@@ -243,8 +244,14 @@ public class project {
         buttonJPanel.add(QuestionsPathButton);
         buttonJPanel.add(bai4);
         buttonJPanel.add(bai5);
-        buttonJPanel.add(freezeButton);
-        buttonJPanel.add(unfreezeButton);
+        if (freeze) {
+        	buttonJPanel.add(freezeButton);
+        	buttonJPanel.remove(unfreezeButton);
+        }
+        else {
+        	buttonJPanel.add(unfreezeButton);
+        	buttonJPanel.remove(freezeButton);
+        }
         buttonJPanel.setBackground(Color.orange);
         
 
@@ -334,6 +341,17 @@ public class project {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				view.setMouseManager(manager);
+				freeze = !freeze;
+				if (freeze) {
+		        	buttonJPanel.add(freezeButton);
+		        	buttonJPanel.remove(unfreezeButton);
+		        }
+		        else {
+		        	buttonJPanel.add(unfreezeButton);
+		        	buttonJPanel.remove(freezeButton);
+		        }
+				frame.repaint();
+				frame.revalidate();
 							}
 		});
         unfreezeButton.addActionListener(new ActionListener() {
@@ -341,6 +359,17 @@ public class project {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				view.setMouseManager(manager1);
+				freeze = !freeze;
+				if (freeze) {
+		        	buttonJPanel.add(freezeButton);
+		        	buttonJPanel.remove(unfreezeButton);
+		        }
+		        else {
+		        	buttonJPanel.add(unfreezeButton);
+		        	buttonJPanel.remove(freezeButton);
+		        }
+				frame.repaint();
+				frame.revalidate();
 							}
 		});
         frame.pack();
@@ -416,14 +445,31 @@ public class project {
 		nPanel.add(nodeLabel);
 		nPanel.add(nodeComboBox);
 		nPanel.add(fishButton);
-		nPanel.add(freezeButton);
-		nPanel.add(unfreezeButton);
+		if (freeze) {
+        	nPanel.add(freezeButton);
+        	nPanel.remove(unfreezeButton);
+        }
+        else {
+        	nPanel.add(unfreezeButton);
+        	nPanel.remove(freezeButton);
+        }
 		
 		freezeButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				view.setMouseManager(manager);
+				freeze = !freeze;
+				if (freeze) {
+					nPanel.add(freezeButton);
+					nPanel.remove(unfreezeButton);
+		        }
+		        else {
+		        	nPanel.add(unfreezeButton);
+		        	nPanel.remove(freezeButton);
+		        }
+				AllPathFrame.repaint();
+				AllPathFrame.revalidate();
 							}
 		});
         unfreezeButton.addActionListener(new ActionListener() {
@@ -431,6 +477,17 @@ public class project {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				view.setMouseManager(manager1);
+				freeze = !freeze;
+				if (freeze) {
+					nPanel.add(freezeButton);
+					nPanel.remove(unfreezeButton);
+		        }
+		        else {
+		        	nPanel.add(unfreezeButton);
+		        	nPanel.remove(freezeButton);
+		        }
+				AllPathFrame.repaint();
+				AllPathFrame.revalidate();
 							}
 		});
 		
