@@ -750,14 +750,15 @@ public class project {
 										vPanel.remove(vButtons[j]);
 									}
 								}
-								vPanel.repaint();
 								String a = omw.getLabel();
 								pathTxt.setText(pathTxt.getText() + a);
-								AllPathFrame.getContentPane().add(vPanelScoll, c);
-								AllPathFrame.getContentPane().remove(view);
-//								view = omw.getViewer();
-								
-								AllPathFrame.getContentPane().add(view, gc);
+//								AllPathFrame.getContentPane().add(vPanelScoll, c);
+////								AllPathFrame.getContentPane().remove(view);
+//////								view = omw.getViewer();
+////								
+////								AllPathFrame.getContentPane().add(view, gc);
+								splitGraph.repaint();
+								splitMenu.repaint();
 								AllPathFrame.repaint();
 								AllPathFrame.revalidate();
 //								AllPathFrame.pack();
@@ -790,11 +791,12 @@ public class project {
 					vPanel.add(vButtons[j]);
 				}
 				pathTxt.setText("Edge has passed:\n");
-				vPanel.repaint();
-				AllPathFrame.getContentPane().add(vPanelScoll, c);
-				AllPathFrame.getContentPane().remove(view);
-//				view = omw.getViewer();
-				AllPathFrame.add(view, gc);
+				splitGraph.repaint();
+				splitMenu.repaint();
+//				AllPathFrame.getContentPane().add(vPanelScoll, c);
+//				AllPathFrame.getContentPane().remove(view);
+////				view = omw.getViewer();
+//				AllPathFrame.add(view, gc);
 				AllPathFrame.repaint();
 				AllPathFrame.revalidate();
 //				AllPathFrame.pack();
@@ -815,11 +817,12 @@ public class project {
 						vPanel.remove(vButtons[j]);
 					}
 				}
-				vPanel.repaint();
-				AllPathFrame.getContentPane().add(vPanelScoll, c);
-				AllPathFrame.getContentPane().remove(view);
-//				view = omw.getViewer();
-				AllPathFrame.add(view, gc);
+				splitGraph.repaint();
+				splitMenu.repaint();
+//				AllPathFrame.getContentPane().add(vPanelScoll, c);
+//				AllPathFrame.getContentPane().remove(view);
+////				view = omw.getViewer();
+//				AllPathFrame.add(view, gc);
 				AllPathFrame.repaint();
 				AllPathFrame.revalidate();
 //				AllPathFrame.pack();
