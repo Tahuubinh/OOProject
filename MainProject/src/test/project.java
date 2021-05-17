@@ -1758,6 +1758,7 @@ public class project {
 		AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		AllPathFrame.setVisible(true);
 		frame.dispose();
+		
 	}
 
 }
