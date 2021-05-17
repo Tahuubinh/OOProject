@@ -230,6 +230,9 @@ public class project {
         JButton bai5 = new JButton("Bài 5* (Euler)");
         JButton freezeButton = new JButton("Freeze");
         JButton unfreezeButton = new JButton("Unfreeze");
+
+        freezeButton.setBackground(Color.BLUE);
+        unfreezeButton.setBackground(Color.LIGHT_GRAY);
         JButton homeButton = new JButton("Home"); // quay trở về welcomeframe
         
         
@@ -371,6 +374,12 @@ public class project {
 		JButton clearButton = new JButton("Clear"); // khôi phục lại đồ thị ban đầu
 		JButton btnNewButton = new JButton("Menu"); // quay lại frame chọn bài
 		JButton stopButton = new JButton("Stop"); // stop simulation graph
+		JButton freezeButton = new JButton("Freeze");
+        JButton unfreezeButton = new JButton("Unfreeze");
+
+        freezeButton.setBackground(Color.BLUE);
+        unfreezeButton.setBackground(Color.LIGHT_GRAY);
+        
 		btnNewButton.setBounds(10, 10, 208, 29);
 		btnNewButton.setBackground(Color.CYAN);
 		JLabel nodeLabel = new JLabel("Enter node");
@@ -407,6 +416,23 @@ public class project {
 		nPanel.add(nodeLabel);
 		nPanel.add(nodeComboBox);
 		nPanel.add(fishButton);
+		nPanel.add(freezeButton);
+		nPanel.add(unfreezeButton);
+		
+		freezeButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				view.setMouseManager(manager);
+							}
+		});
+        unfreezeButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				view.setMouseManager(manager1);
+							}
+		});
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
