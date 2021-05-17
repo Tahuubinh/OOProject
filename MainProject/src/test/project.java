@@ -87,6 +87,9 @@ public class project {
 	private static DFS g;
 	private static boolean freeze = true;
 	
+	private static JButton freezeButton1;
+	private static JButton unfreezeButton1;
+	
 	private static Graph graph;
 	private static String path = "";
 	private static String[] v;
@@ -229,11 +232,11 @@ public class project {
         JButton QuestionsPathButton = new JButton("Bài 3");  // xử lý bài 3
         JButton bai4 = new JButton("Bài 4* (Hamilton)");
         JButton bai5 = new JButton("Bài 5* (Euler)");
-        JButton freezeButton = new JButton("Freeze");
-        JButton unfreezeButton = new JButton("Unfreeze");
+        freezeButton1 = new JButton("Freeze");
+        unfreezeButton1 = new JButton("Unfreeze");
 
-        freezeButton.setBackground(Color.BLUE);
-        unfreezeButton.setBackground(Color.LIGHT_GRAY);
+        freezeButton1.setBackground(Color.BLUE);
+        unfreezeButton1.setBackground(Color.LIGHT_GRAY);
         JButton homeButton = new JButton("Home"); // quay trở về welcomeframe
         
         
@@ -245,12 +248,12 @@ public class project {
         buttonJPanel.add(bai4);
         buttonJPanel.add(bai5);
         if (freeze) {
-        	buttonJPanel.add(freezeButton);
-        	buttonJPanel.remove(unfreezeButton);
+        	buttonJPanel.add(freezeButton1);
+        	buttonJPanel.remove(unfreezeButton1);
         }
         else {
-        	buttonJPanel.add(unfreezeButton);
-        	buttonJPanel.remove(freezeButton);
+        	buttonJPanel.add(unfreezeButton1);
+        	buttonJPanel.remove(freezeButton1);
         }
         buttonJPanel.setBackground(Color.orange);
         
@@ -336,37 +339,37 @@ public class project {
         frame.pack();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
         frame.setVisible(true);
-        freezeButton.addActionListener(new ActionListener() {
+        freezeButton1.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				view.setMouseManager(manager);
 				freeze = !freeze;
 				if (freeze) {
-		        	buttonJPanel.add(freezeButton);
-		        	buttonJPanel.remove(unfreezeButton);
+		        	buttonJPanel.add(freezeButton1);
+		        	buttonJPanel.remove(unfreezeButton1);
 		        }
 		        else {
-		        	buttonJPanel.add(unfreezeButton);
-		        	buttonJPanel.remove(freezeButton);
+		        	buttonJPanel.add(unfreezeButton1);
+		        	buttonJPanel.remove(freezeButton1);
 		        }
 				frame.repaint();
 				frame.revalidate();
 							}
 		});
-        unfreezeButton.addActionListener(new ActionListener() {
+        unfreezeButton1.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				view.setMouseManager(manager1);
 				freeze = !freeze;
 				if (freeze) {
-		        	buttonJPanel.add(freezeButton);
-		        	buttonJPanel.remove(unfreezeButton);
+		        	buttonJPanel.add(freezeButton1);
+		        	buttonJPanel.remove(unfreezeButton1);
 		        }
 		        else {
-		        	buttonJPanel.add(unfreezeButton);
-		        	buttonJPanel.remove(freezeButton);
+		        	buttonJPanel.add(unfreezeButton1);
+		        	buttonJPanel.remove(freezeButton1);
 		        }
 				frame.repaint();
 				frame.revalidate();
@@ -502,6 +505,16 @@ public class project {
 							AllPathFrame.repaint();
 							AllPathFrame.revalidate();
 							AllPathFrame.setVisible(false);
+							buttonJPanel.remove(freezeButton);
+				        	buttonJPanel.remove(unfreezeButton);
+				        	if (freeze) {
+				            	buttonJPanel.add(freezeButton1);
+				            	buttonJPanel.remove(unfreezeButton1);
+				            }
+				            else {
+				            	buttonJPanel.add(unfreezeButton1);
+				            	buttonJPanel.remove(freezeButton1);
+				            }
 							frame.remove(view);
 							frame.add(view);
 							frame.repaint();
