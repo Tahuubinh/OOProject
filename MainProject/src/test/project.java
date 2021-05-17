@@ -151,7 +151,6 @@ public class project {
 		
 		JLabel dirLabel = new JLabel("Enter path ");
 		JTextField dirText = new JTextField(50); // độ dài của phần được nhập là 50 ký tự
-<<<<<<< HEAD
 		JButton finishButton = new JButton(); // hoàn tất việc điền đường path và xử lý file txt đó
 		JButton directoryButton = new JButton(); // chọn file txt thỏa mãn trong máy
 		
@@ -169,7 +168,6 @@ public class project {
 =======
 		JButton finishButton = new JButton("Finish"); // hoàn tất việc điền đường path và xử lý file txt đó
 		JButton directoryButton = new JButton("Directory"); // chọn file txt thỏa mãn trong máy
->>>>>>> 7a16489dbce389a877911ae4ef34211c88d741d2
 		dirPanel.add(dirLabel);
 		dirPanel.add(dirText);
 		dirPanel.add(finishButton);
@@ -249,7 +247,6 @@ public class project {
         JButton QuestionsPathButton = new JButton("Bài 3");  // xử lý bài 3
         JButton bai4 = new JButton("Bài 4* (Hamilton)");
         JButton bai5 = new JButton("Bài 5* (Euler)");
-<<<<<<< HEAD
         JButton freezeButton = new JButton("Freeze");
         JButton unfreezeButton = new JButton("Unfreeze");
         JButton homeButton = new JButton(); // quay trở về welcomeframe
@@ -263,7 +260,6 @@ public class project {
         unfreezeButton.setBackground(Color.LIGHT_GRAY);
 //        JButton homeButton = new JButton("Home"); // quay trở về welcomeframe
      
-=======
         freezeButton1 = new JButton("Freeze");
         unfreezeButton1 = new JButton("Unfreeze");
 
@@ -271,7 +267,6 @@ public class project {
         unfreezeButton1.setBackground(Color.LIGHT_GRAY);
         JButton homeButton = new JButton("Home"); // quay trở về welcomeframe
         
->>>>>>> 7a16489dbce389a877911ae4ef34211c88d741d2
         
         buttonJPanel = new JPanel();
         buttonJPanel.add(homeButton);
@@ -480,11 +475,10 @@ public class project {
 		nPanel.add(stopButton);
 		nPanel.add(nodeLabel);
 		nPanel.add(nodeComboBox);
-<<<<<<< HEAD
 		nPanel.add(finishButton);
 		nPanel.add(freezeButton);
 		nPanel.add(unfreezeButton);
-=======
+
 		nPanel.add(fishButton);
 		if (freeze) {
         	nPanel.add(freezeButton);
@@ -494,7 +488,6 @@ public class project {
         	nPanel.add(unfreezeButton);
         	nPanel.remove(freezeButton);
         }
->>>>>>> 7a16489dbce389a877911ae4ef34211c88d741d2
 		
 		freezeButton.addActionListener(new ActionListener() {
 			
