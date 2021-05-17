@@ -562,11 +562,11 @@ public class project {
 								vPanel.repaint();
 								String a = omw.getLabel();
 								pathTxt.setText(pathTxt.getText() + a);
-								AllPathFrame.getContentPane().add(vPanelScoll, c);
-								AllPathFrame.getContentPane().remove(view);
-//								view = omw.getViewer();
-								
-								AllPathFrame.getContentPane().add(view, gc);
+//								AllPathFrame.getContentPane().add(vPanelScoll, c);
+//								AllPathFrame.getContentPane().remove(view);
+////								view = omw.getViewer();
+//								
+//								AllPathFrame.getContentPane().add(view, gc);
 								AllPathFrame.repaint();
 								AllPathFrame.revalidate();
 //								AllPathFrame.pack();
@@ -600,10 +600,10 @@ public class project {
 				}
 				pathTxt.setText("Edge has passed:\n");
 				vPanel.repaint();
-				AllPathFrame.getContentPane().add(vPanelScoll, c);
-				AllPathFrame.getContentPane().remove(view);
-//				view = omw.getViewer();
-				AllPathFrame.add(view, gc);
+//				AllPathFrame.getContentPane().add(vPanelScoll, c);
+//				AllPathFrame.getContentPane().remove(view);
+////				view = omw.getViewer();
+//				AllPathFrame.add(view, gc);
 				AllPathFrame.repaint();
 				AllPathFrame.revalidate();
 //				AllPathFrame.pack();
@@ -625,10 +625,10 @@ public class project {
 					}
 				}
 				vPanel.repaint();
-				AllPathFrame.getContentPane().add(vPanelScoll, c);
-				AllPathFrame.getContentPane().remove(view);
-//				view = omw.getViewer();
-				AllPathFrame.add(view, gc);
+//				AllPathFrame.getContentPane().add(vPanelScoll, c);
+//				AllPathFrame.getContentPane().remove(view);
+////				view = omw.getViewer();
+//				AllPathFrame.add(view, gc);
 				AllPathFrame.repaint();
 				AllPathFrame.revalidate();
 //				AllPathFrame.pack();
