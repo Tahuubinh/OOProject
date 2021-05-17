@@ -80,8 +80,11 @@ public class DFS extends GraphLinkedList{
     	if (count == 0){
     		JOptionPane.showMessageDialog(null, "No path!", "vertex " + vertex + " to vertex " + end, JOptionPane.INFORMATION_MESSAGE);
     	} 
-    	else {
+    	else if (count < 101){
     		JOptionPane.showMessageDialog(null, "There are " + count + " path(s)", "vertex " + vertex + " to vertex " + end, JOptionPane.INFORMATION_MESSAGE);
+    	}
+    	else {
+    		JOptionPane.showMessageDialog(null, "There are more than 100 path(s)", "vertex " + vertex + " to vertex " + end, JOptionPane.INFORMATION_MESSAGE);
     	}
     	//empty the stack here
     	stack.clear();
