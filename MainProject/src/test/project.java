@@ -13,7 +13,6 @@ import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
@@ -86,6 +85,10 @@ public class project {
 	private static OnMyWay omw4;
 	private static OnMyWay2 omw5;
 	private static DFS g;
+	private static boolean freeze = true;
+	
+	private static JButton freezeButton1;
+	private static JButton unfreezeButton1;
 	
 	private static Graph graph;
 	private static String path = "";
@@ -148,6 +151,7 @@ public class project {
 		
 		JLabel dirLabel = new JLabel("Enter path ");
 		JTextField dirText = new JTextField(50); // độ dài của phần được nhập là 50 ký tự
+<<<<<<< HEAD
 		JButton finishButton = new JButton(); // hoàn tất việc điền đường path và xử lý file txt đó
 		JButton directoryButton = new JButton(); // chọn file txt thỏa mãn trong máy
 		
@@ -162,6 +166,10 @@ public class project {
 		ImageIcon directoryImg = new ImageIcon(directorydImg);
 		directoryButton.setIcon(directoryImg);
 		
+=======
+		JButton finishButton = new JButton("Finish"); // hoàn tất việc điền đường path và xử lý file txt đó
+		JButton directoryButton = new JButton("Directory"); // chọn file txt thỏa mãn trong máy
+>>>>>>> 7a16489dbce389a877911ae4ef34211c88d741d2
 		dirPanel.add(dirLabel);
 		dirPanel.add(dirText);
 		dirPanel.add(finishButton);
@@ -195,12 +203,7 @@ public class project {
 						else {
 						welcomeFrame.setVisible(false);
 						frame.setVisible(true);
-						try {
-							console();
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+						console();
 						}
 					}
 				}
@@ -225,12 +228,7 @@ public class project {
 				else {
 				welcomeFrame.setVisible(false);
 				frame.setVisible(true);
-				try {
-					console();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				console();
 				}
 			}
 		});
@@ -244,13 +242,14 @@ public class project {
 	}
 	
 	/// console được gọi khi chọn xong file txt và xử lý xong phần prepare()
-	public static void console() throws IOException {
+	public static void console() {
 		
         JButton showButton = new JButton("Bài 1"); // xử lý bài 1
         JButton AllPAthButton = new JButton("Bài 2"); // xử lý bài 2
         JButton QuestionsPathButton = new JButton("Bài 3");  // xử lý bài 3
         JButton bai4 = new JButton("Bài 4* (Hamilton)");
         JButton bai5 = new JButton("Bài 5* (Euler)");
+<<<<<<< HEAD
         JButton freezeButton = new JButton("Freeze");
         JButton unfreezeButton = new JButton("Unfreeze");
         JButton homeButton = new JButton(); // quay trở về welcomeframe
@@ -264,6 +263,15 @@ public class project {
         unfreezeButton.setBackground(Color.LIGHT_GRAY);
 //        JButton homeButton = new JButton("Home"); // quay trở về welcomeframe
      
+=======
+        freezeButton1 = new JButton("Freeze");
+        unfreezeButton1 = new JButton("Unfreeze");
+
+        freezeButton1.setBackground(Color.BLUE);
+        unfreezeButton1.setBackground(Color.LIGHT_GRAY);
+        JButton homeButton = new JButton("Home"); // quay trở về welcomeframe
+        
+>>>>>>> 7a16489dbce389a877911ae4ef34211c88d741d2
         
         buttonJPanel = new JPanel();
         buttonJPanel.add(homeButton);
@@ -272,8 +280,14 @@ public class project {
         buttonJPanel.add(QuestionsPathButton);
         buttonJPanel.add(bai4);
         buttonJPanel.add(bai5);
-        buttonJPanel.add(freezeButton);
-        buttonJPanel.add(unfreezeButton);
+        if (freeze) {
+        	buttonJPanel.add(freezeButton1);
+        	buttonJPanel.remove(unfreezeButton1);
+        }
+        else {
+        	buttonJPanel.add(unfreezeButton1);
+        	buttonJPanel.remove(freezeButton1);
+        }
         buttonJPanel.setBackground(Color.orange);
         
 
@@ -330,12 +344,7 @@ public class project {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					QuestionsPath();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} // phần mô phỏng bài 3
+				QuestionsPath(); // phần mô phỏng bài 3
 							}
 		});
         frame.pack();
@@ -363,18 +372,40 @@ public class project {
         frame.pack();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
         frame.setVisible(true);
-        freezeButton.addActionListener(new ActionListener() {
+        freezeButton1.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				view.setMouseManager(manager);
+				freeze = !freeze;
+				if (freeze) {
+		        	buttonJPanel.add(freezeButton1);
+		        	buttonJPanel.remove(unfreezeButton1);
+		        }
+		        else {
+		        	buttonJPanel.add(unfreezeButton1);
+		        	buttonJPanel.remove(freezeButton1);
+		        }
+				frame.repaint();
+				frame.revalidate();
 							}
 		});
-        unfreezeButton.addActionListener(new ActionListener() {
+        unfreezeButton1.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				view.setMouseManager(manager1);
+				freeze = !freeze;
+				if (freeze) {
+		        	buttonJPanel.add(freezeButton1);
+		        	buttonJPanel.remove(unfreezeButton1);
+		        }
+		        else {
+		        	buttonJPanel.add(unfreezeButton1);
+		        	buttonJPanel.remove(freezeButton1);
+		        }
+				frame.repaint();
+				frame.revalidate();
 							}
 		});
         frame.pack();
@@ -385,7 +416,7 @@ public class project {
 	
 	
 	/// bài 3
-	protected static void QuestionsPath() throws IOException {
+	protected static void QuestionsPath() {
 		// TODO Auto-generated method stub
 		JFrame AllPathFrame = new JFrame("Bai3"); // tạo 1 frame mới 
 		AllPathFrame.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
@@ -406,7 +437,7 @@ public class project {
 		vPanelScoll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		
 		JButton clearButton = new JButton("Clear"); // khôi phục lại đồ thị ban đầu
-		JButton btnNewButton = new JButton(); // quay lại frame chọn bài
+		JButton btnNewButton = new JButton("Menu"); // quay lại frame chọn bài
 		JButton stopButton = new JButton("Stop"); // stop simulation graph
 		JButton freezeButton = new JButton("Freeze");
         JButton unfreezeButton = new JButton("Unfreeze");
@@ -416,20 +447,6 @@ public class project {
         
 		btnNewButton.setBounds(10, 10, 208, 29);
 		btnNewButton.setBackground(Color.CYAN);
-		BufferedImage menuBf = ImageIO.read(new File("label_button\\menu.png"));
-		Image menudImg = menuBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon menuImg = new ImageIcon(menudImg);
-		btnNewButton.setIcon(menuImg);
-		
-		BufferedImage clearBf = ImageIO.read(new File("label_button\\reset.jpg"));
-		Image cleardImg = clearBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon clearImg = new ImageIcon(cleardImg);
-		clearButton.setIcon(clearImg);
-		
-		BufferedImage stopBf = ImageIO.read(new File("label_button\\stop.png"));
-		Image stopdImg = stopBf.getScaledInstance(20, 30, Image.SCALE_SMOOTH);
-		ImageIcon stopImg = new ImageIcon(stopdImg);
-		stopButton.setIcon(stopImg);
 		JLabel nodeLabel = new JLabel("Enter node");
 		DefaultComboBoxModel nodeComboBoxModel = new DefaultComboBoxModel();
 		nodeComboBoxModel.addElement("");
@@ -457,25 +474,44 @@ public class project {
 			}
 		});
 		
-		JButton finishButton = new JButton("Finish");
-		BufferedImage finishBf = ImageIO.read(new File("label_button\\find.png"));
-		Image finishdImg = finishBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon finishImg = new ImageIcon(finishdImg);
-		finishButton.setIcon(finishImg);
+		JButton fishButton = new JButton("Finish");
 		nPanel.add(btnNewButton);
 		nPanel.add(clearButton);
 		nPanel.add(stopButton);
 		nPanel.add(nodeLabel);
 		nPanel.add(nodeComboBox);
+<<<<<<< HEAD
 		nPanel.add(finishButton);
 		nPanel.add(freezeButton);
 		nPanel.add(unfreezeButton);
+=======
+		nPanel.add(fishButton);
+		if (freeze) {
+        	nPanel.add(freezeButton);
+        	nPanel.remove(unfreezeButton);
+        }
+        else {
+        	nPanel.add(unfreezeButton);
+        	nPanel.remove(freezeButton);
+        }
+>>>>>>> 7a16489dbce389a877911ae4ef34211c88d741d2
 		
 		freezeButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				view.setMouseManager(manager);
+				freeze = !freeze;
+				if (freeze) {
+					nPanel.add(freezeButton);
+					nPanel.remove(unfreezeButton);
+		        }
+		        else {
+		        	nPanel.add(unfreezeButton);
+		        	nPanel.remove(freezeButton);
+		        }
+				AllPathFrame.repaint();
+				AllPathFrame.revalidate();
 							}
 		});
         unfreezeButton.addActionListener(new ActionListener() {
@@ -483,6 +519,17 @@ public class project {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				view.setMouseManager(manager1);
+				freeze = !freeze;
+				if (freeze) {
+					nPanel.add(freezeButton);
+					nPanel.remove(unfreezeButton);
+		        }
+		        else {
+		        	nPanel.add(unfreezeButton);
+		        	nPanel.remove(freezeButton);
+		        }
+				AllPathFrame.repaint();
+				AllPathFrame.revalidate();
 							}
 		});
 		
@@ -497,6 +544,16 @@ public class project {
 							AllPathFrame.repaint();
 							AllPathFrame.revalidate();
 							AllPathFrame.setVisible(false);
+							buttonJPanel.remove(freezeButton);
+				        	buttonJPanel.remove(unfreezeButton);
+				        	if (freeze) {
+				            	buttonJPanel.add(freezeButton1);
+				            	buttonJPanel.remove(unfreezeButton1);
+				            }
+				            else {
+				            	buttonJPanel.add(unfreezeButton1);
+				            	buttonJPanel.remove(freezeButton1);
+				            }
 							frame.remove(view);
 							frame.add(view);
 							frame.repaint();
@@ -517,7 +574,7 @@ public class project {
 			vPanel.add(vButtons[i]);
 		}
 		
-        finishButton.addActionListener(new ActionListener() {
+        fishButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -664,11 +721,11 @@ public class project {
 								vPanel.repaint();
 								String a = omw.getLabel();
 								pathTxt.setText(pathTxt.getText() + a);
-//								AllPathFrame.getContentPane().add(vPanelScoll, c);
-//								AllPathFrame.getContentPane().remove(view);
-////								view = omw.getViewer();
-//								
-//								AllPathFrame.getContentPane().add(view, gc);
+								AllPathFrame.getContentPane().add(vPanelScoll, c);
+								AllPathFrame.getContentPane().remove(view);
+//								view = omw.getViewer();
+								
+								AllPathFrame.getContentPane().add(view, gc);
 								AllPathFrame.repaint();
 								AllPathFrame.revalidate();
 //								AllPathFrame.pack();
@@ -702,10 +759,10 @@ public class project {
 				}
 				pathTxt.setText("Edge has passed:\n");
 				vPanel.repaint();
-//				AllPathFrame.getContentPane().add(vPanelScoll, c);
-//				AllPathFrame.getContentPane().remove(view);
-////				view = omw.getViewer();
-//				AllPathFrame.add(view, gc);
+				AllPathFrame.getContentPane().add(vPanelScoll, c);
+				AllPathFrame.getContentPane().remove(view);
+//				view = omw.getViewer();
+				AllPathFrame.add(view, gc);
 				AllPathFrame.repaint();
 				AllPathFrame.revalidate();
 //				AllPathFrame.pack();
@@ -727,10 +784,10 @@ public class project {
 					}
 				}
 				vPanel.repaint();
-//				AllPathFrame.getContentPane().add(vPanelScoll, c);
-//				AllPathFrame.getContentPane().remove(view);
-////				view = omw.getViewer();
-//				AllPathFrame.add(view, gc);
+				AllPathFrame.getContentPane().add(vPanelScoll, c);
+				AllPathFrame.getContentPane().remove(view);
+//				view = omw.getViewer();
+				AllPathFrame.add(view, gc);
 				AllPathFrame.repaint();
 				AllPathFrame.revalidate();
 //				AllPathFrame.pack();
@@ -751,19 +808,7 @@ public class project {
 		 c = new Integer[max + 1];
 		JFrame AllPathFrame = new JFrame();
 		JPanel vPanel = new JPanel();
-		JButton btnNewButton = new JButton();
-		btnNewButton.setBounds(10, 10, 208, 29);
-		btnNewButton.setBackground(Color.CYAN);
-		BufferedImage menuBf = null;
-		try {
-			menuBf = ImageIO.read(new File("label_button\\menu.png"));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		Image menudImg = menuBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon menuImg = new ImageIcon(menudImg);
-		btnNewButton.setIcon(menuImg);
+		JButton btnNewButton = new JButton("Menu");
 		btnNewButton.setBounds(10, 10, 208, 29);
 		btnNewButton.setBackground(Color.CYAN);
 		btnNewButton.addActionListener(new ActionListener() {
@@ -838,16 +883,6 @@ public class project {
 			}
 		});
 		JButton finishButton = new JButton("Finish");
-		BufferedImage finishBf = null;
-		try {
-			finishBf = ImageIO.read(new File("label_button\\find.png"));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		Image finishdImg = finishBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon finishImg = new ImageIcon(finishdImg);
-		finishButton.setIcon(finishImg);
 		vPanel.add(nodeLabel1);
 		vPanel.add(nodeComboBox1);
 		vPanel.add(nodeLabel2);
@@ -1126,46 +1161,10 @@ public class project {
 		JScrollPane vPanelScoll = new JScrollPane(vPanel);
 		vPanelScoll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		JButton clearButton = new JButton("Clear");
-		JButton backButton = new JButton();
-		JButton btnNewButton = new JButton();
+		JButton backButton = new JButton("Back");
+		JButton btnNewButton = new JButton("Menu");
 		btnNewButton.setBounds(10, 10, 208, 29);
 		btnNewButton.setBackground(Color.CYAN);
-		
-		BufferedImage menuBf = null;
-		try {
-			menuBf = ImageIO.read(new File("label_button\\menu.png"));
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		Image menudImg = menuBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon menuImg = new ImageIcon(menudImg);
-		btnNewButton.setIcon(menuImg);
-		
-		BufferedImage backBf = null;
-		try {
-			backBf = ImageIO.read(new File("label_button\\back.png"));
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		Image backdImg = backBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon backImg = new ImageIcon(backdImg);
-		backButton.setIcon(backImg);
-
-		BufferedImage clearBf = null;
-		try {
-			clearBf = ImageIO.read(new File("label_button\\reset.jpg"));
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		Image cleardImg = clearBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon clearImg = new ImageIcon(cleardImg);
-		clearButton.setIcon(clearImg);
-		
-		
-		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EventQueue.invokeLater(new Runnable() {
@@ -1211,24 +1210,14 @@ public class project {
 				}
 			}
 		});
-		JButton finishButton = new JButton("Finish");
-		BufferedImage finishBf = null;
-		try {
-			finishBf = ImageIO.read(new File("label_button\\find.png"));
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		Image finishdImg = finishBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon finishImg = new ImageIcon(finishdImg);
-		finishButton.setIcon(finishImg);
+		JButton fishButton = new JButton("Finish");
 		
 		vPanel.add(btnNewButton);
 		//vPanel.add(clearButton);
 		vPanel.add(backButton);
 		vPanel.add(nodeLabel);
 		vPanel.add(nodeComboBox);
-		vPanel.add(finishButton);
+		vPanel.add(fishButton);
 		
 		JButton[] vButtons = new JButton[max];
 		for(int i = 0; i < max; ++i) {
@@ -1258,7 +1247,7 @@ public class project {
 		//view = omw4.getViewer();
 		AllPathFrame.add(view4);
 		
-		finishButton.addActionListener(new ActionListener() {
+		fishButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1423,40 +1412,6 @@ public class project {
 		JButton clearButton = new JButton("Clear");
 		JButton backButton = new JButton("Back");
 		JButton btnNewButton = new JButton("Menu");
-		
-		BufferedImage menuBf = null;
-		try {
-			menuBf = ImageIO.read(new File("label_button\\menu.png"));
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		Image menudImg = menuBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon menuImg = new ImageIcon(menudImg);
-		btnNewButton.setIcon(menuImg);
-		
-		BufferedImage backBf = null;
-		try {
-			backBf = ImageIO.read(new File("label_button\\back.png"));
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		Image backdImg = backBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon backImg = new ImageIcon(backdImg);
-		backButton.setIcon(backImg);
-
-		BufferedImage clearBf = null;
-		try {
-			clearBf = ImageIO.read(new File("label_button\\reset.jpg"));
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		Image cleardImg = clearBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon clearImg = new ImageIcon(cleardImg);
-		clearButton.setIcon(clearImg);
-		
 		btnNewButton.setBounds(10, 10, 208, 29);
 		btnNewButton.setBackground(Color.CYAN);
 		btnNewButton.addActionListener(new ActionListener() {
@@ -1504,23 +1459,14 @@ public class project {
 				}
 			}
 		});
-		JButton finishButton = new JButton("Finish");
-		BufferedImage finishBf = null;
-		try {
-			finishBf = ImageIO.read(new File("label_button\\find.png"));
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		Image finishdImg = finishBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon finishImg = new ImageIcon(finishdImg);
-		finishButton.setIcon(finishImg);
+		JButton fishButton = new JButton("Finish");
+		
 		vPanel.add(btnNewButton);
 		//vPanel.add(clearButton);
 		vPanel.add(backButton);
 		vPanel.add(nodeLabel);
 		vPanel.add(nodeComboBox);
-		vPanel.add(finishButton);
+		vPanel.add(fishButton);
 		
 		JButton[] vButtons = new JButton[max];
 		for(int i = 0; i < max; ++i) {
@@ -1550,7 +1496,7 @@ public class project {
 		//view5 = omw5.getview5er();
 		AllPathFrame.add(view5);
 		
-		finishButton.addActionListener(new ActionListener() {
+		fishButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
