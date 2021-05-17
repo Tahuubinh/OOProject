@@ -78,8 +78,11 @@ public class DFS extends GraphLinkedList{
     void runDFS(int vertex, int end) {
     	runDFS(vertex, end, true);
     	if (count == 0){
-    		JOptionPane.showMessageDialog(null, "No path!", "vertex " + vertex + " and vertex " + end, JOptionPane.INFORMATION_MESSAGE);
+    		JOptionPane.showMessageDialog(null, "No path!", "vertex " + vertex + " to vertex " + end, JOptionPane.INFORMATION_MESSAGE);
     	} 
+    	else {
+    		JOptionPane.showMessageDialog(null, "There are " + count + " path(s)", "vertex " + vertex + " to vertex " + end, JOptionPane.INFORMATION_MESSAGE);
+    	}
     	//empty the stack here
     	stack.clear();
     	count = 0;
