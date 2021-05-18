@@ -20,8 +20,9 @@ import org.graphstream.ui.view.Viewer;
 import org.graphstream.ui.view.Viewer.CloseFramePolicy;
 
 public class DFS extends GraphLinkedList{
-	
-	private String path;
+       private int countpic = 0;
+       private int countpath = 0;
+        private String path;
 	DFS (int vertices) {
 		super(vertices);
 		// TODO Auto-generated constructor stub
@@ -33,8 +34,10 @@ public class DFS extends GraphLinkedList{
 	    
 	    //Print results
 	    if (vertex == end) {
-	    	graphDraw();
-	    	count++;
+	       if(countpic < 20) graphDraw();
+               countpic++;
+               countpath++;
+                count++;
 	    	for (int i = 0; i < stack.size(); ++i) {
 	    		
 	    		//take the node
@@ -70,21 +73,23 @@ public class DFS extends GraphLinkedList{
 	        int adj = ite.next();
 	        if (!visited[adj])
 	        	runDFS(adj, end, true);
+                       if(countpath == 101)
+                            break;
 	    }
 	    visited[vertex] = false;
 	    stack.remove(stack.size() - 1);
     }  
-    // chạy thuật DFS
+    // ch?y thu?t DFS
     void runDFS(int vertex, int end) {
     	runDFS(vertex, end, true);
     	if (count == 0){
     		JOptionPane.showMessageDialog(null, "No path!", "vertex " + vertex + " to vertex " + end, JOptionPane.INFORMATION_MESSAGE);
     	} 
-    	else if (count < 101){
+    	else if (count < 21){
     		JOptionPane.showMessageDialog(null, "There are " + count + " path(s)", "vertex " + vertex + " to vertex " + end, JOptionPane.INFORMATION_MESSAGE);
     	}
     	else {
-    		JOptionPane.showMessageDialog(null, "There are more than 100 path(s)", "vertex " + vertex + " to vertex " + end, JOptionPane.INFORMATION_MESSAGE);
+    		JOptionPane.showMessageDialog(null, "There are more than 20 path(s)", "vertex " + vertex + " to vertex " + end, JOptionPane.INFORMATION_MESSAGE);
     	}
     	//empty the stack here
     	stack.clear();
@@ -92,7 +97,7 @@ public class DFS extends GraphLinkedList{
     	
     	
     }
-    // path là tên của file ảnh của thuật DFS và vị trí lưu nó
+    // path là tên c?a file ?nh c?a thu?t DFS và v? trí luu nó
     void runDFS(int vertex, int end, String path) {
     	this.path = path;
     	runDFS(vertex, end);
@@ -100,4 +105,3 @@ public class DFS extends GraphLinkedList{
     }
 
 }
-

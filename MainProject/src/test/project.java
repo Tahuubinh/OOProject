@@ -152,19 +152,21 @@ public class project {
 		
 		JLabel dirLabel = new JLabel("Enter path ");
 		JTextField dirText = new JTextField(50); // độ dài của phần được nhập là 50 ký tự
-		JButton finishButton = new JButton(); // hoàn tất việc điền đường path và xử lý file txt đó
-		JButton directoryButton = new JButton(); // chọn file txt thỏa mãn trong máy
+		JButton finishButton = new JButton("Ok"); // hoàn tất việc điền đường path và xử lý file txt đó
+		JButton directoryButton = new JButton("Directory"); // chọn file txt thỏa mãn trong máy
 		
-		
-		BufferedImage finishBf = ImageIO.read(new File("label_button\\enter.png"));
-		Image finishdImg = finishBf.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-		ImageIcon finishImg = new ImageIcon(finishdImg);
-		finishButton.setIcon(finishImg);
-		
-		BufferedImage directoryBf = ImageIO.read(new File("label_button\\directory.jpg"));
-		Image directorydImg = directoryBf.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-		ImageIcon directoryImg = new ImageIcon(directorydImg);
-		directoryButton.setIcon(directoryImg);
+//		
+//		BufferedImage finishBf = ImageIO.read(new File("label_button\\enter.png"));
+//		Image finishdImg = finishBf.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+//		ImageIcon finishImg = new ImageIcon(finishdImg);
+//		finishButton.setIcon(finishImg);
+//		finishButton.setBounds(10, 10, 208, 29);
+//		finishButton.setBackground(Color.CYAN);
+//		
+//		BufferedImage directoryBf = ImageIO.read(new File("label_button\\directory.jpg"));
+//		Image directorydImg = directoryBf.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+//		ImageIcon directoryImg = new ImageIcon(directorydImg);
+//		directoryButton.setIcon(directoryImg);
 		
 		
 		dirPanel.add(dirLabel);
@@ -264,7 +266,9 @@ public class project {
 		Image homedImg = homeBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		ImageIcon homeImg = new ImageIcon(homedImg);
 		homeButton.setIcon(homeImg);
-
+		homeButton.setBounds(10, 10, 208, 29);
+		homeButton.setBackground(Color.CYAN);
+		
         freezeButton.setBackground(Color.BLUE);
         unfreezeButton.setBackground(Color.LIGHT_GRAY);
 //        JButton homeButton = new JButton("Home"); // quay trở về welcomeframe
@@ -456,7 +460,7 @@ public class project {
 		
 		JButton clearButton = new JButton("Clear"); // khôi phục lại đồ thị ban đầu
 		JButton btnNewButton = new JButton(); // quay lại frame chọn bài
-		JButton stopButton = new JButton(); // stop simulation graph
+		JButton stopButton = new JButton("Stop"); // stop simulation graph
 		JButton freezeButton = new JButton("Freeze");
         JButton unfreezeButton = new JButton("Unfreeze");
         BufferedImage menuBf = ImageIO.read(new File("label_button\\menu.png"));
@@ -464,15 +468,15 @@ public class project {
 		ImageIcon menuImg = new ImageIcon(menudImg);
 		btnNewButton.setIcon(menuImg);
 		
-		BufferedImage clearBf = ImageIO.read(new File("label_button\\reset.jpg"));
-		Image cleardImg = clearBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon clearImg = new ImageIcon(cleardImg);
-		clearButton.setIcon(clearImg);
-		
-		BufferedImage stopBf = ImageIO.read(new File("label_button\\stop.png"));
-		Image stopdImg = stopBf.getScaledInstance(20, 30, Image.SCALE_SMOOTH);
-		ImageIcon stopImg = new ImageIcon(stopdImg);
-		stopButton.setIcon(stopImg);
+//		BufferedImage clearBf = ImageIO.read(new File("label_button\\reset.jpg"));
+//		Image cleardImg = clearBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+//		ImageIcon clearImg = new ImageIcon(cleardImg);
+//		clearButton.setIcon(clearImg);
+//		
+//		BufferedImage stopBf = ImageIO.read(new File("label_button\\stop.png"));
+//		Image stopdImg = stopBf.getScaledInstance(20, 30, Image.SCALE_SMOOTH);
+//		ImageIcon stopImg = new ImageIcon(stopdImg);
+//		stopButton.setIcon(stopImg);
         freezeButton.setBackground(Color.BLUE);
         unfreezeButton.setBackground(Color.LIGHT_GRAY);
         
@@ -506,10 +510,10 @@ public class project {
 		});
 		
 		JButton finishButton = new JButton("Finish");
-		BufferedImage finishBf = ImageIO.read(new File("label_button\\find.png"));
-		Image finishdImg = finishBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon finishImg = new ImageIcon(finishdImg);
-		finishButton.setIcon(finishImg);
+//		BufferedImage finishBf = ImageIO.read(new File("label_button\\find.png"));
+//		Image finishdImg = finishBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+//		ImageIcon finishImg = new ImageIcon(finishdImg);
+//		finishButton.setIcon(finishImg);
 		nPanel.add(btnNewButton);
 		nPanel.add(clearButton);
 		nPanel.add(stopButton);
@@ -838,7 +842,7 @@ public class project {
 	}
 	
 	
-	public static void AllPathButton() { // ài 2
+	public static void AllPathButton() { // bài 2
 		// TODO Auto-generated method stub
 		 c = new Integer[max + 1];
 		JFrame AllPathFrame = new JFrame();
@@ -1216,22 +1220,22 @@ public class project {
 		JScrollPane vPanelScoll = new JScrollPane(vPanel);
 		vPanelScoll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		JButton clearButton = new JButton("Clear");
-		JButton backButton = new JButton();
+		JButton backButton = new JButton("Back");
 		JButton btnNewButton = new JButton();
 		BufferedImage menuBf = ImageIO.read(new File("label_button\\menu.png"));
 		Image menudImg = menuBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		ImageIcon menuImg = new ImageIcon(menudImg);
 		btnNewButton.setIcon(menuImg);
 		
-		BufferedImage clearBf = ImageIO.read(new File("label_button\\reset.jpg"));
-		Image cleardImg = clearBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon clearImg = new ImageIcon(cleardImg);
-		clearButton.setIcon(clearImg);
-		
-		BufferedImage backBf = ImageIO.read(new File("label_button\\back.png"));
-		Image backdImg = backBf.getScaledInstance(20, 30, Image.SCALE_SMOOTH);
-		ImageIcon backImg = new ImageIcon(backdImg);
-		backButton.setIcon(backImg);
+//		BufferedImage clearBf = ImageIO.read(new File("label_button\\reset.jpg"));
+//		Image cleardImg = clearBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+//		ImageIcon clearImg = new ImageIcon(cleardImg);
+//		clearButton.setIcon(clearImg);
+//		
+//		BufferedImage backBf = ImageIO.read(new File("label_button\\back.png"));
+//		Image backdImg = backBf.getScaledInstance(20, 30, Image.SCALE_SMOOTH);
+//		ImageIcon backImg = new ImageIcon(backdImg);
+//		backButton.setIcon(backImg);
 		btnNewButton.setBounds(10, 10, 208, 29);
 		btnNewButton.setBackground(Color.CYAN);
 		btnNewButton.addActionListener(new ActionListener() {
@@ -1280,10 +1284,10 @@ public class project {
 			}
 		});
 		JButton finishButton = new JButton("Finish");
-		BufferedImage finishBf = ImageIO.read(new File("label_button\\find.png"));
-		Image finishdImg = finishBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon finishImg = new ImageIcon(finishdImg);
-		finishButton.setIcon(finishImg);
+//		BufferedImage finishBf = ImageIO.read(new File("label_button\\find.png"));
+//		Image finishdImg = finishBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+//		ImageIcon finishImg = new ImageIcon(finishdImg);
+//		finishButton.setIcon(finishImg);
 		vPanel.add(btnNewButton);
 		//vPanel.add(clearButton);
 		vPanel.add(backButton);
@@ -1482,23 +1486,23 @@ public class project {
 		JScrollPane vPanelScoll = new JScrollPane(vPanel);
 		vPanelScoll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		JButton clearButton = new JButton("Clear");
-		JButton backButton = new JButton();
+		JButton backButton = new JButton("Back");
 		JButton btnNewButton = new JButton();
 		
 		BufferedImage menuBf = ImageIO.read(new File("label_button\\menu.png"));
 		Image menudImg = menuBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		ImageIcon menuImg = new ImageIcon(menudImg);
 		btnNewButton.setIcon(menuImg);
-		
-		BufferedImage clearBf = ImageIO.read(new File("label_button\\reset.jpg"));
-		Image cleardImg = clearBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon clearImg = new ImageIcon(cleardImg);
-		clearButton.setIcon(clearImg);
-		
-		BufferedImage backBf = ImageIO.read(new File("label_button\\back.png"));
-		Image backdImg = backBf.getScaledInstance(20, 30, Image.SCALE_SMOOTH);
-		ImageIcon backImg = new ImageIcon(backdImg);
-		backButton.setIcon(backImg);
+//		
+//		BufferedImage clearBf = ImageIO.read(new File("label_button\\reset.jpg"));
+//		Image cleardImg = clearBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+//		ImageIcon clearImg = new ImageIcon(cleardImg);
+//		clearButton.setIcon(clearImg);
+//		
+//		BufferedImage backBf = ImageIO.read(new File("label_button\\back.png"));
+//		Image backdImg = backBf.getScaledInstance(20, 30, Image.SCALE_SMOOTH);
+//		ImageIcon backImg = new ImageIcon(backdImg);
+//		backButton.setIcon(backImg);
 		btnNewButton.setBounds(10, 10, 208, 29);
 		btnNewButton.setBackground(Color.CYAN);
 		btnNewButton.addActionListener(new ActionListener() {
@@ -1547,16 +1551,16 @@ public class project {
 			}
 		});
 		JButton finishButton = new JButton("Finish");
-		BufferedImage finishBf = null;
-		try {
-			finishBf = ImageIO.read(new File("label_button\\find.png"));
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		Image finishdImg = finishBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon finishImg = new ImageIcon(finishdImg);
-		finishButton.setIcon(finishImg);
+//		BufferedImage finishBf = null;
+//		try {
+//			finishBf = ImageIO.read(new File("label_button\\find.png"));
+//		} catch (IOException e2) {
+//			// TODO Auto-generated catch block
+//			e2.printStackTrace();
+//		}
+//		Image finishdImg = finishBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+//		ImageIcon finishImg = new ImageIcon(finishdImg);
+//		finishButton.setIcon(finishImg);
 		vPanel.add(btnNewButton);
 		//vPanel.add(clearButton);
 		vPanel.add(backButton);

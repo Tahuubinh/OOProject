@@ -142,6 +142,17 @@ public class GraphLinkedList{
 		}
 
 	}
+	void graphDrawDFS() {
+		FileSinkImages pic = new SwingFileSinkImages(OutputType.PNG, Resolutions.VGA);
+		 
+		 pic.setLayoutPolicy(LayoutPolicy.COMPUTED_FULLY_AT_NEW_IMAGE);
+		 try {
+		 pic.writeAll(graph, "pic_graph\\" + path + ".png");
+		 } catch (IOException e) {
+			// TODO: handle exception
+			 e.printStackTrace();
+		}
+	}
 	// nhận tên của graph để xuất ảnh với tên tương ứng
 	public void graphString(String path) throws IOException {
 		this.path = path;
