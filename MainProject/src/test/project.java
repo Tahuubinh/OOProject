@@ -969,21 +969,21 @@ public class project {
 				}
 			}
 		});
-		AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		AllPathFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
 		AllPathFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent) {
 				AllPathFrame.dispose();
 			}
 		});
 		setLabel(AllPathFrame);
+
+		AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
+		AllPathFrame.getContentPane().add(view);
+		AllPathFrame.setPreferredSize(new Dimension(1600, 825));
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		AllPathFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		AllPathFrame.pack();
 		AllPathFrame.setVisible(true);
 		frame.dispose();
-		AllPathFrame.getContentPane().add(view);
 		
 	}
 	
