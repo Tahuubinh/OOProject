@@ -313,11 +313,13 @@ public class OnMyWay6 extends project{
                         graph.getEdge(Integer.toString(key) + " " +  Integer.toString(adjacencyGraph.get(key).get(i))).setAttribute("ui.style", "fill-color: black; size: 1px;");
                     }
                 }
+
+
                 frame.remove(view);
                 frame.add(view);
                 frame.repaint();
                 frame.revalidate();
-                frame.pack();
+                //frame.pack();
                 frame.setVisible(true);
             }
         });
@@ -582,9 +584,33 @@ public class OnMyWay6 extends project{
                     //frameBai6.setVisible(false);
                     frameBai6.dispose();
                     //Clear: Set status of graph return initial
+                    for (int i = 1; i <= max; ++i) {
+                        flag[i] = false;
+                    }
+                    countPath = 0;
+                    currentPath.clear();
+
+
+                    // Khởi tạo ban đầu cho anyPath()
+                    stack.clear();
+                    countTableOfAnyPath = 0;
+                    for (int i = 1; i <= max; ++i) {
+                        graph.getNode(String.valueOf(i)).setAttribute("ui.style", "shape:circle; fill-color: yellow; size: 25px;");
+                    }
+                    Set<Integer> set = adjacencyGraph.keySet();
+                    for (Integer key:set) {
+                        for (int i = 0; i < adjacencyGraph.get(key).size(); ++i) {
+                            graph.getEdge(Integer.toString(key) + " " +  Integer.toString(adjacencyGraph.get(key).get(i))).setAttribute("ui.style", "fill-color: black; size: 1px;");
+                        }
+                    }
+
+                    frame.remove(view);
+                    frame.add(view);
+                    frame.repaint();
+                    frame.revalidate();
+                    //frame.pack();
                     frame.setVisible(true);
                 } else {
-                    twoSelection();
                 }
             }
         }
@@ -680,6 +706,30 @@ public class OnMyWay6 extends project{
                                 //frameBai6.setVisible(false);
                                 frameBai6.dispose();
                                 //Clear: Set status of graph return initial
+                                for (int i = 1; i <= max; ++i) {
+                                    flag[i] = false;
+                                }
+                                countPath = 0;
+                                currentPath.clear();
+
+
+                                // Khởi tạo ban đầu cho anyPath()
+                                stack.clear();
+                                countTableOfAnyPath = 0;
+                                for (int i = 1; i <= max; ++i) {
+                                    graph.getNode(String.valueOf(i)).setAttribute("ui.style", "shape:circle; fill-color: yellow; size: 25px;");
+                                }
+                                Set<Integer> set = adjacencyGraph.keySet();
+                                for (Integer key:set) {
+                                    for (int i = 0; i < adjacencyGraph.get(key).size(); ++i) {
+                                        graph.getEdge(Integer.toString(key) + " " +  Integer.toString(adjacencyGraph.get(key).get(i))).setAttribute("ui.style", "fill-color: black; size: 1px;");
+                                    }
+                                }
+                                frame.remove(view);
+                                frame.add(view);
+                                frame.repaint();
+                                frame.revalidate();
+                                //frame.pack();
                                 frame.setVisible(true);
                             }
                             else { // Lùi lại
@@ -719,6 +769,30 @@ public class OnMyWay6 extends project{
                                 //frameBai6.setVisible(false);
                                 frameBai6.dispose();
                                 //Clear: Set status of graph return initial
+                                for (int i = 1; i <= max; ++i) {
+                                    flag[i] = false;
+                                }
+                                countPath = 0;
+                                currentPath.clear();
+
+
+                                // Khởi tạo ban đầu cho anyPath()
+                                stack.clear();
+                                countTableOfAnyPath = 0;
+                                for (int i = 1; i <= max; ++i) {
+                                    graph.getNode(String.valueOf(i)).setAttribute("ui.style", "shape:circle; fill-color: yellow; size: 25px;");
+                                }
+                                Set<Integer> set = adjacencyGraph.keySet();
+                                for (Integer key:set) {
+                                    for (int i = 0; i < adjacencyGraph.get(key).size(); ++i) {
+                                        graph.getEdge(Integer.toString(key) + " " +  Integer.toString(adjacencyGraph.get(key).get(i))).setAttribute("ui.style", "fill-color: black; size: 1px;");
+                                    }
+                                }
+                                frame.remove(view);
+                                frame.add(view);
+                                frame.repaint();
+                                frame.revalidate();
+                                //frame.pack();
                                 frame.setVisible(true);
                             }
                             else if(choose == 1) { // OK: Chỉ để màn hình xem thông tin thôi
@@ -788,6 +862,29 @@ public class OnMyWay6 extends project{
                                 //frameBai6.setVisible(false);
                                 frameBai6.dispose();
                                 //Clear: Set status of graph return initial
+                                for (int i = 1; i <= max; ++i) {
+                                    flag[i] = false;
+                                }
+                                countPath = 0;
+                                currentPath.clear();
+                                
+                                // Khởi tạo ban đầu cho anyPath()
+                                stack.clear();
+                                countTableOfAnyPath = 0;
+                                for (int i = 1; i <= max; ++i) {
+                                    graph.getNode(String.valueOf(i)).setAttribute("ui.style", "shape:circle; fill-color: yellow; size: 25px;");
+                                }
+                                Set<Integer> set = adjacencyGraph.keySet();
+                                for (Integer key:set) {
+                                    for (int i = 0; i < adjacencyGraph.get(key).size(); ++i) {
+                                        graph.getEdge(Integer.toString(key) + " " +  Integer.toString(adjacencyGraph.get(key).get(i))).setAttribute("ui.style", "fill-color: black; size: 1px;");
+                                    }
+                                }
+                                frame.remove(view);
+                                frame.add(view);
+                                frame.repaint();
+                                frame.revalidate();
+                                //frame.pack();
                                 frame.setVisible(true);
                             }
                             else if(choose == 1) { // OK: Chỉ để màn hình xem thông tin thôi
