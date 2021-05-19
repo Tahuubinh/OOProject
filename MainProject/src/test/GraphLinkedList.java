@@ -102,21 +102,12 @@ public class GraphLinkedList{
 		
 	}
 	
-	void graphDraw1() {
+	void graphDraw1(SingleGraph graph) {
 		System.setProperty("org.graphstream.ui", "swing");
 		//graph = new SingleGraph("Use");
-		graph.setAttribute( "ui.stylesheet", styleSheet );
-		graph.setAttribute( "ui.antialias" );
-		graph.setAttribute( "ui.quality" );
-		for (int i = 1; i <= vertices; ++i) {
-			graph.addNode(Integer.toString(i));
-		}
+		this.graph = graph;
 		for (int i = 1; i <= vertices; ++i) {
 			String iString = Integer.toString(i);
-			if (adjLists[i].size() > 0) {
-				for (int j: adjLists[i])
-					graph.addEdge(iString + " " + Integer.toString(j), iString, Integer.toString(j), true);
-			}
 			v[i] = graph.getNode(iString);
 		}
 		

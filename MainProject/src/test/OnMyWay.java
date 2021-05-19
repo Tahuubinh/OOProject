@@ -20,15 +20,16 @@ import org.graphstream.ui.view.Viewer;
 import org.graphstream.ui.view.Viewer.CloseFramePolicy;
 
 public class OnMyWay extends GraphLinkedList{
-
+	private ViewPanel view;
 	private ArrayList<Integer> vertex = new ArrayList<Integer>();
 	OnMyWay(int vertices) {
 		super(vertices);
 		// TODO Auto-generated constructor stub
 	}
 	
-	void runner() throws NoSuchElementException, IOException {
-    	graphDraw();
+	void runner(SingleGraph graph, ViewPanel view) throws NoSuchElementException, IOException {
+		graphDraw1(graph);
+    	this.view = view;
 	}
 	
 	void clear() {
@@ -143,9 +144,9 @@ public class OnMyWay extends GraphLinkedList{
 	}
 	
 	public ViewPanel getViewer() { //cập nhật đồ thị mới vào frame
-		SwingViewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-    	viewer.enableAutoLayout();
-        ViewPanel view = (ViewPanel) viewer.addDefaultView(false);
+//		SwingViewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+//    	viewer.enableAutoLayout();
+//        ViewPanel view = (ViewPanel) viewer.addDefaultView(false);
         
         return view;
 	}

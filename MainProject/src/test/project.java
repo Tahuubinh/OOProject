@@ -57,6 +57,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 
 import org.graphstream.graph.Graph;
@@ -68,6 +69,8 @@ import org.graphstream.stream.file.FileSinkImages.LayoutPolicy;
 import org.graphstream.stream.file.FileSinkImages.OutputPolicy;
 import org.graphstream.stream.file.FileSinkImages.OutputType;
 import org.graphstream.stream.file.images.Resolutions;
+import org.graphstream.ui.geom.Point2;
+import org.graphstream.ui.geom.Point3;
 import org.graphstream.ui.layout.Layout;
 import org.graphstream.ui.layout.Layouts;
 import org.graphstream.ui.swing_viewer.DefaultView;
@@ -93,7 +96,7 @@ public class project {
 	private static JButton freezeButton1;
 	private static JButton unfreezeButton1;
 	
-	 static Graph graph;
+	 static SingleGraph graph;
 	private static String path = "";
 	private static String[] v;
 	 static int[][] allIntArr;
@@ -115,7 +118,20 @@ public class project {
 	private static HashMap<String,String[]> adjEdge=new HashMap<>();
 	
 	public static void main(String args[]) throws IOException {
-		welcome();
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				try {
+					welcome();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		});
 		///welcome: hiện thị ra tên các thành viên trong nhóm và chọn file txt để chạy đồ thị
 	}
 	
@@ -446,9 +462,7 @@ public class project {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
         frame.setVisible(true);
 	}
-	
-	
-	
+		
 	/// bài 3
 	protected static void QuestionsPath() throws IOException {
 		// TODO Auto-generated method stub
@@ -853,7 +867,6 @@ public class project {
 		frame.dispose();
 	}
 	
-	
 	public static void AllPathButton() { // bài 2
 		// TODO Auto-generated method stub
 		 c = new Integer[max + 1];
@@ -998,8 +1011,7 @@ public class project {
 		frame.dispose();
 		
 	}
-	
-	
+		
 	public static void prepare() throws IOException { // đọc file, xử lý để in ra đồ thị từ file đó
 //		System.setProperty("org.graphstream.ui", "org.graphstream.ui.swing.util.Display");
 //		graph = new SingleGraph("Project");
@@ -1080,13 +1092,14 @@ public class project {
         }
         omw.runner();
         graph = omw.getGraph();
+    	view = omw.getViewer();
         omw4 = new OnMyWay(max);
         for (int i = 0; i < size; i++) {
         	for (int j = 1; j < allIntArr[i].length; j++) {
         		omw4.addEdge(allIntArr[i][0], allIntArr[i][j]);
         	}
         }
-        omw4.runner();
+        omw4.runner(graph, view);
         
         omw5 = new OnMyWay2(max);
         for (int i = 0; i < size; i++) {
@@ -1094,7 +1107,7 @@ public class project {
         		omw5.addEdge(allIntArr[i][0], allIntArr[i][j]);
         	}
         }
-        omw5.runner();
+        omw5.runner(graph, view);
         
         Node[] e = new Node[max+1];
         
@@ -1106,11 +1119,11 @@ public class project {
 //    		e[i].setAttribute("ui.label", Integer.toString(i)); 
 //    		
 //        }
-    	view = omw.getViewer();
     	view.addMouseWheelListener(new MouseWheelListener() {
             @Override
             public void mouseWheelMoved(MouseWheelEvent mwe) {
                 project.zoomGraphMouseWheelMoved(mwe, view);
+
             }
         });
     	
@@ -1135,23 +1148,30 @@ public class project {
             	if (mwe.getKeyChar() == 'c') {
 	            	String result;
 	        		result = JOptionPane.showInputDialog("Saved as: ");
-	        		omw.takePicture(result);
-	        		JOptionPane.showMessageDialog(null, "Your image has been saved as "+result+".png");
+	        		if(result != null) {
+	        			omw.takePicture(result);
+		        		JOptionPane.showMessageDialog(null, "Your image has been saved as "+result+".png");
+	        		}
+	        		
             	}
             	else if (mwe.getKeyChar() == 's') {
+            		
             		String result;
 	        		result = JOptionPane.showInputDialog("Saved as: ");
-            		BufferedImage bi = new BufferedImage(view.getWidth(), view.getHeight(), BufferedImage.TYPE_INT_RGB);
-                    Graphics g = bi.createGraphics();
-                    view.print(g);
-                    g.dispose();
-                    try {
-                        ImageIO.write(bi, "png", new File("pic_graph\\"+result+".png"));
-                        JOptionPane.showMessageDialog(null, "Your image has been saved as "+result+".png");
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
+	        		if(result != null) {
+	        			BufferedImage bi = new BufferedImage(view.getWidth(), view.getHeight(), BufferedImage.TYPE_INT_RGB);
+	                    Graphics g = bi.createGraphics();
+	                    view.print(g);
+	                    g.dispose();
+	                    try {
+	                        ImageIO.write(bi, "png", new File("pic_graph\\"+result+".png"));
+	                        JOptionPane.showMessageDialog(null, "Your image has been saved as "+result+".png");
+	                    } catch (IOException e) {
+	                        // TODO Auto-generated catch block
+	                        e.printStackTrace();
+	                    }
+	        		}
+            		
             	}
             	else {
             		String s = "1. Type \'C\' to take picture of the whole graph\n"

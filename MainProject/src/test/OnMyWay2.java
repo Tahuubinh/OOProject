@@ -20,7 +20,7 @@ import org.graphstream.ui.view.Viewer.CloseFramePolicy;
 
 public class OnMyWay2 extends GraphLinkedList{
 
-	
+	private ViewPanel view;
 	OnMyWay2(int vertices) {
 		super(vertices);
 		// TODO Auto-generated constructor stub
@@ -35,9 +35,10 @@ public class OnMyWay2 extends GraphLinkedList{
 		return signal;
 	}
 	
-	void runner() throws NoSuchElementException, IOException {
+	void runner(SingleGraph graph, ViewPanel view) throws NoSuchElementException, IOException {
 		//graph = new SingleGraph("Use");
-    	graphDraw();
+		graphDraw1(graph);
+    	this.view = view;
 	}
 	
 	void clear() {
@@ -178,10 +179,10 @@ public class OnMyWay2 extends GraphLinkedList{
 	}
 	
 	public ViewPanel getViewer() { //cập nhật đồ thị mới vào frame
-		SwingViewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-    	viewer.enableAutoLayout();
-        ViewPanel view = (ViewPanel) viewer.addDefaultView(false);
-        
+//		SwingViewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+//    	viewer.enableAutoLayout();
+//        ViewPanel view = (ViewPanel) viewer.addDefaultView(false);
+//        
         return view;
 	}
 	
