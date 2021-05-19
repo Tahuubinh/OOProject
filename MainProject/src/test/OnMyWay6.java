@@ -8,6 +8,7 @@ import org.graphstream.ui.swing_viewer.SwingViewer;
 import org.graphstream.ui.swing_viewer.ViewPanel;
 import org.graphstream.ui.view.Viewer;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -20,6 +21,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -229,13 +233,24 @@ public class OnMyWay6 extends project{
         panelInPanelWest.add(scrollPaneCenterInPanelWest, BorderLayout.CENTER);
         panelInPanelWest.add(panelFind, BorderLayout.SOUTH);
         //-------------------------1.3.Thanh cuối: chứa Menu, Clear,...-----------------------------//
+        JButton clearButton = new JButton("Clear");
         JButton dataButton = new JButton("Data"); // khôi phục lại đồ thị ban đầu
-        JButton menuButton = new JButton("Menu"); // quay lại frame chọn bài
+        JButton menuButton = new JButton(); // quay lại frame chọn bài
         //JButton stopButton = new JButton("Stop"); // stop simulation graph
         menuButton.setBounds(10, 10, 208, 29);
         menuButton.setBackground(Color.CYAN);
-
+        BufferedImage menuBf = null;
+		try {
+			menuBf = ImageIO.read(new File("label_button\\menu.png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Image menudImg = menuBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+		ImageIcon menuImg = new ImageIcon(menudImg);
+		menuButton.setIcon(menuImg);
         panelSouthInPanelWest.add(menuButton);
+        panelSouthInPanelWest.add(clearButton);
         panelSouthInPanelWest.add(dataButton);
         panelSouthInPanelWest.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         //panelSouthInPanelWest.add(stopButton);
@@ -304,7 +319,37 @@ public class OnMyWay6 extends project{
                  frame.setVisible(true);
             }
         });
+        
+        clearButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				 for (int i = 1; i <= max; ++i) {
+                     flag[i] = false;
+                 }
+                 countPath = 0;
+                 currentPath.clear();
 
+
+                 // Khởi tạo ban đầu cho anyPath()
+                 stack.clear();
+                 countTableOfAnyPath = 0;
+                 for (int i = 1; i <= max; ++i) {
+                   graph.getNode(String.valueOf(i)).setAttribute("ui.style", "shape:circle; fill-color: yellow; size: 25px;");
+                 }
+                 Set<Integer> set = adjacencyGraph.keySet();
+                 for (Integer key:set) {
+                     for (int i = 0; i < adjacencyGraph.get(key).size(); ++i) {
+                         graph.getEdge(Integer.toString(key) + " " +  Integer.toString(adjacencyGraph.get(key).get(i))).setAttribute("ui.style", "fill-color: black; size: 1px;");
+                     }
+                 }
+                 frameBai6.repaint();
+                 frameBai6.revalidate();
+                 frameBai6.pack();
+			}
+		});
+        
         dataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
