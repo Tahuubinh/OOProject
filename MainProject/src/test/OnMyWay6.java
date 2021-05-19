@@ -42,6 +42,8 @@ public class OnMyWay6 extends project{
     JButton stopButton = new JButton("Stop"); // stop simulation graph
     JPanel panelEast = new JPanel();
     JFrame frameBai6 = new JFrame();
+    JTable tableInScrollPane;
+    JButton nextButton;
 
     String[] columns = {"Số thứ tự","Đường đi", "Trọng số"};
     DefaultTableModel model = new DefaultTableModel(columns,0);
@@ -173,19 +175,19 @@ public class OnMyWay6 extends project{
         //------------------------------1.2.ScrollPane--------------------------------//
         // Bổ sung thêm chức năng tìm kiếm
         JPanel panelInPanelWest = new JPanel();
-              //---------Scroll Pane
-        JTable tableInScrollPane = new JTable(model);
-                        //---------- Căn giữa cho Cell của Table
+        //---------Scroll Pane
+        tableInScrollPane = new JTable(model);
+        //---------- Căn giữa cho Cell của Table
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for(int i = 0; i < 3; ++i) {
             tableInScrollPane.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
         JScrollPane scrollPaneCenterInPanelWest = new JScrollPane(tableInScrollPane);
-        scrollPaneCenterInPanelWest.setPreferredSize(new Dimension((int) (tk.getScreenSize().getWidth()/3) - 10, 65650));
-                        //------- Hoan thanh Scroll Pane
+        scrollPaneCenterInPanelWest.setPreferredSize(new Dimension((int) (tk.getScreenSize().getWidth()/3) - 10, 650));
+        //------- Hoan thanh Scroll Pane
 
-             //---------Panel contain Label, TextField
+        //---------Panel contain Label, TextField
         JPanel panelFind = new JPanel();
 
         JLabel labelFind = new JLabel();
@@ -228,29 +230,29 @@ public class OnMyWay6 extends project{
 
         panelFind.add(labelFind, BorderLayout.WEST);
         panelFind.add(textFieldFind, BorderLayout.CENTER);
-             //----------Hoàn thành Panel contain Label, TextField
+        //----------Hoàn thành Panel contain Label, TextField
 
         panelInPanelWest.add(scrollPaneCenterInPanelWest, BorderLayout.CENTER);
         panelInPanelWest.add(panelFind, BorderLayout.SOUTH);
         //-------------------------1.3.Thanh cuối: chứa Menu, Clear,...-----------------------------//
-             //JButton clearButton = new JButton("Clear");
+        //JButton clearButton = new JButton("Clear");
         JButton dataButton = new JButton("Data"); // khôi phục lại đồ thị ban đầu
         JButton menuButton = new JButton(); // quay lại frame chọn bài
         //JButton stopButton = new JButton("Stop"); // stop simulation graph
         menuButton.setBounds(10, 10, 208, 29);
         menuButton.setBackground(Color.CYAN);
         BufferedImage menuBf = null;
-		try {
-			menuBf = ImageIO.read(new File("label_button\\menu.png"));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		Image menudImg = menuBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		ImageIcon menuImg = new ImageIcon(menudImg);
-		menuButton.setIcon(menuImg);
+        try {
+            menuBf = ImageIO.read(new File("label_button\\menu.png"));
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        Image menudImg = menuBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        ImageIcon menuImg = new ImageIcon(menudImg);
+        menuButton.setIcon(menuImg);
         panelSouthInPanelWest.add(menuButton);
-             //panelSouthInPanelWest.add(clearButton);
+        //panelSouthInPanelWest.add(clearButton);
         panelSouthInPanelWest.add(dataButton);
         panelSouthInPanelWest.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         //panelSouthInPanelWest.add(stopButton);
@@ -290,67 +292,77 @@ public class OnMyWay6 extends project{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //frameBai6.setVisible(false);
-            	 frameBai6.dispose();
-                 //Clear: Set status of graph return initial
-                 for (int i = 1; i <= max; ++i) {
-                     flag[i] = false;
-                 }
-                 countPath = 0;
-                 currentPath.clear();
+                frameBai6.dispose();
+                //Clear: Set status of graph return initial
+                for (int i = 1; i <= max; ++i) {
+                    flag[i] = false;
+                }
+                countPath = 0;
+                currentPath.clear();
 
 
-                 // Khởi tạo ban đầu cho anyPath()
-                 stack.clear();
-                 countTableOfAnyPath = 0;
-                 for (int i = 1; i <= max; ++i) {
-                   graph.getNode(String.valueOf(i)).setAttribute("ui.style", "shape:circle; fill-color: yellow; size: 25px;");
-                 }
-                 Set<Integer> set = adjacencyGraph.keySet();
-                 for (Integer key:set) {
-                     for (int i = 0; i < adjacencyGraph.get(key).size(); ++i) {
-                         graph.getEdge(Integer.toString(key) + " " +  Integer.toString(adjacencyGraph.get(key).get(i))).setAttribute("ui.style", "fill-color: black; size: 1px;");
-                     }
-                 }
-                 frame.remove(view);
-                 frame.add(view);
-                 frame.repaint();
-                 frame.revalidate();
-                 frame.pack();
-                 frame.setVisible(true);
+                // Khởi tạo ban đầu cho anyPath()
+                stack.clear();
+                countTableOfAnyPath = 0;
+                for (int i = 1; i <= max; ++i) {
+                    graph.getNode(String.valueOf(i)).setAttribute("ui.style", "shape:circle; fill-color: yellow; size: 25px;");
+                }
+                Set<Integer> set = adjacencyGraph.keySet();
+                for (Integer key:set) {
+                    for (int i = 0; i < adjacencyGraph.get(key).size(); ++i) {
+                        graph.getEdge(Integer.toString(key) + " " +  Integer.toString(adjacencyGraph.get(key).get(i))).setAttribute("ui.style", "fill-color: black; size: 1px;");
+                    }
+                }
+                frame.remove(view);
+                frame.add(view);
+                frame.repaint();
+                frame.revalidate();
+                frame.pack();
+                frame.setVisible(true);
             }
         });
-        
-	    /*
-        clearButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				 for (int i = 1; i <= max; ++i) {
-                     flag[i] = false;
-                 }
-                 countPath = 0;
-                 currentPath.clear();
+
+        /*clearButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+                for (int i = 1; i <= max; ++i) {
+                    flag[i] = false;
+                }
+                countPath = 0;
+                currentPath.clear();
 
 
-                 // Khởi tạo ban đầu cho anyPath()
-                 stack.clear();
-                 countTableOfAnyPath = 0;
-                 for (int i = 1; i <= max; ++i) {
-                   graph.getNode(String.valueOf(i)).setAttribute("ui.style", "shape:circle; fill-color: yellow; size: 25px;");
-                 }
-                 Set<Integer> set = adjacencyGraph.keySet();
-                 for (Integer key:set) {
-                     for (int i = 0; i < adjacencyGraph.get(key).size(); ++i) {
-                         graph.getEdge(Integer.toString(key) + " " +  Integer.toString(adjacencyGraph.get(key).get(i))).setAttribute("ui.style", "fill-color: black; size: 1px;");
-                     }
-                 }
-                 frameBai6.repaint();
-                 frameBai6.revalidate();
-                 frameBai6.pack();
-			}
-		});
-        */
+                // Khởi tạo ban đầu cho anyPath()
+                stack.clear();
+                countTableOfAnyPath = 0;
+                for (int i = 1; i <= max; ++i) {
+                    graph.getNode(String.valueOf(i)).setAttribute("ui.style", "shape:circle; fill-color: yellow; size: 25px;");
+                }
+                Set<Integer> set = adjacencyGraph.keySet();
+                for (Integer key:set) {
+                    for (int i = 0; i < adjacencyGraph.get(key).size(); ++i) {
+                        graph.getEdge(Integer.toString(key) + " " +  Integer.toString(adjacencyGraph.get(key).get(i))).setAttribute("ui.style", "fill-color: black; size: 1px;");
+                    }
+                }
+
+                if (answer == 0) {
+                    panelSouthInPanelWest.remove(nextButton);
+                    panelSouthInPanelWest.updateUI();
+                } else {
+                    panelSouthInPanelEast.removeAll();
+                    panelSouthInPanelEast.updateUI();
+                }
+                DefaultTableModel dtm = (DefaultTableModel) tableInScrollPane.getModel();
+                dtm.setRowCount(0);
+                twoSelection();
+                frameBai6.repaint();
+                frameBai6.revalidate();
+                frameBai6.pack();
+            }
+        });*/
+
         dataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -379,7 +391,7 @@ public class OnMyWay6 extends project{
                         int v = adjacencyGraph.get(iter).get(i);
                         String[] dataRow = {
                                 Integer.toString(count),
-                                "Cạnh  " + iter + " - " + v,
+                                "Cạnh " + iter + " - " + v,
                                 Integer.toString(weightGraph.get(Integer.toString(iter) + Integer.toString(v)))
                         };
                         dataModel.addRow(dataRow);
@@ -503,7 +515,7 @@ public class OnMyWay6 extends project{
                     graph.getEdge(String.valueOf(arrayListTemp.get(i)) + " " + String.valueOf(arrayListTemp.get(i+1))).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
                     sum = sum + weightGraph.get(String.valueOf(arrayListTemp.get(i)) + String.valueOf(arrayListTemp.get(i+1)));
                     String[] data = {String.valueOf(i+1),
-                           "Cạnh " + String.valueOf(arrayListTemp.get(i)) + " - " + String.valueOf(arrayListTemp.get(i+1)),
+                            "Cạnh " + String.valueOf(arrayListTemp.get(i)) + " - " + String.valueOf(arrayListTemp.get(i+1)),
                             Integer.toString(weightGraph.get(String.valueOf(arrayListTemp.get(i)) + String.valueOf(arrayListTemp.get(i+1))))};
                     model.addRow(data);
                     panelEast.updateUI();
@@ -516,7 +528,7 @@ public class OnMyWay6 extends project{
                 JOptionPane.showMessageDialog(null, "Chi phí của đường đi là: " + Integer.toString(sum), "Thông báo", JOptionPane.PLAIN_MESSAGE);
 
                 if (countPath > 1) {
-                    JButton nextButton = new JButton("Tiếp theo");
+                    nextButton = new JButton("Tiếp theo");
                     panelSouthInPanelWest.add(nextButton);
                     panelSouthInPanelWest.updateUI();
 
@@ -895,4 +907,3 @@ public class OnMyWay6 extends project{
         }
     }
 }
-
