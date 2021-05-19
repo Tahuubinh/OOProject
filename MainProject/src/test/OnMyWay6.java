@@ -182,7 +182,7 @@ public class OnMyWay6 extends project{
             tableInScrollPane.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
         JScrollPane scrollPaneCenterInPanelWest = new JScrollPane(tableInScrollPane);
-        scrollPaneCenterInPanelWest.setPreferredSize(new Dimension((int) (tk.getScreenSize().getWidth()/3) - 10, 670));
+        scrollPaneCenterInPanelWest.setPreferredSize(new Dimension((int) (tk.getScreenSize().getWidth()/3) - 10, 65650));
                         //------- Hoan thanh Scroll Pane
 
              //---------Panel contain Label, TextField
