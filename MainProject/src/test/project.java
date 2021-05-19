@@ -91,17 +91,17 @@ public class project {
 	private static JButton freezeButton1;
 	private static JButton unfreezeButton1;
 	
-	private static Graph graph;
+	 static Graph graph;
 	private static String path = "";
 	private static String[] v;
-	private static int[][] allIntArr;
+	 static int[][] allIntArr;
 	private static String[] arrOfStr;
-	private static int max = 0; // file index of the last vertex
+	 static int max = 0; // file index of the last vertex
 	private static int i1, i2, i3 = 0, x = 0, y = 0, a = 0, y1 = 0;
 	private static Integer[] c;
-	private static int size;
+	 static int size;
 	private static JFrame welcomeFrame;
-	private static JFrame frame = new JFrame();
+	 static JFrame frame = new JFrame();
 	private static JPanel buttonJPanel;
 	private static SwingViewer viewer;
 	private static ViewPanel view;
@@ -258,6 +258,7 @@ public class project {
         JButton QuestionsPathButton = new JButton("Bài 3");  // xử lý bài 3
         JButton bai4 = new JButton("Bài 4* (Hamilton)");
         JButton bai5 = new JButton("Bài 5* (Euler)");
+        JButton WeightGraph = new JButton("Bài 6"); // xử lý bài 6
         JButton freezeButton = new JButton("Freeze");
         JButton unfreezeButton = new JButton("Unfreeze");
         JButton homeButton = new JButton(); // quay trở về welcomeframe
@@ -287,6 +288,7 @@ public class project {
         buttonJPanel.add(QuestionsPathButton);
         buttonJPanel.add(bai4);
         buttonJPanel.add(bai5);
+        buttonJPanel.add(WeightGraph);
         if (freeze) {
         	buttonJPanel.add(freezeButton1);
         	buttonJPanel.remove(unfreezeButton1);
@@ -390,6 +392,14 @@ public class project {
 					e1.printStackTrace();
 				} // phần mô phỏng bài 3
 							}
+		});
+        WeightGraph.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				OnMyWay6 onMyWay6 = new OnMyWay6();
+				onMyWay6.setUI();
+				onMyWay6.twoSelection();
+			}
 		});
         frame.pack();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
