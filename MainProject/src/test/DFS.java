@@ -73,7 +73,7 @@ public class DFS extends GraphLinkedList{
 	        int adj = ite.next();
 	        if (!visited[adj])
 	        	runDFS(adj, end, true);
-                       if(countpath == 101)
+                       if(countpath == 21)
                             break;
 	    }
 	    visited[vertex] = false;

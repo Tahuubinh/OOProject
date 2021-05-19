@@ -14,6 +14,11 @@ import javax.swing.JPanel;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.stream.file.FileSinkImages;
+import org.graphstream.stream.file.FileSinkImages.LayoutPolicy;
+import org.graphstream.stream.file.FileSinkImages.OutputType;
+import org.graphstream.stream.file.images.Resolutions;
+import org.graphstream.ui.swing.util.SwingFileSinkImages;
 import org.graphstream.ui.swing_viewer.SwingViewer;
 import org.graphstream.ui.swing_viewer.ViewPanel;
 import org.graphstream.ui.view.Viewer;
@@ -185,4 +190,25 @@ public class OnMyWayabc extends GraphLinkedList{
 			a = prePlace + "->" + place + " (" + count.get(prePlace + " " + place) + ")\n";
 		return a;
 	}
+	public void takePicture(String s) {
+		FileSinkImages pic = new SwingFileSinkImages(OutputType.PNG, Resolutions.VGA);
+		 
+		 pic.setLayoutPolicy(LayoutPolicy.COMPUTED_FULLY_AT_NEW_IMAGE);
+		 try {
+			 pic.writeAll(graph, "pic_graph\\" + s +".png");
+		 } catch (IOException e) {
+			// TODO: handle exception
+			 e.printStackTrace();
+		}
+	}
 }
+
+
+
+
+
+
+
+
+
+
