@@ -103,8 +103,8 @@ public class project {
 	private static JFrame welcomeFrame;
 	 static JFrame frame = new JFrame();
 	private static JPanel buttonJPanel;
-	private static SwingViewer viewer;
-	private static ViewPanel view;
+	protected static SwingViewer viewer;
+	static ViewPanel view;
 	private static ViewPanel view4;
 	private static ViewPanel view5;
 	private static ArrayList<Integer> vertex = new ArrayList<Integer>();
@@ -343,7 +343,7 @@ public class project {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				g.runDFS(1, max, "Bai2"); // in tất cả các đường đi từ đỉnh đầu đên đỉnh cuối
+				omw.runDFS(1, max, "Bai2"); // in tất cả các đường đi từ đỉnh đầu đên đỉnh cuối
 				AllPathButton(); // mở rộng ra, ta có thể chọn 2 đỉnh bất ký và in ra tất cả đường đi giữa 2 đỉnh đó
 				
 			}
@@ -975,7 +975,7 @@ public class project {
 					}
 				}
 				else {
-					g.runDFS(Integer.parseInt(t1) , Integer.parseInt(t2), "path between vertex " + t1 + " and vertex " +t2 );
+					omw.runDFS(Integer.parseInt(t1) , Integer.parseInt(t2), "path between vertex " + t1 + " and vertex " +t2 );
 				}
 			}
 		});
@@ -999,14 +999,14 @@ public class project {
 	
 	
 	public static void prepare() throws IOException { // đọc file, xử lý để in ra đồ thị từ file đó
-		System.setProperty("org.graphstream.ui", "org.graphstream.ui.swing.util.Display");
-		graph = new SingleGraph("Project");
-		graph.setAttribute( "ui.stylesheet", styleSheet );
-		graph.setAttribute( "ui.antialias" );
-		graph.setAttribute( "ui.quality" );
-		graph.setStrict(false);
-		graph.setAutoCreate( true );
-		
+//		System.setProperty("org.graphstream.ui", "org.graphstream.ui.swing.util.Display");
+//		graph = new SingleGraph("Project");
+//		graph.setAttribute( "ui.stylesheet", styleSheet );
+//		graph.setAttribute( "ui.antialias" );
+//		graph.setAttribute( "ui.quality" );
+//		graph.setStrict(false);
+//		graph.setAutoCreate( true );
+//		
 		 // Creates an array of character
         char[] array = new char[100];
         // Read file into an arraylist
@@ -1046,11 +1046,11 @@ public class project {
         		allIntArr[i][j] = Integer.parseInt(arrOfStr[j]);
         		
         	}
-        	for (int j = 1; j < arrOfStrlength; j++) {
-        			graph.addEdge(arrOfStr[0] + arrOfStr[j], arrOfStr[0], arrOfStr[j], true); // true: đồ thị có hướng
-        			
-        	        		
-        	}
+//        	for (int j = 1; j < arrOfStrlength; j++) {
+//        			graph.addEdge(arrOfStr[0] + arrOfStr[j], arrOfStr[0], arrOfStr[j], true); // true: đồ thị có hướng
+//        			
+//        	        		
+//        	}
         	for (int j = 0; j < arrOfStrlength; j++) { // tìm đỉnh có số hiệu lớn nhất
         		if (max < allIntArr[i][j])
             		max = allIntArr[i][j];
@@ -1059,12 +1059,12 @@ public class project {
         	
         	
         }
-        g = new DFS(max); // add các cạnh vào DFS để chạy thuật toán đó
-        for (int i = 0; i < size; i++) {
-        	for (int j = 1; j < allIntArr[i].length; j++) {
-        		g.addEdge(allIntArr[i][0], allIntArr[i][j]);
-        	}
-        }
+//        g = new DFS(max); // add các cạnh vào DFS để chạy thuật toán đó
+//        for (int i = 0; i < size; i++) {
+//        	for (int j = 1; j < allIntArr[i].length; j++) {
+//        		g.addEdge(allIntArr[i][0], allIntArr[i][j]);
+//        	}
+//        }
         
         //Max is the numbers of node of graph
         /////////////////////////////////////
@@ -1077,7 +1077,7 @@ public class project {
         	}
         }
         omw.runner();
-        
+        graph = omw.getGraph();
         omw4 = new OnMyWay(max);
         for (int i = 0; i < size; i++) {
         	for (int j = 1; j < allIntArr[i].length; j++) {
@@ -1096,14 +1096,14 @@ public class project {
         
         Node[] e = new Node[max+1];
         
-        for(int i = 1; i <= max; ++i) {
-
-        	graph.addNode(Integer.toString(i));
-        	e[i] = graph.getNode(Integer.toString(i));
-        	e[i].setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
-    		e[i].setAttribute("ui.label", Integer.toString(i)); 
-    		
-        }
+//        for(int i = 1; i <= max; ++i) {
+//
+//        	graph.addNode(Integer.toString(i));
+//        	e[i] = graph.getNode(Integer.toString(i));
+//        	e[i].setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
+//    		e[i].setAttribute("ui.label", Integer.toString(i)); 
+//    		
+//        }
     	view = omw.getViewer();
     	view.addMouseWheelListener(new MouseWheelListener() {
             @Override

@@ -19,7 +19,7 @@ import org.graphstream.ui.swing_viewer.ViewPanel;
 import org.graphstream.ui.view.Viewer;
 import org.graphstream.ui.view.Viewer.CloseFramePolicy;
 
-public class OnMyWayabc extends GraphLinkedList{
+public class OnMyWayabc extends DFS{
 
 	
 	HashMap<String, Integer> count = new HashMap<>(); // Count the times of edge that went

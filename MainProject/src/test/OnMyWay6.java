@@ -27,10 +27,10 @@ import java.util.Stack;
 
 
 public class OnMyWay6 extends project{
-    Graph graphBai6 = new SingleGraph("graphBai6");
+//    Graph graph = new SingleGraph("graph");
 
     // Các Swing UI dùng chung cho Bài 6 này.
-    ViewPanel viewBai6; // Hiển thị đồ thị
+//    ViewPanel view; // Hiển thị đồ thị
     JButton[] buttonBai6 = new JButton[max+1];
     JPanel panelSouthInPanelWest = new JPanel();
     JPanel panelSouthInPanelEast = new JPanel();
@@ -87,51 +87,51 @@ public class OnMyWay6 extends project{
         countTableOfAnyPath = 0;
 
         // drawGraph
-        drawGraph();
-        getViewer();
-        viewBai6.addMouseWheelListener(new MouseWheelListener() {
+//        drawGraph();
+//        getViewer();
+        view.addMouseWheelListener(new MouseWheelListener() {
             @Override
             public void mouseWheelMoved(MouseWheelEvent mwe) {
-                project.zoomGraphMouseWheelMoved(mwe, viewBai6);
+                project.zoomGraphMouseWheelMoved(mwe, view);
             }
         });
     }
 
     public void setInitialDrawGraph() {
         for (int i = 1; i <= max; ++i) {
-            graphBai6.getNode(String.valueOf(i)).setAttribute("ui.style", "shape:circle; fill-color: yellow; size: 25px;");
+            graph.getNode(String.valueOf(i)).setAttribute("ui.style", "shape:circle; fill-color: yellow; size: 25px;");
         }
 
         Set<Integer> set = adjacencyGraph.keySet();
         for (Integer key:set) {
             for (int i = 0; i < adjacencyGraph.get(key).size(); ++i) {
-                graphBai6.getEdge(Integer.toString(key) + Integer.toString(adjacencyGraph.get(key).get(i))).setAttribute("ui.style", "fill-color: black;size: 1px;");
+                graph.getEdge(Integer.toString(key) + " " + Integer.toString(adjacencyGraph.get(key).get(i))).setAttribute("ui.style", "fill-color: black;size: 1px;");
             }
         }
     }
 
-    public void drawGraph() {
-        for (int i = 1; i <= max; ++i) {
-            graphBai6.addNode(Integer.toString(i));
-            graphBai6.getNode(String.valueOf(i)).setAttribute("ui.style", "shape:circle; fill-color: yellow; size: 25px;");
-            graphBai6.getNode(Integer.toString(i)).setAttribute("ui.label", Integer.toString(i));
-        }
-
-        Set<Integer> set = adjacencyGraph.keySet();
-        for (Integer key:set) {
-            for (int i = 0; i < adjacencyGraph.get(key).size(); ++i) {
-                graphBai6.addEdge(Integer.toString(key) + Integer.toString(adjacencyGraph.get(key).get(i)),
-                        Integer.toString(key), Integer.toString(adjacencyGraph.get(key).get(i)), true);
-                graphBai6.getEdge(Integer.toString(key) + Integer.toString(adjacencyGraph.get(key).get(i))).setAttribute("ui.style", "size: 1px;");
-            }
-        }
-    }
-
-    public void getViewer() { //cập nhật đồ thị mới vào frame
-        SwingViewer viewer = new SwingViewer(graphBai6, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-        viewer.enableAutoLayout();
-        viewBai6 = (ViewPanel) viewer.addDefaultView(false);
-    }
+//    public void drawGraph() {
+//        for (int i = 1; i <= max; ++i) {
+//            graph.addNode(Integer.toString(i));
+//            graph.getNode(String.valueOf(i)).setAttribute("ui.style", "shape:circle; fill-color: yellow; size: 25px;");
+//            graph.getNode(Integer.toString(i)).setAttribute("ui.label", Integer.toString(i));
+//        }
+//
+//        Set<Integer> set = adjacencyGraph.keySet();
+//        for (Integer key:set) {
+//            for (int i = 0; i < adjacencyGraph.get(key).size(); ++i) {
+//                graph.addEdge(Integer.toString(key) + Integer.toString(adjacencyGraph.get(key).get(i)),
+//                        Integer.toString(key), Integer.toString(adjacencyGraph.get(key).get(i)), true);
+//                graph.getEdge(Integer.toString(key) + Integer.toString(adjacencyGraph.get(key).get(i))).setAttribute("ui.style", "size: 1px;");
+//            }
+//        }
+//    }
+//
+//    public void getViewer() { //cập nhật đồ thị mới vào frame
+//        SwingViewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+//        viewer.enableAutoLayout();
+//        view = (ViewPanel) viewer.addDefaultView(false);
+//    }
 
     public void setWeightGraph() {
         JFrame frameWeightGraph = new JFrame();
@@ -257,7 +257,7 @@ public class OnMyWay6 extends project{
 
         //panelSouthInPanelEast.setBackground(Color.GRAY);
 
-        panelEast.add(viewBai6, BorderLayout.CENTER);
+        panelEast.add(view, BorderLayout.CENTER);
 
         /////////////////////////////COMPLETE 2.Panel East////////////////////////////////////
 
@@ -275,9 +275,33 @@ public class OnMyWay6 extends project{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //frameBai6.setVisible(false);
-                frameBai6.dispose();
-                //Clear: Set status of graph return initial
-                frame.setVisible(true);
+            	 frameBai6.dispose();
+                 //Clear: Set status of graph return initial
+                 for (int i = 1; i <= max; ++i) {
+                     flag[i] = false;
+                 }
+                 countPath = 0;
+                 currentPath.clear();
+
+
+                 // Khởi tạo ban đầu cho anyPath()
+                 stack.clear();
+                 countTableOfAnyPath = 0;
+                 for (int i = 1; i <= max; ++i) {
+                   graph.getNode(String.valueOf(i)).setAttribute("ui.style", "shape:circle; fill-color: yellow; size: 25px;");
+                 }
+                 Set<Integer> set = adjacencyGraph.keySet();
+                 for (Integer key:set) {
+                     for (int i = 0; i < adjacencyGraph.get(key).size(); ++i) {
+                         graph.getEdge(Integer.toString(key) + " " +  Integer.toString(adjacencyGraph.get(key).get(i))).setAttribute("ui.style", "fill-color: black; size: 1px;");
+                     }
+                 }
+                 frame.remove(view);
+                 frame.add(view);
+                 frame.repaint();
+                 frame.revalidate();
+                 frame.pack();
+                 frame.setVisible(true);
             }
         });
 
@@ -429,8 +453,8 @@ public class OnMyWay6 extends project{
 
                 int sum = 0;
                 for (int i = 0; i < arrayListTemp.size()-1; ++i) {
-                    graphBai6.getNode(Integer.toString(arrayListTemp.get(i))).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
-                    graphBai6.getEdge(String.valueOf(arrayListTemp.get(i)) + String.valueOf(arrayListTemp.get(i+1))).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
+                    graph.getNode(Integer.toString(arrayListTemp.get(i))).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
+                    graph.getEdge(String.valueOf(arrayListTemp.get(i)) + " " + String.valueOf(arrayListTemp.get(i+1))).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
                     sum = sum + weightGraph.get(String.valueOf(arrayListTemp.get(i)) + String.valueOf(arrayListTemp.get(i+1)));
                     String[] data = {String.valueOf(i+1),
                            "Cạnh " + String.valueOf(arrayListTemp.get(i)) + " - " + String.valueOf(arrayListTemp.get(i+1)),
@@ -438,7 +462,7 @@ public class OnMyWay6 extends project{
                     model.addRow(data);
                     panelEast.updateUI();
                     if (i == arrayListTemp.size() - 2) {
-                        graphBai6.getNode(Integer.toString(arrayListTemp.get(i+1))).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
+                        graph.getNode(Integer.toString(arrayListTemp.get(i+1))).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
                     }
                 }
                 String[] data = {"------------------------------", "Tổng chi phí là: ", Integer.toString(sum)};
@@ -462,8 +486,8 @@ public class OnMyWay6 extends project{
 
                                 int sum = 0;
                                 for (int i = 0; i < arrayListTemp.size()-1; ++i) {
-                                    graphBai6.getNode(Integer.toString(arrayListTemp.get(i))).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
-                                    graphBai6.getEdge(String.valueOf(arrayListTemp.get(i)) + String.valueOf(arrayListTemp.get(i+1))).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
+                                    graph.getNode(Integer.toString(arrayListTemp.get(i))).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
+                                    graph.getEdge(String.valueOf(arrayListTemp.get(i)) + " " +  String.valueOf(arrayListTemp.get(i+1))).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
                                     sum = sum + weightGraph.get(String.valueOf(arrayListTemp.get(i)) + String.valueOf(arrayListTemp.get(i+1)));
                                     String[] data = {String.valueOf(i+1),
                                             "Cạnh " + String.valueOf(arrayListTemp.get(i)) + " - " + String.valueOf(arrayListTemp.get(i+1)),
@@ -471,7 +495,7 @@ public class OnMyWay6 extends project{
                                     model.addRow(data);
                                     panelEast.updateUI();
                                     if (i == arrayListTemp.size() - 2) {
-                                        graphBai6.getNode(Integer.toString(arrayListTemp.get(i+1))).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
+                                        graph.getNode(Integer.toString(arrayListTemp.get(i+1))).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
                                     }
                                 }
                                 String[] data = {"------------------------------", "Tổng chi phí là: ", Integer.toString(sum)};
@@ -536,8 +560,8 @@ public class OnMyWay6 extends project{
                         // Tô màu đã đi cho đường đi vừa rồi
                         int nodeTop1 = stack.pop();
                         int nodeTop2 = stack.pop();
-                        graphBai6.getNode(Integer.toString(nodeTop1)).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
-                        graphBai6.getEdge(Integer.toString(nodeTop2) + Integer.toString(nodeTop1)).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
+                        graph.getNode(Integer.toString(nodeTop1)).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
+                        graph.getEdge(Integer.toString(nodeTop2) + " " + Integer.toString(nodeTop1)).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
                     }
                 }
             });
@@ -609,10 +633,10 @@ public class OnMyWay6 extends project{
                             int nodeTop1 = stack.pop();
                             int nodeTop2 = stack.pop();
                             // Tô màu xanh cây cho nodeTop2
-                            graphBai6.getNode(Integer.toString(nodeTop2)).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
+                            graph.getNode(Integer.toString(nodeTop2)).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
                             // Tô màu tím cho nodeTop1. Đồng thời tô màu tím cho cạnh nodeTop2-nodeTop1
-                            graphBai6.getNode(Integer.toString(nodeTop1)).setAttribute("ui.style", "shape:circle;fill-color: violet;size: 30px;");
-                            graphBai6.getEdge(Integer.toString(nodeTop2) + Integer.toString(nodeTop1)).setAttribute("ui.style", "fill-color: violet; size: 2px;");
+                            graph.getNode(Integer.toString(nodeTop1)).setAttribute("ui.style", "shape:circle;fill-color: violet;size: 30px;");
+                            graph.getEdge(Integer.toString(nodeTop2) + " " + Integer.toString(nodeTop1)).setAttribute("ui.style", "fill-color: violet; size: 2px;");
                             // Cộng chi phí đường đi cho nodeTop1-nodeTop2
                             sumCost = sumCost + weightGraph.get(Integer.toString(nodeTop2) + Integer.toString(nodeTop1));
                             // Add vào table thông tin đường
@@ -654,8 +678,8 @@ public class OnMyWay6 extends project{
                                 int nodeTopTop1 = stack.pop();
                                 int nodeTopTop2 = stack.pop();
                                 // Tô màu lại cạnh vừa đi và node vừa đi qua trở lại trạng thái ban đầu: cạnh - đen, bode - vàng
-                                graphBai6.getNode(Integer.toString(nodeTopTop1)).setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
-                                graphBai6.getEdge(Integer.toString(nodeTopTop2) + Integer.toString(nodeTopTop1)).setAttribute("ui.style", "fill-color: black;size: 1px;");
+                                graph.getNode(Integer.toString(nodeTopTop1)).setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
+                                graph.getEdge(Integer.toString(nodeTopTop2) + " " + Integer.toString(nodeTopTop1)).setAttribute("ui.style", "fill-color: black;size: 1px;");
                                 // Tô màu nodeTopTop2 lại màu tím
                                 graph.getNode(Integer.toString(nodeTopTop2)).setAttribute("ui.style", "shape:circle;fill-color: violet;size: 30px;");
                                 // trả lại sumCost
@@ -676,11 +700,11 @@ public class OnMyWay6 extends project{
                             int nodeTop3 = stack.pop();
 
                             // Tô màu xanh cây cho NodeTop2. Đồng thời tô màu xanh biển cho cạnh nodeTop3-nodeTop2
-                            graphBai6.getNode(Integer.toString(nodeTop2)).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
-                            graphBai6.getEdge(Integer.toString(nodeTop3) + Integer.toString(nodeTop2)).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
+                            graph.getNode(Integer.toString(nodeTop2)).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
+                            graph.getEdge(Integer.toString(nodeTop3) + " " + Integer.toString(nodeTop2)).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
                             // Tô màu tím cho nodeTop1. Đồng thời tô màu tím cho cạnh nodeTop2-NodeTop1
-                            graphBai6.getNode(Integer.toString(nodeTop1)).setAttribute("ui.style", "shape:circle;fill-color: violet;size: 30px;");
-                            graphBai6.getEdge(Integer.toString(nodeTop2) + Integer.toString(nodeTop1)).setAttribute("ui.style", "fill-color: violet; size: 2px;");
+                            graph.getNode(Integer.toString(nodeTop1)).setAttribute("ui.style", "shape:circle;fill-color: violet;size: 30px;");
+                            graph.getEdge(Integer.toString(nodeTop2) + " " + Integer.toString(nodeTop1)).setAttribute("ui.style", "fill-color: violet; size: 2px;");
                             // Cộng chi phí đường đi cho nodeTop1-nodeTop2
                             sumCost = sumCost + weightGraph.get(Integer.toString(nodeTop2) + Integer.toString(nodeTop1));
                             // Add vào table thông tin đường
@@ -717,8 +741,8 @@ public class OnMyWay6 extends project{
                                 // Node màu xanh cây. Tô màu cạnh vừa đi bằng màu xanh biển
                                 int nodeTopTop1 = stack.pop();
                                 int nodeTopTop2 = stack.pop();
-                                graphBai6.getNode(Integer.toString(nodeTopTop1)).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
-                                graphBai6.getEdge(Integer.toString(nodeTopTop2) + Integer.toString(nodeTopTop1)).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
+                                graph.getNode(Integer.toString(nodeTopTop1)).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
+                                graph.getEdge(Integer.toString(nodeTopTop2) + Integer.toString(nodeTopTop1)).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
                                 stack.push(nodeTopTop2);
                                 stack.push(nodeTopTop1);
                                 panelSouthInPanelEast.removeAll();
@@ -731,11 +755,11 @@ public class OnMyWay6 extends project{
                                 int nodeTopTop2 = stack.pop();
                                 int nodeTopTop3 = stack.pop();
                                 // Tô màu lại cạnh vừa đi và node vừa đi qua trở lại trạng thái ban đầu: cạnh - đen, bode - vàng
-                                graphBai6.getNode(Integer.toString(nodeTopTop1)).setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
-                                graphBai6.getEdge(Integer.toString(nodeTopTop2) + Integer.toString(nodeTopTop1)).setAttribute("ui.style", "fill-color: black;size: 1px;");
+                                graph.getNode(Integer.toString(nodeTopTop1)).setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
+                                graph.getEdge(Integer.toString(nodeTopTop2) + " " +Integer.toString(nodeTopTop1)).setAttribute("ui.style", "fill-color: black;size: 1px;");
                                 // Tô màu nodeTopTop2 lại màu tím, cạnh nodeTopTop3-nodeTopTop2 màu tím
-                                graphBai6.getNode(Integer.toString(nodeTopTop2)).setAttribute("ui.style", "shape:circle;fill-color: violet;size: 30px;");
-                                graphBai6.getEdge(Integer.toString(nodeTopTop3) + Integer.toString(nodeTopTop2)).setAttribute("ui.style", "fill-color: violet;size: 2px;");
+                                graph.getNode(Integer.toString(nodeTopTop2)).setAttribute("ui.style", "shape:circle;fill-color: violet;size: 30px;");
+                                graph.getEdge(Integer.toString(nodeTopTop3) + " " + Integer.toString(nodeTopTop2)).setAttribute("ui.style", "fill-color: violet;size: 2px;");
                                 // trả lại sumCost
                                 sumCost = sumCost - weightGraph.get(Integer.toString(nodeTopTop2) + Integer.toString(nodeTopTop1));
                                 // Add vào PathLog câu: Trở lại đỉnh xxx, chỉ phí bao nhiêu
@@ -753,7 +777,7 @@ public class OnMyWay6 extends project{
                         if (stack.size() == 1) {  // Node đầu tiên được chọn và không phải node lá
                             int nodeTop1 = stack.pop();
                             // Tô màu tím cho nodeTop1
-                            graphBai6.getNode(Integer.toString(nodeTop1)).setAttribute("ui.style", "shape:circle;fill-color: violet;size: 30px;");
+                            graph.getNode(Integer.toString(nodeTop1)).setAttribute("ui.style", "shape:circle;fill-color: violet;size: 30px;");
                             //Hiện các node kề của nodeTop1 lên panelSouthInPanelEast
                             panelSouthInPanelEast.removeAll();
                             for (int i = 0; i < adjacencyGraph.get(nodeTop1).size(); ++i) {
@@ -768,10 +792,10 @@ public class OnMyWay6 extends project{
                             int nodeTop1 = stack.pop();
                             int nodeTop2 = stack.pop();
                             // Tô màu xanh cây cho nodeTop2
-                            graphBai6.getNode(Integer.toString(nodeTop2)).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
+                            graph.getNode(Integer.toString(nodeTop2)).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
                             // Tô màu tím cho nodeTop1. Đồng thời tô màu tím cho cạnh nodeTop2-nodeTop1
-                            graphBai6.getNode(Integer.toString(nodeTop1)).setAttribute("ui.style", "shape:circle;fill-color: violet;size: 30px;");
-                            graphBai6.getEdge(Integer.toString(nodeTop2) + Integer.toString(nodeTop1)).setAttribute("ui.style", "fill-color: violet; size: 2px;");
+                            graph.getNode(Integer.toString(nodeTop1)).setAttribute("ui.style", "shape:circle;fill-color: violet;size: 30px;");
+                            graph.getEdge(Integer.toString(nodeTop2) + " " + Integer.toString(nodeTop1)).setAttribute("ui.style", "fill-color: violet; size: 2px;");
                             // Cộng chi phí đường đi cho nodeTop1-nodeTop2
                             sumCost = sumCost + weightGraph.get(Integer.toString(nodeTop2) + Integer.toString(nodeTop1));
                             // Add vào table thông tin đường
@@ -796,11 +820,11 @@ public class OnMyWay6 extends project{
                             int nodeTop3 = stack.pop();
 
                             // Tô màu xanh cây cho NodeTop2. Đồng thời tô màu xanh biển cho cạnh nodeTop3-nodeTop2
-                            graphBai6.getNode(Integer.toString(nodeTop2)).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
-                            graphBai6.getEdge(Integer.toString(nodeTop3) + Integer.toString(nodeTop2)).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
+                            graph.getNode(Integer.toString(nodeTop2)).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
+                            graph.getEdge(Integer.toString(nodeTop3) + " " + Integer.toString(nodeTop2)).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
                             // Tô màu tím cho nodeTop1. Đồng thời tô màu tím cho cạnh nodeTop2-NodeTop1
-                            graphBai6.getNode(Integer.toString(nodeTop1)).setAttribute("ui.style", "shape:circle;fill-color: violet;size: 30px;");
-                            graphBai6.getEdge(Integer.toString(nodeTop2) + Integer.toString(nodeTop1)).setAttribute("ui.style", "fill-color: violet; size: 2px;");
+                            graph.getNode(Integer.toString(nodeTop1)).setAttribute("ui.style", "shape:circle;fill-color: violet;size: 30px;");
+                            graph.getEdge(Integer.toString(nodeTop2) + " " + Integer.toString(nodeTop1)).setAttribute("ui.style", "fill-color: violet; size: 2px;");
                             // Cộng chi phí đường đi cho nodeTop1-nodeTop2
                             sumCost = sumCost + weightGraph.get(Integer.toString(nodeTop2) + Integer.toString(nodeTop1));
                             // Add vào table thông tin đường
