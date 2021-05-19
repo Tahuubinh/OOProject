@@ -233,7 +233,7 @@ public class OnMyWay6 extends project{
         panelInPanelWest.add(scrollPaneCenterInPanelWest, BorderLayout.CENTER);
         panelInPanelWest.add(panelFind, BorderLayout.SOUTH);
         //-------------------------1.3.Thanh cuối: chứa Menu, Clear,...-----------------------------//
-        JButton clearButton = new JButton("Clear");
+             //JButton clearButton = new JButton("Clear");
         JButton dataButton = new JButton("Data"); // khôi phục lại đồ thị ban đầu
         JButton menuButton = new JButton(); // quay lại frame chọn bài
         //JButton stopButton = new JButton("Stop"); // stop simulation graph
@@ -250,7 +250,7 @@ public class OnMyWay6 extends project{
 		ImageIcon menuImg = new ImageIcon(menudImg);
 		menuButton.setIcon(menuImg);
         panelSouthInPanelWest.add(menuButton);
-        panelSouthInPanelWest.add(clearButton);
+             //panelSouthInPanelWest.add(clearButton);
         panelSouthInPanelWest.add(dataButton);
         panelSouthInPanelWest.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         //panelSouthInPanelWest.add(stopButton);
@@ -320,6 +320,7 @@ public class OnMyWay6 extends project{
             }
         });
         
+	    /*
         clearButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -349,7 +350,7 @@ public class OnMyWay6 extends project{
                  frameBai6.pack();
 			}
 		});
-        
+        */
         dataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
