@@ -800,7 +800,7 @@ public class OnMyWay6 extends project{
                                 int nodeTopTop1 = stack.pop();
                                 int nodeTopTop2 = stack.pop();
                                 graph.getNode(Integer.toString(nodeTopTop1)).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
-                                graph.getEdge(Integer.toString(nodeTopTop2) + Integer.toString(nodeTopTop1)).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
+                                graph.getEdge(Integer.toString(nodeTopTop2) + " " +Integer.toString(nodeTopTop1)).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
                                 stack.push(nodeTopTop2);
                                 stack.push(nodeTopTop1);
                                 panelSouthInPanelEast.removeAll();
