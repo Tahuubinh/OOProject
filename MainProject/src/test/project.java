@@ -9,6 +9,7 @@ import java.awt.Event;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -20,6 +21,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
@@ -1127,7 +1129,49 @@ public class project {
                 project.zoomGraphMouseWheelMoved(mwe, view5);
             }
         });
-    	
+    	view.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent mwe) {
+            	if (mwe.getKeyChar() == 'c') {
+	            	String result;
+	        		result = JOptionPane.showInputDialog("Saved as: ");
+	        		omw.takePicture(result);
+	        		JOptionPane.showMessageDialog(null, "Your image has been saved as "+result+".png");
+            	}
+            	else if (mwe.getKeyChar() == 's') {
+            		String result;
+	        		result = JOptionPane.showInputDialog("Saved as: ");
+            		BufferedImage bi = new BufferedImage(view.getWidth(), view.getHeight(), BufferedImage.TYPE_INT_RGB);
+                    Graphics g = bi.createGraphics();
+                    view.print(g);
+                    g.dispose();
+                    try {
+                        ImageIO.write(bi, "png", new File("pic_graph\\"+result+".png"));
+                        JOptionPane.showMessageDialog(null, "Your image has been saved as "+result+".png");
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+            	}
+            	else {
+            		String s = "1. Type \'C\' to take picture of the whole graph\n"
+            				+ "2. Type \'S\' to take picture of the the view\n";
+            		JOptionPane.showMessageDialog(null, s);
+            	}
+            }
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+        });
     	
 	}
 	// đây là đặt nhãn dán cho 1 frame bất kỳ ở phía trên cùng của frame
