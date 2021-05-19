@@ -53,6 +53,7 @@ public class OnMyWay6 extends project{
     ArrayList<Integer> currentPath = new ArrayList<>(); // Lưu đường đi hiện tại của thuật DFS auto
     int countPath = 0; // Đếm số đường đi trong duyệt DFS
     HashMap<Integer, ArrayList<Integer>> allPathDFSBai6 = new HashMap<>();
+    int dem = 1;
 
     // CTDL cho AnyPath
     int sumCost = 0; // Chi phí đường đi cua thuat AnyPath
@@ -97,9 +98,15 @@ public class OnMyWay6 extends project{
     }
 
     public void setInitialDrawGraph() {
+        for (int i = 1; i <= max; ++i) {
+            graphBai6.getNode(String.valueOf(i)).setAttribute("ui.style", "shape:circle; fill-color: yellow; size: 25px;");
+        }
+
         Set<Integer> set = adjacencyGraph.keySet();
         for (Integer key:set) {
-
+            for (int i = 0; i < adjacencyGraph.get(key).size(); ++i) {
+                graphBai6.getEdge(Integer.toString(key) + Integer.toString(adjacencyGraph.get(key).get(i))).setAttribute("ui.style", "fill-color: black;size: 1px;");
+            }
         }
     }
 
@@ -414,11 +421,12 @@ public class OnMyWay6 extends project{
 
             DFSBai6(Integer.parseInt(nodeStart), Integer.parseInt(nodeEnd));
             if (countPath > 0) {
-                // Có nhiều đường đi từ nodeStart - nodeEnd. randomNum để chọn 1 trong những đường đi đó
-                int randomNum = 1 + (int)(Math.random() * ((countPath - 1) + 1));
+                /*// Có nhiều đường đi từ nodeStart - nodeEnd. randomNum để chọn 1 trong những đường đi đó
+                int randomNum = 1 + (int)(Math.random() * ((countPath - 1) + 1));*/
+
                 ArrayList<Integer> arrayListTemp = new ArrayList<>();
-                arrayListTemp = allPathDFSBai6.get(randomNum);
-                //System.out.println(arrayListTemp);
+                arrayListTemp = allPathDFSBai6.get(dem);
+
                 int sum = 0;
                 for (int i = 0; i < arrayListTemp.size()-1; ++i) {
                     graphBai6.getNode(Integer.toString(arrayListTemp.get(i))).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
@@ -433,9 +441,50 @@ public class OnMyWay6 extends project{
                         graphBai6.getNode(Integer.toString(arrayListTemp.get(i+1))).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
                     }
                 }
-                String[] data = {"", "Tổng chi phí là: ", Integer.toString(sum)};
+                String[] data = {"------------------------------", "Tổng chi phí là: ", Integer.toString(sum)};
                 model.addRow(data);
                 JOptionPane.showMessageDialog(null, "Chi phí của đường đi là: " + Integer.toString(sum), "Thông báo", JOptionPane.PLAIN_MESSAGE);
+
+                if (countPath > 1) {
+                    JButton nextButton = new JButton("Tiếp theo");
+                    panelSouthInPanelWest.add(nextButton);
+                    panelSouthInPanelWest.updateUI();
+
+                    nextButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            ++dem;
+                            if (dem <= countPath) {
+                                String[] dataX = {"------------------------------", "Đường đi tiếp theo", "------------------------------"};
+                                model.addRow(dataX);
+                                setInitialDrawGraph();
+                                ArrayList<Integer> arrayListTemp = allPathDFSBai6.get(dem);
+
+                                int sum = 0;
+                                for (int i = 0; i < arrayListTemp.size()-1; ++i) {
+                                    graphBai6.getNode(Integer.toString(arrayListTemp.get(i))).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
+                                    graphBai6.getEdge(String.valueOf(arrayListTemp.get(i)) + String.valueOf(arrayListTemp.get(i+1))).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
+                                    sum = sum + weightGraph.get(String.valueOf(arrayListTemp.get(i)) + String.valueOf(arrayListTemp.get(i+1)));
+                                    String[] data = {String.valueOf(i+1),
+                                            "Cạnh " + String.valueOf(arrayListTemp.get(i)) + " - " + String.valueOf(arrayListTemp.get(i+1)),
+                                            Integer.toString(weightGraph.get(String.valueOf(arrayListTemp.get(i)) + String.valueOf(arrayListTemp.get(i+1))))};
+                                    model.addRow(data);
+                                    panelEast.updateUI();
+                                    if (i == arrayListTemp.size() - 2) {
+                                        graphBai6.getNode(Integer.toString(arrayListTemp.get(i+1))).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
+                                    }
+                                }
+                                String[] data = {"------------------------------", "Tổng chi phí là: ", Integer.toString(sum)};
+                                model.addRow(data);
+                                JOptionPane.showMessageDialog(null, "Chi phí của đường đi là: " + Integer.toString(sum), "Thông báo", JOptionPane.PLAIN_MESSAGE);
+                            }
+                            else {
+                                JOptionPane.showMessageDialog(null, "Hết đường đi rồi nhé!!!", "Thông báo", JOptionPane.PLAIN_MESSAGE);
+                            }
+                        }
+                    });
+                }
+
             }
             else {
                 String[] option = {"Menu", "Tiếp tục"};
@@ -478,7 +527,7 @@ public class OnMyWay6 extends project{
                         panelSouthInPanelEast.removeAll();
                         panelSouthInPanelEast.updateUI();
                         JOptionPane.showMessageDialog(null, "Chi phí của đường đi là: " + Integer.toString(sumCost), "Thông báo", JOptionPane.PLAIN_MESSAGE);
-                        String[] data = {"", "Tổng chi phí là: ", Integer.toString(sumCost)};
+                        String[] data = {"------------------------------", "Tổng chi phí là: ", Integer.toString(sumCost)};
                         model.addRow(data);
                         // Xoá stopButton
                         panelSouthInPanelWest.remove(stopButton);
@@ -612,8 +661,8 @@ public class OnMyWay6 extends project{
                                 // trả lại sumCost
                                 sumCost = sumCost - weightGraph.get(Integer.toString(nodeTopTop2) + Integer.toString(nodeTopTop1));
                                 // Add vào PathLog câu: Trở lại đỉnh xxx, chỉ phí bao nhiêu
-                                String[] data1 = {"", "Trở lại đỉnh " + nodeTopTop2 , ""};
-                                String[] data2 = {"", "Lúc đó, chi phí đường đi là: ", Integer.toString(sumCost)};
+                                String[] data1 = {"------------------------------", "Trở lại đỉnh " + nodeTopTop2 , "------------------------------"};
+                                String[] data2 = {"------------------------------", "Lúc đó, chi phí đường đi là: ", Integer.toString(sumCost)};
                                 model.addRow(data1);
                                 model.addRow(data2);
                                 // Add đỉnh vào stack lại
@@ -690,8 +739,8 @@ public class OnMyWay6 extends project{
                                 // trả lại sumCost
                                 sumCost = sumCost - weightGraph.get(Integer.toString(nodeTopTop2) + Integer.toString(nodeTopTop1));
                                 // Add vào PathLog câu: Trở lại đỉnh xxx, chỉ phí bao nhiêu
-                                String[] data1 = {"", "Trở lại đỉnh " + nodeTopTop2 , ""};
-                                String[] data2 = {"", "Lúc đó, chi phí đường đi là: ", Integer.toString(sumCost)};
+                                String[] data1 = {"------------------------------", "Trở lại đỉnh " + nodeTopTop2 , "------------------------------"};
+                                String[] data2 = {"------------------------------", "Lúc đó, chi phí đường đi là: ", Integer.toString(sumCost)};
                                 model.addRow(data1);
                                 model.addRow(data2);
                                 // Add đỉnh vào stack lại
