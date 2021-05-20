@@ -23,6 +23,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.event.WindowAdapter;
@@ -41,6 +42,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
@@ -58,6 +60,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.border.LineBorder;
 
 import org.graphstream.graph.Graph;
@@ -87,6 +90,7 @@ import org.graphstream.ui.view.util.MouseManager;
 
 
 public class project {
+	
 	private static OnMyWayabc omw;
 	private static OnMyWay omw4;
 	private static OnMyWay2 omw5;
@@ -319,7 +323,27 @@ public class project {
         }
         buttonJPanel.setBackground(Color.orange);
         
-
+        Timer timer = new Timer(1000, new ActionListener() {
+            private int cnt = 1;
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if(cnt == max) {
+                    ((Timer) actionEvent.getSource()).stop();
+                    return;
+                }
+                System.out.println(cnt);
+                graph.getNode(cnt +"").setAttribute("ui.class", "marked");
+                cnt ++;
+            }
+        });
+        JButton testButton = new JButton("Test");
+        testButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                timer.start();
+            }
+        });
+        buttonJPanel.add(testButton);
         setLabel(frame);
         
         frame.getContentPane().add(buttonJPanel, BorderLayout.SOUTH);
@@ -423,6 +447,7 @@ public class project {
 				} // phần mô phỏng bài 3
 							}
 		});
+       
         WeightGraph.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1284,6 +1309,43 @@ public class project {
             }
         });
     	
+//    	view.addMouseMotionListener(new MouseMotionListener() {
+//			private int preX = -1;
+//			private int preY = -1;
+//			@Override
+//			public void mouseMoved(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				int currentX = e.getX();
+//				int currenY = e.getY();
+//				System.out.println(view.getCamera().getViewCenter());
+//				Point3 pointView = view.getCamera().getViewCenter();
+//				if(preX != -1  && preY != -1) {
+//					if(preX  < currentX) {
+//						System.out.println("move right");
+//						pointView.x -= 0.01;
+//					}
+//					else if(preX > currentX) {
+//						System.out.println("move left");
+//						pointView.x += 0.01;
+//					}
+//					if(preY  < currentX) {
+//						System.out.println("move down");
+//						pointView.y -= 0.01;
+//					}
+//					else if(preY > currentX) {
+//						System.out.println("move up");
+//						pointView.y += 0.01;
+//					}
+//				}
+//			}
+//			
+//			@Override
+//			public void mouseDragged(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});;
+//    	
     	view4 = omw4.getViewer();
     	view4.addMouseWheelListener(new MouseWheelListener() {
             @Override
@@ -1596,7 +1658,6 @@ public class project {
 				}
 			}
 		});
-
 		for(int i = 0; i < max; ++i) {
 			vButtons[i].addActionListener(new ActionListener() {
 				
@@ -1604,6 +1665,7 @@ public class project {
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					for(int i = 1; i <= max; ++i) {
+						
 						if(e.getActionCommand().equals(Integer.toString(i))) {
 							try {
 								i3 = i;
