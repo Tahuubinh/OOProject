@@ -55,15 +55,13 @@ public class OnMyWay2 extends GraphLinkedList{
 		stack2.clear();
 		vertexStack.clear();
 		edgeStack.clear();
-<<<<<<< HEAD
 		for(int i = 1; i <= vertices; ++i) {
 
         	v[i] = graph.getNode(Integer.toString(i));
         	v[i].setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
     		
         }
-=======
->>>>>>> 20406267f3428ef818cef8556fa94ef506cc6493
+
 	}
 	void addOption(int i, int pl) throws IOException {
 		if(stack.size() > 0 && (i==1)) {

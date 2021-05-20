@@ -1742,13 +1742,10 @@ public class project {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-<<<<<<< HEAD
 //							omw4.clear();
 							frame.remove(view);
-=======
 							omw5.clear();
 							omw.graphPaint();
->>>>>>> 20406267f3428ef818cef8556fa94ef506cc6493
 							frame.getContentPane().add(view);
 							AllPathFrame.repaint();
 							AllPathFrame.revalidate();
