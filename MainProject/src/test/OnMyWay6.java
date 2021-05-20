@@ -243,6 +243,7 @@ public class OnMyWay6 extends project{
         //JButton clearButton = new JButton("Clear");
         JButton dataButton = new JButton("Data"); // khôi phục lại đồ thị ban đầu
         JButton menuButton = new JButton(); // quay lại frame chọn bài
+        JButton restartButton = new JButton();
         //JButton stopButton = new JButton("Stop"); // stop simulation graph
         menuButton.setBounds(10, 10, 208, 29);
         menuButton.setBackground(Color.CYAN);
@@ -256,9 +257,21 @@ public class OnMyWay6 extends project{
         Image menudImg = menuBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
         ImageIcon menuImg = new ImageIcon(menudImg);
         menuButton.setIcon(menuImg);
+        
+        BufferedImage restartBf = null;
+        try {
+            restartBf = ImageIO.read(new File("label_button\\restart.png"));
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        Image restartdImg = restartBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        ImageIcon restartImg = new ImageIcon(restartdImg);
+        restartButton.setIcon(restartImg);
         panelSouthInPanelWest.add(menuButton);
         //panelSouthInPanelWest.add(clearButton);
         panelSouthInPanelWest.add(dataButton);
+        panelSouthInPanelWest.add(restartButton);
         panelSouthInPanelWest.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         //panelSouthInPanelWest.add(stopButton);
 
@@ -283,8 +296,8 @@ public class OnMyWay6 extends project{
 
         /////////////////////////////COMPLETE 2.Panel East////////////////////////////////////
 
-        frameBai6.setExtendedState(Frame.MAXIMIZED_BOTH);
-        frameBai6.setResizable(false);
+        frameBai6.setPreferredSize(new Dimension(1600, 825));
+        frameBai6.setResizable(true);
         frameBai6.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frameBai6.getContentPane().add(panelWest,BorderLayout.WEST);
@@ -329,41 +342,44 @@ public class OnMyWay6 extends project{
             }
         });
 
-//        restartButton.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// TODO Auto-generated method stub
-////				frameBai6.dispose();
-//				 for (int i = 1; i <= max; ++i) {
-//	                    flag[i] = false;
-//	                }
-//	                countPath = 0;
-//	                currentPath.clear();
-//
-//
-//	                // Khởi tạo ban đầu cho anyPath()
-//	                stack.clear();
-//	                countTableOfAnyPath = 0;
-//	                for (int i = 1; i <= max; ++i) {
-//	                    graph.getNode(String.valueOf(i)).setAttribute("ui.style", "shape:circle; fill-color: yellow; size: 25px;");
-//	                }
-//	                Set<Integer> set = adjacencyGraph.keySet();
-//	                for (Integer key:set) {
-//	                    for (int i = 0; i < adjacencyGraph.get(key).size(); ++i) {
-//	                        graph.getEdge(Integer.toString(key) + " " +  Integer.toString(adjacencyGraph.get(key).get(i))).setAttribute("ui.style", "fill-color: black; size: 1px;");
-//	                    }
-//	                }
-//
-////                frame.remove(view);
-////                frame.add(view);
-////                frame.repaint();
-////                frame.revalidate();
-////                frame.pack();
-////	                setUI();
-//                twoSelection();
-//			}
-//		});
+        restartButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+//				frameBai6.dispose();
+				 for (int i = 1; i <= max; ++i) {
+	                    flag[i] = false;
+	                }
+	                countPath = 0;
+	                currentPath.clear();
+
+
+	                // Khởi tạo ban đầu cho anyPath()
+	                stack.clear();
+	                countTableOfAnyPath = 0;
+	                for (int i = 1; i <= max; ++i) {
+	                    graph.getNode(String.valueOf(i)).setAttribute("ui.style", "shape:circle; fill-color: yellow; size: 25px;");
+	                }
+	                Set<Integer> set = adjacencyGraph.keySet();
+	                for (Integer key:set) {
+	                    for (int i = 0; i < adjacencyGraph.get(key).size(); ++i) {
+	                        graph.getEdge(Integer.toString(key) + " " +  Integer.toString(adjacencyGraph.get(key).get(i))).setAttribute("ui.style", "fill-color: black; size: 1px;");
+	                    }
+	                }
+	               
+//                frame.remove(view);
+//                frame.add(view);
+//                frame.repaint();
+//                frame.revalidate();
+//                frame.pack();
+//	                setUI();
+                twoSelection();
+                frameBai6.repaint();
+                frameBai6.revalidate();
+                frameBai6.pack();
+			}
+		});
         /*clearButton.addActionListener(new ActionListener() {
 
 =======
@@ -747,6 +763,7 @@ public class OnMyWay6 extends project{
 
     // Thủ công
     public void anyPath() {
+//    	panelSouthInPanelEast.removeAll();
         for (int i = 1; i <= max; ++i) {
             buttonBai6[i] = new JButton(String.valueOf(i));
             panelSouthInPanelEast.add(buttonBai6[i]);

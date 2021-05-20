@@ -87,7 +87,7 @@ public class OnMyWayabc extends DFS{
     	SwingViewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
     	viewer.enableAutoLayout();
         view = (ViewPanel) viewer.addDefaultView(false);
-        view.removeMouseListener(view.getMouseListeners()[0]);
+//        view.removeMouseListener(view.getMouseListeners()[0]);
 
         view.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
