@@ -1,10 +1,14 @@
 package test;
 
+import java.awt.Cursor;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -26,12 +30,16 @@ import org.graphstream.stream.file.FileSinkImages.LayoutPolicy;
 import org.graphstream.stream.file.FileSinkImages.OutputType;
 import org.graphstream.stream.file.images.Resolutions;
 import org.graphstream.ui.geom.Point3;
+import org.graphstream.ui.graphicGraph.GraphicElement;
 import org.graphstream.ui.layout.Layout;
 import org.graphstream.ui.swing.util.SwingFileSinkImages;
 import org.graphstream.ui.swing_viewer.SwingViewer;
 import org.graphstream.ui.swing_viewer.ViewPanel;
+import org.graphstream.ui.view.View;
 import org.graphstream.ui.view.Viewer;
 import org.graphstream.ui.view.Viewer.CloseFramePolicy;
+import org.graphstream.ui.view.camera.Camera;
+import org.graphstream.ui.view.util.InteractiveElement;
 
 public class OnMyWayabc extends DFS{
 
@@ -79,6 +87,59 @@ public class OnMyWayabc extends DFS{
     	SwingViewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
     	viewer.enableAutoLayout();
         view = (ViewPanel) viewer.addDefaultView(false);
+        view.removeMouseListener(view.getMouseListeners()[0]);
+
+        view.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+
+        Camera camera = viewer.getDefaultView().getCamera();
+        camera.setAutoFitView(true);
+
+        view.addMouseMotionListener(new MouseMotionListener() {
+
+            private int preX = -1;
+            private int preY = -1;
+
+            @Override
+            public void mouseDragged(MouseEvent mouseEvent) {
+                int currentX = mouseEvent.getX();
+                int currentY = mouseEvent.getY();
+
+                Point3 pointView = camera.getViewCenter();
+
+                if (preX != -1 && preY != -1) {
+                    if (preX < currentX) {
+                        pointView.x -= 0.01;
+                    }
+                    else if (preX > currentX) {
+                        pointView.x += 0.01;
+                    }
+
+                    if (preY < currentY) {
+                        pointView.y += 0.01;
+                    }
+                    else if (preY > currentY) {
+                        pointView.y -= 0.01;
+                    }
+                }
+                camera.setViewCenter(pointView.x, pointView.y, pointView.z);
+
+                preX = currentX;
+                preY = currentY;
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent mouseEvent) {
+                GraphicElement node =  ((View) view).findGraphicElementAt(EnumSet.of(InteractiveElement.NODE), mouseEvent.getX(), mouseEvent.getY());
+                if (node != null) {
+                    view.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                }
+                else {
+                    view.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                }
+            }
+        });
+
 	}
 	
 	void clear() {

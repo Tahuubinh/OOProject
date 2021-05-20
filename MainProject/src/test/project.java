@@ -323,27 +323,6 @@ public class project {
         }
         buttonJPanel.setBackground(Color.orange);
         
-        Timer timer = new Timer(1000, new ActionListener() {
-            private int cnt = 1;
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if(cnt == max) {
-                    ((Timer) actionEvent.getSource()).stop();
-                    return;
-                }
-                System.out.println(cnt);
-                graph.getNode(cnt +"").setAttribute("ui.class", "marked");
-                cnt ++;
-            }
-        });
-        JButton testButton = new JButton("Test");
-        testButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                timer.start();
-            }
-        });
-        buttonJPanel.add(testButton);
         setLabel(frame);
         
         frame.getContentPane().add(buttonJPanel, BorderLayout.SOUTH);
@@ -1309,42 +1288,7 @@ public class project {
             }
         });
     	
-//    	view.addMouseMotionListener(new MouseMotionListener() {
-//			private int preX = -1;
-//			private int preY = -1;
-//			@Override
-//			public void mouseMoved(MouseEvent e) {
-//				// TODO Auto-generated method stub
-//				int currentX = e.getX();
-//				int currenY = e.getY();
-//				System.out.println(view.getCamera().getViewCenter());
-//				Point3 pointView = view.getCamera().getViewCenter();
-//				if(preX != -1  && preY != -1) {
-//					if(preX  < currentX) {
-//						System.out.println("move right");
-//						pointView.x -= 0.01;
-//					}
-//					else if(preX > currentX) {
-//						System.out.println("move left");
-//						pointView.x += 0.01;
-//					}
-//					if(preY  < currentX) {
-//						System.out.println("move down");
-//						pointView.y -= 0.01;
-//					}
-//					else if(preY > currentX) {
-//						System.out.println("move up");
-//						pointView.y += 0.01;
-//					}
-//				}
-//			}
-//			
-//			@Override
-//			public void mouseDragged(MouseEvent e) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//		});;
+//    	
 //    	
     	view4 = omw4.getViewer();
     	view4.addMouseWheelListener(new MouseWheelListener() {
