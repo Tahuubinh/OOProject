@@ -1,9 +1,13 @@
 package test;
 
 import java.awt.Cursor;
+import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -89,57 +93,103 @@ public class OnMyWayabc extends DFS{
         view = (ViewPanel) viewer.addDefaultView(false);
 //        view.removeMouseListener(view.getMouseListeners()[0]);
 
-        view.setCursor(new Cursor(Cursor.HAND_CURSOR));
+//        view.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-
-        Camera camera = viewer.getDefaultView().getCamera();
-        camera.setAutoFitView(true);
-
-        view.addMouseMotionListener(new MouseMotionListener() {
-
-            private int preX = -1;
-            private int preY = -1;
-
+//
+//        Camera camera = viewer.getDefaultView().getCamera();
+//        camera.setAutoFitView(true);
+////
+//        view.addMouseMotionListener(new MouseMotionListener() {
+//
+//            private int preX = -1;
+//            private int preY = -1;
+//
+//            @Override
+//            public void mouseDragged(MouseEvent mouseEvent) {
+//                int currentX = mouseEvent.getX();
+//                int currentY = mouseEvent.getY();
+//
+//                Point3 pointView = camera.getViewCenter();
+//
+//                if (preX != -1 && preY != -1) {
+//                    if (preX < currentX) {
+//                        pointView.x -= 0.01;
+//                    }
+//                    else if (preX > currentX) {
+//                        pointView.x += 0.01;
+//                    }
+//
+//                    if (preY < currentY) {
+//                        pointView.y += 0.01;
+//                    }
+//                    else if (preY > currentY) {
+//                        pointView.y -= 0.01;
+//                    }
+//                }
+//                camera.setViewCenter(pointView.x, pointView.y, pointView.z);
+//
+//                preX = currentX;
+//                preY = currentY;
+//            }
+//
+//            @Override
+//            public void mouseMoved(MouseEvent mouseEvent) {
+//                GraphicElement node =  ((View) view).findGraphicElementAt(EnumSet.of(InteractiveElement.NODE), mouseEvent.getX(), mouseEvent.getY());
+//                if (node != null) {
+//                    view.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+//                }
+//                else {
+//                    view.setCursor(new Cursor(Cursor.HAND_CURSOR));
+//                }
+//            }
+//        });
+        view.addMouseWheelListener(new MouseWheelListener() {
             @Override
-            public void mouseDragged(MouseEvent mouseEvent) {
-                int currentX = mouseEvent.getX();
-                int currentY = mouseEvent.getY();
+            public void mouseWheelMoved(MouseWheelEvent mwe) {
+            	 if (Event.ALT_MASK != 0) {            
+     	            if (mwe.getWheelRotation() > 0) {
+     	                double new_view_percent = view.getCamera().getViewPercent() + 0.05;
+     	                view.getCamera().setViewPercent(new_view_percent);               
+     	            } else if (mwe.getWheelRotation() < 0) {
+     	                double current_view_percent = view.getCamera().getViewPercent();
+     	                if(current_view_percent > 0.05){
+     	                    view.getCamera().setViewPercent(current_view_percent - 0.05);                
+     	                }
+     	            }
+     	        }        
 
-                Point3 pointView = camera.getViewCenter();
-
-                if (preX != -1 && preY != -1) {
-                    if (preX < currentX) {
-                        pointView.x -= 0.01;
-                    }
-                    else if (preX > currentX) {
-                        pointView.x += 0.01;
-                    }
-
-                    if (preY < currentY) {
-                        pointView.y += 0.01;
-                    }
-                    else if (preY > currentY) {
-                        pointView.y -= 0.01;
-                    }
-                }
-                camera.setViewCenter(pointView.x, pointView.y, pointView.z);
-
-                preX = currentX;
-                preY = currentY;
-            }
-
-            @Override
-            public void mouseMoved(MouseEvent mouseEvent) {
-                GraphicElement node =  ((View) view).findGraphicElementAt(EnumSet.of(InteractiveElement.NODE), mouseEvent.getX(), mouseEvent.getY());
-                if (node != null) {
-                    view.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                }
-                else {
-                    view.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                }
             }
         });
-
+        
+//        view.addMouseListener(new MouseListener() {
+//            @Override
+//            public void mouseClicked(MouseEvent mouseEvent) {
+//            	GraphicElement node = ((View) view).findGraphicElementAt(EnumSet.of(InteractiveElement.NODE), mouseEvent.getX(), mouseEvent.getY());
+//                if (node != null) {
+//                    System.out.println(node.getId());
+//                    graph.getNode(node.getId()).setAttribute("ui.class", "marked");
+//                }
+//            }
+//            @Override
+//            public void mousePressed(MouseEvent mouseEvent) {
+//
+//            }
+//
+//            @Override
+//            public void mouseReleased(MouseEvent mouseEvent) {
+//
+//            }
+//
+//            @Override
+//            public void mouseEntered(MouseEvent mouseEvent) {
+//
+//            }
+//
+//            @Override
+//            public void mouseExited(MouseEvent mouseEvent) {
+//
+//            }
+//        });
 	}
 	
 	void clear() {

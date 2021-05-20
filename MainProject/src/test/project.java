@@ -325,11 +325,7 @@ public class project {
         
         setLabel(frame);
         
-        frame.getContentPane().add(buttonJPanel, BorderLayout.SOUTH);
-        frame.setTitle("Project OOPT");
-        frame.setForeground(Color.YELLOW);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.getContentPane().add(view);
+       
         homeButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -394,10 +390,6 @@ public class project {
 				} // phần mô phỏng bài 3
 							}
 		});
-        frame.pack();
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-        frame.setVisible(true);
-        
         bai4.addActionListener(new ActionListener() {
 			
 			@Override
@@ -410,9 +402,6 @@ public class project {
 				} // phần mô phỏng bài 3
 							}
 		});
-        frame.pack();
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-        frame.setVisible(true);
         
         bai5.addActionListener(new ActionListener() {
 			
@@ -434,9 +423,6 @@ public class project {
 				onMyWay6.twoSelection();
 			}
 		});
-        frame.pack();
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-        frame.setVisible(true);
         freezeButton1.addActionListener(new ActionListener() {
 			
 			@Override
@@ -473,9 +459,12 @@ public class project {
 				frame.revalidate();
 							}
 		});
-        frame.pack();
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-        frame.setVisible(true);
+        frame.getContentPane().add(buttonJPanel, BorderLayout.SOUTH);
+        frame.setTitle("Project OOPT");
+        frame.setForeground(Color.YELLOW);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(view);
 	}
 		
 	/// bài 3
