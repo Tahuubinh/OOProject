@@ -431,7 +431,6 @@ public class project {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				OnMyWay6 onMyWay6 = new OnMyWay6();
-				onMyWay6.setUI();
 				onMyWay6.twoSelection();
 			}
 		});
