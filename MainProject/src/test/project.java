@@ -1002,7 +1002,7 @@ public class project {
 					}
 				}
 				else {
-					g.runDFS(Integer.parseInt(t1) , Integer.parseInt(t2), "path between vertex " + t1 + " and vertex " +t2 );
+					omw.runDFS(Integer.parseInt(t1) , Integer.parseInt(t2), "path between vertex " + t1 + " and vertex " +t2 );
 				}
 			}
 		});
