@@ -272,7 +272,7 @@ public class project {
 	public static void console() throws IOException {
 		
         JButton showButton = new JButton("Bài 1"); // xử lý bài 1
-        JButton AllPAthButton = new JButton("Bài 2"); // xử lý bài 2
+        JButton AllPAthButton = new JButton("Bài 2"); // xử lý bài 2z
         JButton QuestionsPathButton = new JButton("Bài 3");  // xử lý bài 3
         JButton bai4 = new JButton("Bài 4* (Hamilton)");
         JButton bai5 = new JButton("Bài 5* (Euler)");
@@ -867,7 +867,7 @@ public class project {
 		frame.dispose();
 	}
 	
-	public static void AllPathButton() { // bài 2
+	public static void AllPathButton() { // ài 2
 		// TODO Auto-generated method stub
 		 c = new Integer[max + 1];
 		JFrame AllPathFrame = new JFrame();
@@ -895,6 +895,7 @@ public class project {
 							AllPathFrame.revalidate();
 							frame.setVisible(true);
 							AllPathFrame.dispose();
+							omw.graphPaint();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -994,21 +995,21 @@ public class project {
 				}
 			}
 		});
+		AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		AllPathFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
 		AllPathFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent) {
 				AllPathFrame.dispose();
 			}
 		});
 		setLabel(AllPathFrame);
-
-		AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
-		AllPathFrame.getContentPane().add(view);
-		AllPathFrame.setPreferredSize(new Dimension(1600, 825));
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		AllPathFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		AllPathFrame.pack();
 		AllPathFrame.setVisible(true);
 		frame.dispose();
+		AllPathFrame.getContentPane().add(view);
 		
 	}
 		

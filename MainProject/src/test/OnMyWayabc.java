@@ -28,7 +28,7 @@ import org.graphstream.ui.swing_viewer.ViewPanel;
 import org.graphstream.ui.view.Viewer;
 import org.graphstream.ui.view.Viewer.CloseFramePolicy;
 
-public class OnMyWayabc extends DFS{
+public class OnMyWayabc extends GraphLinkedList{
 
 	private static boolean mutex;
 	private String path;
@@ -53,7 +53,24 @@ public class OnMyWayabc extends DFS{
 	
 	void runner() throws NoSuchElementException, IOException {
 		//graph = new SingleGraph("Use");
-    	graphDraw();
+    	//graphDraw();
+		graph = new SingleGraph("Use");
+		for (int i = 1; i <= vertices; ++i) {
+			graph.addNode(Integer.toString(i));
+		}
+		for (int i = 1; i <= vertices; ++i) {
+			String iString = Integer.toString(i);
+			if (adjLists[i].size() > 0) {
+				for (int j: adjLists[i])
+					graph.addEdge(iString + " " + Integer.toString(j), iString, Integer.toString(j), true);
+			}
+			v[i] = graph.getNode(iString);
+		}
+		
+		for (int i = 1; i <= vertices; ++i) {
+			v[i].setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
+			v[i].setAttribute("ui.label", Integer.toString(i)); 
+		}
     	SwingViewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
     	viewer.enableAutoLayout();
         view = (ViewPanel) viewer.addDefaultView(false);
@@ -155,9 +172,6 @@ public class OnMyWayabc extends DFS{
 	
 	boolean aa = true;
 	public ViewPanel getViewer() { //cập nhật đồ thị mới vào frame
-		SwingViewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-    	viewer.enableAutoLayout();
-        ViewPanel view = (ViewPanel) viewer.addDefaultView(false);
         
         return view;
 	}
@@ -325,8 +339,8 @@ public class OnMyWayabc extends DFS{
     	runDFS(vertex, end);
 
     }
-	
-	public void graphPaint() {
+    
+    void graphPaint() {
 		for (int i = 1; i <= vertices; ++i) {
 			String iString = Integer.toString(i);
 			if (adjLists[i].size() > 0) {
