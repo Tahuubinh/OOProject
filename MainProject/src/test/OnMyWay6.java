@@ -44,7 +44,7 @@ public class OnMyWay6 extends project{
     JFrame frameBai6 = new JFrame();
     JTable tableInScrollPane;
     JButton nextButton;
-
+    JFrame dataFrame = new JFrame();
     String[] columns = {"Số thứ tự","Đường đi", "Trọng số"};
     DefaultTableModel model = new DefaultTableModel(columns,0);
 
@@ -101,6 +101,7 @@ public class OnMyWay6 extends project{
                 project.zoomGraphMouseWheelMoved(mwe, view);
             }
         });
+        setUI();
     }
 
     public void setInitialDrawGraph() {
@@ -238,9 +239,11 @@ public class OnMyWay6 extends project{
         //JButton clearButton = new JButton("Clear");
         JButton dataButton = new JButton("Data"); // khôi phục lại đồ thị ban đầu
         JButton menuButton = new JButton(); // quay lại frame chọn bài
+        JButton restartButton = new JButton();
         //JButton stopButton = new JButton("Stop"); // stop simulation graph
         menuButton.setBounds(10, 10, 208, 29);
         menuButton.setBackground(Color.CYAN);
+        
         BufferedImage menuBf = null;
         try {
             menuBf = ImageIO.read(new File("label_button\\menu.png"));
@@ -251,9 +254,22 @@ public class OnMyWay6 extends project{
         Image menudImg = menuBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
         ImageIcon menuImg = new ImageIcon(menudImg);
         menuButton.setIcon(menuImg);
+        
+        BufferedImage restartBf = null;
+        try {
+            restartBf = ImageIO.read(new File("label_button\\restart.png"));
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        Image restartdImg = restartBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        ImageIcon restartImg = new ImageIcon(restartdImg);
+        restartButton.setIcon(restartImg);
+        
         panelSouthInPanelWest.add(menuButton);
         //panelSouthInPanelWest.add(clearButton);
         panelSouthInPanelWest.add(dataButton);
+        panelSouthInPanelWest.add(restartButton);
         panelSouthInPanelWest.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         //panelSouthInPanelWest.add(stopButton);
 
@@ -322,6 +338,33 @@ public class OnMyWay6 extends project{
             }
         });
 
+        restartButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				for (int i = 1; i <= max; ++i) {
+                    flag[i] = false;
+                }
+                countPath = 0;
+                currentPath.clear();
+
+
+                // Khởi tạo ban đầu cho anyPath()
+                stack.clear();
+                countTableOfAnyPath = 0;
+                for (int i = 1; i <= max; ++i) {
+                    graph.getNode(String.valueOf(i)).setAttribute("ui.style", "shape:circle; fill-color: yellow; size: 25px;");
+                }
+                Set<Integer> set = adjacencyGraph.keySet();
+                for (Integer key:set) {
+                    for (int i = 0; i < adjacencyGraph.get(key).size(); ++i) {
+                        graph.getEdge(Integer.toString(key) + " " +  Integer.toString(adjacencyGraph.get(key).get(i))).setAttribute("ui.style", "fill-color: black; size: 1px;");
+                    }
+                }
+                twoSelection();
+			}
+		});
         /*clearButton.addActionListener(new ActionListener() {
 
             @Override
@@ -366,7 +409,7 @@ public class OnMyWay6 extends project{
         dataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame dataFrame = new JFrame();
+                
                 dataFrame.setSize(600,700);
                 dataFrame.setLayout(new BorderLayout());
                 dataFrame.setTitle("Data Graph");
@@ -459,12 +502,16 @@ public class OnMyWay6 extends project{
                 /*dataFrame.getContentPane().add(findLabel, BorderLayout.SOUTH);
                 dataFrame.add(dataFind, BorderLayout.SOUTH);*/
                 dataFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                dataFrame.setVisible(true);
+                dataFrame.setVisible(false);
             }
         });
     }
 
     public void twoSelection() {
+    	dataFrame.repaint();
+    	dataFrame.revalidate();
+    	dataFrame.pack();
+    	dataFrame.setVisible(true);
         String[] responses = {"Tự động", "Thủ công"};
         answer = JOptionPane.showOptionDialog(null,
                 "Bạn muốn thực hiện như thế nào?",

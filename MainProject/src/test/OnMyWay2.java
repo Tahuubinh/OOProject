@@ -46,11 +46,21 @@ public class OnMyWay2 extends GraphLinkedList{
 			visited[i] = false;
 		}
 		stack.clear();
+		
+		for (String tempEdgeString: stack2) {
+			Edge edge=graph.getEdge(tempEdgeString);
+			edge.setAttribute("ui.style", "fill-color: black; size: 1px;");
+		}
+		
 		stack2.clear();
 		vertexStack.clear();
 		edgeStack.clear();
-		graph = new SingleGraph("Use");
-    	graphDraw();
+		for(int i = 1; i <= vertices; ++i) {
+
+        	v[i] = graph.getNode(Integer.toString(i));
+        	v[i].setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
+    		
+        }
 	}
 	void addOption(int i, int pl) throws IOException {
 		if(stack.size() > 0 && (i==1)) {

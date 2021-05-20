@@ -347,7 +347,7 @@ public class project {
 					frame = new JFrame();
 					prepare();
 					console();
-					g.graphString("Bai1"); // thực hiện bài 1
+//					g.graphString("Bai1"); // thực hiện bài 1
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -415,7 +415,6 @@ public class project {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				OnMyWay6 onMyWay6 = new OnMyWay6();
-				onMyWay6.setUI();
 				onMyWay6.twoSelection();
 			}
 		});
@@ -1584,7 +1583,8 @@ public class project {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							//omw4.clear();
+//							omw4.clear();
+							frame.remove(view);
 							frame.getContentPane().add(view);
 							AllPathFrame.repaint();
 							AllPathFrame.revalidate();
