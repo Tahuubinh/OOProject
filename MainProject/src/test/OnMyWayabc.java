@@ -28,11 +28,11 @@ import org.graphstream.ui.swing_viewer.ViewPanel;
 import org.graphstream.ui.view.Viewer;
 import org.graphstream.ui.view.Viewer.CloseFramePolicy;
 
-public class OnMyWayabc extends GraphLinkedList{
+public class OnMyWayabc extends DFS{
 
-	private static boolean mutex;
-	private String path;
-	private static int countDFS;
+	private static boolean mutex1;
+	private String path1;
+	private static int countDFS1;
 	private static ViewPanel view;
 	HashMap<String, Integer> count = new HashMap<>(); // Count the times of edge that went
 	
@@ -239,14 +239,14 @@ public class OnMyWayabc extends GraphLinkedList{
         }
 	}
 	
-	void runDFS(int vertex, int end, boolean c) {
+	void runDFS1(int vertex, int end, boolean c) {
 	    visited[vertex] = true;
 	    stack.add(vertex);
 	    
 	    //Print results
 	    if (vertex == end) {
 	    	graphPaint();
-	    	countDFS++;
+	    	countDFS1++;
 		    	for (int i = 0; i < stack.size(); ++i) {
 		    		
 		    		//take the node
@@ -261,7 +261,7 @@ public class OnMyWayabc extends GraphLinkedList{
 		    		String b = Integer.toString(node_index_next);
 		    		Edge edge=graph.getEdge(a + " " + b);
 		    		edge.setAttribute("ui.style", "fill-color: purple; size: 3px;");
-		    		mutex = false;
+		    		mutex1 = false;
 		    	}
 		    	 /*FileSinkImages pic = new SwingFileSinkImages(OutputType.PNG, Resolutions.VGA);
 				 
@@ -285,12 +285,12 @@ public class OnMyWayabc extends GraphLinkedList{
 				//capView(path + "_" + Integer.toString(countDFS));
 		    	int reply = JOptionPane.showConfirmDialog(null, "Do you want to save?", null, JOptionPane.YES_NO_CANCEL_OPTION);
 		    	if (reply == JOptionPane.YES_OPTION) {
-		    		capView(path + "_" + Integer.toString(countDFS));
+		    		capView(path1 + "_" + Integer.toString(countDFS1));
 		    	}
 		    	else if (reply == JOptionPane.NO_OPTION) {
 		    	}
 		    	else {
-		    		countDFS = 150;
+		    		countDFS1 = 150;
 		    	}
         		
 			
@@ -303,25 +303,25 @@ public class OnMyWayabc extends GraphLinkedList{
 	    //--------------------------------------------------------------------------------------------------------------------
 	    Iterator<Integer> ite = adjLists[vertex].listIterator();
 	    while (ite.hasNext()) {
-	    	if(countDFS > 20)
+	    	if(countDFS1 > 20)
                 break;
 	        int adj = ite.next();
 	        if (!visited[adj])
-	        	runDFS(adj, end, true);
+	        	runDFS1(adj, end, true);
 	    }
 	    visited[vertex] = false;
 	    stack.remove(stack.size() - 1);
     }  
     // chạy thuật DFS
-    void runDFS(int vertex, int end) {
-    	runDFS(vertex, end, true);
-    	if (countDFS == 0){
+    void runDFS1(int vertex, int end) {
+    	runDFS1(vertex, end, true);
+    	if (countDFS1 == 0){
     		JOptionPane.showMessageDialog(null, "No path!", "vertex " + vertex + " to vertex " + end, JOptionPane.INFORMATION_MESSAGE);
     	} 
-    	else if (countDFS < 101){
-    		JOptionPane.showMessageDialog(null, "There are " + countDFS + " path(s)", "vertex " + vertex + " to vertex " + end, JOptionPane.INFORMATION_MESSAGE);
+    	else if (countDFS1 < 101){
+    		JOptionPane.showMessageDialog(null, "There are " + countDFS1 + " path(s)", "vertex " + vertex + " to vertex " + end, JOptionPane.INFORMATION_MESSAGE);
     	}
-    	else if (countDFS == 150){
+    	else if (countDFS1 == 150){
     		JOptionPane.showMessageDialog(null, "Stop counting", "vertex " + vertex + " to vertex " + end, JOptionPane.INFORMATION_MESSAGE);
     	}
     	else {
@@ -329,14 +329,14 @@ public class OnMyWayabc extends GraphLinkedList{
     	}
     	//empty the stack here
     	stack.clear();
-    	countDFS = 0;
+    	countDFS1 = 0;
     	
     	
     }
     // path là tên của file ảnh của thuật DFS và vị trí lưu nó
-    void runDFS(int vertex, int end, String path) {
-    	this.path = path;
-    	runDFS(vertex, end);
+    void runDFS1(int vertex, int end, String path) {
+    	this.path1 = path;
+    	runDFS1(vertex, end);
 
     }
     

@@ -272,7 +272,8 @@ public class project {
 	public static void console() throws IOException {
 		
         JButton showButton = new JButton("Bài 1"); // xử lý bài 1
-        JButton AllPAthButton = new JButton("Bài 2"); // xử lý bài 2z
+        JButton AllPAthButton = new JButton("Bài 2"); // xử lý bài 2
+        JButton AllPAthButton2 = new JButton("Bài 2#"); // xử lý bài 2z
         JButton QuestionsPathButton = new JButton("Bài 3");  // xử lý bài 3
         JButton bai4 = new JButton("Bài 4* (Hamilton)");
         JButton bai5 = new JButton("Bài 5* (Euler)");
@@ -303,6 +304,7 @@ public class project {
         buttonJPanel.add(homeButton);
         buttonJPanel.add(showButton);
         buttonJPanel.add(AllPAthButton);
+        buttonJPanel.add(AllPAthButton2);
         buttonJPanel.add(QuestionsPathButton);
         buttonJPanel.add(bai4);
         buttonJPanel.add(bai5);
@@ -356,13 +358,23 @@ public class project {
 			}
 		});
         
-		
         AllPAthButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				omw.runDFS(1, max, "Bai2"); // in tất cả các đường đi từ đỉnh đầu đên đỉnh cuối
 				AllPathButton(); // mở rộng ra, ta có thể chọn 2 đỉnh bất ký và in ra tất cả đường đi giữa 2 đỉnh đó
+				
+			}
+		});
+        
+		
+        AllPAthButton2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				omw.runDFS1(1, max, "Bai2"); // in tất cả các đường đi từ đỉnh đầu đên đỉnh cuối
+				AllPathButton2(); // mở rộng ra, ta có thể chọn 2 đỉnh bất ký và in ra tất cả đường đi giữa 2 đỉnh đó
 				
 			}
 		});
@@ -867,7 +879,152 @@ public class project {
 		frame.dispose();
 	}
 	
-	public static void AllPathButton() { // ài 2
+	public static void AllPathButton() { // bài 2
+		// TODO Auto-generated method stub
+		 c = new Integer[max + 1];
+		JFrame AllPathFrame = new JFrame();
+		JPanel vPanel = new JPanel();
+		JButton btnNewButton = new JButton("Menu");
+		BufferedImage menuBf = null;
+		try {
+			menuBf = ImageIO.read(new File("label_button\\menu.png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Image menudImg = menuBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+		ImageIcon menuImg = new ImageIcon(menudImg);
+		btnNewButton.setIcon(menuImg);
+		btnNewButton.setBounds(10, 10, 208, 29);
+		btnNewButton.setBackground(Color.CYAN);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							frame.getContentPane().add(view);
+							AllPathFrame.repaint();
+							AllPathFrame.revalidate();
+							frame.setVisible(true);
+							AllPathFrame.dispose();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
+		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		vPanel.add(btnNewButton);
+		JLabel nodeLabel1 = new JLabel("Enter node 1st");
+		JLabel nodeLabel2 = new JLabel("Enter node 2nd");
+		DefaultComboBoxModel nodeComboBoxModel1 = new DefaultComboBoxModel();
+		nodeComboBoxModel1.addElement("");
+		for(int i = 1; i <= max; ++i) {
+			nodeComboBoxModel1.addElement(i+"");
+		}
+		JComboBox nodeComboBox1 = new JComboBox(nodeComboBoxModel1);
+		nodeComboBox1.setEditable(true);
+		final JTextField nodeText1 = (JTextField) nodeComboBox1.getEditor().getEditorComponent();
+		nodeText1.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent ke) {
+				LinkedList<String> filterNode = new LinkedList<String>();
+				for(int i = 0; i < nodeComboBoxModel1.getSize(); ++i) {
+					if((nodeComboBoxModel1.getElementAt(i)+"").contains(nodeText1.getText())) {
+						filterNode.add(nodeComboBoxModel1.getElementAt(i)+"");
+					}
+				}
+				if(filterNode.size() >0) {
+					nodeComboBox1.setModel(new DefaultComboBoxModel(filterNode.toArray()));
+					nodeComboBox1.setSelectedItem(nodeText1.getText());
+					nodeComboBox1.showPopup();
+				} else {
+					nodeComboBox1.hidePopup();
+				}
+			}
+		});
+		DefaultComboBoxModel nodeComboBoxModel2 = new DefaultComboBoxModel();
+		nodeComboBoxModel2.addElement("");
+		for(int i = 1; i <= max; ++i) {
+			nodeComboBoxModel2.addElement(i+"");
+		}
+		JComboBox nodeComboBox2 = new JComboBox(nodeComboBoxModel2);
+		nodeComboBox2.setEditable(true);
+		final JTextField nodeText2 = (JTextField) nodeComboBox2.getEditor().getEditorComponent();
+		nodeText2.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent ke) {
+				LinkedList<String> filterNode = new LinkedList<String>();
+				for(int i = 0; i < nodeComboBoxModel2.getSize(); ++i) {
+					if((nodeComboBoxModel2.getElementAt(i)+"").contains(nodeText2.getText())) {
+						filterNode.add(nodeComboBoxModel2.getElementAt(i)+"");
+					}
+				}
+				if(filterNode.size() >0) {
+					nodeComboBox2.setModel(new DefaultComboBoxModel(filterNode.toArray()));
+					nodeComboBox2.setSelectedItem(nodeText2.getText());
+					nodeComboBox2.showPopup();
+				} else {
+					nodeComboBox2.hidePopup();
+				}
+			}
+		});
+		JButton finishButton = new JButton("Finish");
+		BufferedImage finishBf = null;
+		try {
+			finishBf = ImageIO.read(new File("label_button\\find.png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Image finishdImg = finishBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+		ImageIcon finishImg = new ImageIcon(finishdImg);
+		finishButton.setIcon(finishImg);
+		vPanel.add(nodeLabel1);
+		vPanel.add(nodeComboBox1);
+		vPanel.add(nodeLabel2);
+		vPanel.add(nodeComboBox2);
+		vPanel.add(finishButton);
+		finishButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String t1 = nodeText1.getText(), t2 = nodeText2.getText(); 
+				if(graph.getNode(t1) == null || graph.getNode(t2) == null) {
+					if(graph.getNode(t1) == null && graph.getNode(t2) != null) {
+						JOptionPane.showMessageDialog(null, "Can't find node" + t1 + "!", "ERROR", JOptionPane.ERROR_MESSAGE);
+					}
+					else if(graph.getNode(t2) == null && graph.getNode(t1) != null) {
+						JOptionPane.showMessageDialog(null, "Can't find node" + t2 + "!", "ERROR", JOptionPane.ERROR_MESSAGE);
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Can't find node" + t1 + " " + t2 + "!", "ERROR", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+				else {
+					g.runDFS(Integer.parseInt(t1) , Integer.parseInt(t2), "path between vertex " + t1 + " and vertex " +t2 );
+				}
+			}
+		});
+		AllPathFrame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent windowEvent) {
+				AllPathFrame.dispose();
+			}
+		});
+		setLabel(AllPathFrame);
+
+		AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
+		AllPathFrame.getContentPane().add(view);
+		AllPathFrame.setPreferredSize(new Dimension(1600, 825));
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		AllPathFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		AllPathFrame.pack();
+		AllPathFrame.setVisible(true);
+		frame.dispose();
+		
+	}
+	
+	public static void AllPathButton2() { // ài 2
 		// TODO Auto-generated method stub
 		 c = new Integer[max + 1];
 		JFrame AllPathFrame = new JFrame();
@@ -991,7 +1148,7 @@ public class project {
 					}
 				}
 				else {
-					omw.runDFS(Integer.parseInt(t1) , Integer.parseInt(t2), "path between vertex " + t1 + " and vertex " +t2 );
+					omw.runDFS1(Integer.parseInt(t1) , Integer.parseInt(t2), "path between vertex " + t1 + " and vertex " +t2 );
 				}
 			}
 		});
