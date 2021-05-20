@@ -1,5 +1,8 @@
 package test;
 
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +11,7 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -31,7 +35,10 @@ import org.graphstream.ui.view.Viewer.CloseFramePolicy;
 
 public class OnMyWayabc extends DFS{
 
-	
+	private static boolean mutex1;
+	private String path1;
+	private static int countDFS1;
+	private static ViewPanel view;
 	HashMap<String, Integer> count = new HashMap<>(); // Count the times of edge that went
 	
 	
@@ -51,7 +58,27 @@ public class OnMyWayabc extends DFS{
 	
 	void runner() throws NoSuchElementException, IOException {
 		//graph = new SingleGraph("Use");
-    	graphDraw();
+    	//graphDraw();
+		graph = new SingleGraph("Use");
+		for (int i = 1; i <= vertices; ++i) {
+			graph.addNode(Integer.toString(i));
+		}
+		for (int i = 1; i <= vertices; ++i) {
+			String iString = Integer.toString(i);
+			if (adjLists[i].size() > 0) {
+				for (int j: adjLists[i])
+					graph.addEdge(iString + " " + Integer.toString(j), iString, Integer.toString(j), true);
+			}
+			v[i] = graph.getNode(iString);
+		}
+		
+		for (int i = 1; i <= vertices; ++i) {
+			v[i].setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
+			v[i].setAttribute("ui.label", Integer.toString(i)); 
+		}
+    	SwingViewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+    	viewer.enableAutoLayout();
+        view = (ViewPanel) viewer.addDefaultView(false);
 	}
 	
 	void clear() {
@@ -150,9 +177,6 @@ public class OnMyWayabc extends DFS{
 	
 	boolean aa = true;
 	public ViewPanel getViewer() { //cập nhật đồ thị mới vào frame
-		SwingViewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-    	viewer.enableAutoLayout();
-        ViewPanel view = (ViewPanel) viewer.addDefaultView(false);
         
         return view;
 	}
@@ -205,6 +229,139 @@ public class OnMyWayabc extends DFS{
 			// TODO: handle exception
 			 e.printStackTrace();
 		}
+	}
+	
+	public static void capView(String result) {
+		BufferedImage bi = new BufferedImage(view.getWidth(), view.getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics g = bi.createGraphics();
+        view.print(g);
+        g.dispose();
+        try {
+            ImageIO.write(bi, "png", new File("pic_graph\\"+result+".png"));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+	}
+	
+	void runDFS1(int vertex, int end, boolean c) {
+	    visited[vertex] = true;
+	    stack.add(vertex);
+	    
+	    //Print results
+	    if (vertex == end) {
+	    	graphPaint();
+	    	countDFS1++;
+		    	for (int i = 0; i < stack.size(); ++i) {
+		    		
+		    		//take the node
+		    		int node_index_temp = stack.get(i);
+		    		
+		    		v[node_index_temp].setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px; stroke-mode: plain;");
+		    		
+		    		if (i == stack.size() - 1)
+		    			continue;
+		    		int node_index_next = stack.get(i + 1);
+		    		String a = Integer.toString(node_index_temp);
+		    		String b = Integer.toString(node_index_next);
+		    		Edge edge=graph.getEdge(a + " " + b);
+		    		edge.setAttribute("ui.style", "fill-color: purple; size: 3px;");
+		    		mutex1 = false;
+		    	}
+		    	 /*FileSinkImages pic = new SwingFileSinkImages(OutputType.PNG, Resolutions.VGA);
+				 
+				 pic.setLayoutPolicy(LayoutPolicy.COMPUTED_FULLY_AT_NEW_IMAGE);
+				 try {
+				 pic.writeAll(graph, "pic_graph\\" + path + "_" + Integer.toString(countDFS) +".png");
+				 } catch (IOException e) {
+					// TODO: handle exception
+					 e.printStackTrace();
+				}
+				graph.setAttribute("ui.screenshot", "pic_graph/" + path + "_" + Integer.toString(countDFS)+ ".png");
+				mutex = true;
+				try {
+					TimeUnit.SECONDS.sleep(1);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} finally {
+					capView(path + "_" + Integer.toString(countDFS));
+				}*/
+				//capView(path + "_" + Integer.toString(countDFS));
+		    	int reply = JOptionPane.showConfirmDialog(null, "Do you want to save?", null, JOptionPane.YES_NO_CANCEL_OPTION);
+		    	if (reply == JOptionPane.YES_OPTION) {
+		    		capView(path1 + "_" + Integer.toString(countDFS1));
+		    	}
+		    	else if (reply == JOptionPane.NO_OPTION) {
+		    	}
+		    	else {
+		    		countDFS1 = 150;
+		    	}
+        		
+			
+			 
+	    	System.out.println();
+	    	visited[vertex] = false;
+		    stack.remove(stack.size() - 1);
+	    	return;
+	    }
+	    //--------------------------------------------------------------------------------------------------------------------
+	    Iterator<Integer> ite = adjLists[vertex].listIterator();
+	    while (ite.hasNext()) {
+	    	if(countDFS1 > 20)
+                break;
+	        int adj = ite.next();
+	        if (!visited[adj])
+	        	runDFS1(adj, end, true);
+	    }
+	    visited[vertex] = false;
+	    stack.remove(stack.size() - 1);
+    }  
+    // chạy thuật DFS
+    void runDFS1(int vertex, int end) {
+    	runDFS1(vertex, end, true);
+    	if (countDFS1 == 0){
+    		JOptionPane.showMessageDialog(null, "No path!", "vertex " + vertex + " to vertex " + end, JOptionPane.INFORMATION_MESSAGE);
+    	} 
+    	else if (countDFS1 < 101){
+    		JOptionPane.showMessageDialog(null, "There are " + countDFS1 + " path(s)", "vertex " + vertex + " to vertex " + end, JOptionPane.INFORMATION_MESSAGE);
+    	}
+    	else if (countDFS1 == 150){
+    		JOptionPane.showMessageDialog(null, "Stop counting", "vertex " + vertex + " to vertex " + end, JOptionPane.INFORMATION_MESSAGE);
+    	}
+    	else {
+    		JOptionPane.showMessageDialog(null, "There are more than 100 path(s)", "vertex " + vertex + " to vertex " + end, JOptionPane.INFORMATION_MESSAGE);
+    	}
+    	//empty the stack here
+    	stack.clear();
+    	countDFS1 = 0;
+    	
+    	
+    }
+    // path là tên của file ảnh của thuật DFS và vị trí lưu nó
+    void runDFS1(int vertex, int end, String path) {
+    	this.path1 = path;
+    	runDFS1(vertex, end);
+
+    }
+    
+    void graphPaint() {
+		for (int i = 1; i <= vertices; ++i) {
+			String iString = Integer.toString(i);
+			if (adjLists[i].size() > 0) {
+				for (int j: adjLists[i]) {
+					Edge edge=graph.getEdge(iString + " " + Integer.toString(j));
+					edge.setAttribute("ui.style", "fill-color: black; size: 1px;");
+				}
+			}
+			v[i] = graph.getNode(iString);
+		}
+		
+		for (int i = 1; i <= vertices; ++i) {
+			v[i].setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
+			v[i].setAttribute("ui.label", Integer.toString(i)); 
+		}
+		
 	}
 }
 
