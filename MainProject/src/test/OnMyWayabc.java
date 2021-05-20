@@ -52,6 +52,7 @@ public class OnMyWayabc extends DFS{
 	private static int countDFS1;
 	private static ViewPanel view;
 	HashMap<String, Integer> count = new HashMap<>(); // Count the times of edge that went
+	public String RandomPath=""; //D
 	
 	
 	OnMyWayabc(int vertices) {
@@ -473,6 +474,17 @@ public class OnMyWayabc extends DFS{
 			v[i].setAttribute("ui.label", Integer.toString(i)); 
 		}
 		
+	}
+	//D
+	void clearAuto(){
+		graph.edges().forEach(edge -> {
+			edge.setAttribute("ui.style", "fill-color: black; size: 1px;");
+		});
+
+		for(Node node: graph){
+			node.setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
+		}
+		RandomPath = "";
 	}
 }
 

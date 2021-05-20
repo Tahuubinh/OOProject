@@ -11,19 +11,16 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 import org.graphstream.graph.Node;
-import org.graphstream.graph.BreadthFirstIterator;
-import org.graphstream.graph.Edge;
-import org.graphstream.graph.Graph;
-import org.graphstream.graph.implementations.DefaultGraph;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.stream.file.FileSinkImages;
 import org.graphstream.stream.file.FileSinkImages.LayoutPolicy;
-import org.graphstream.stream.file.FileSinkImages.OutputPolicy;
 import org.graphstream.stream.file.FileSinkImages.OutputType;
 import org.graphstream.stream.file.images.Resolutions;
 import org.graphstream.ui.swing.util.SwingFileSinkImages;
-import org.graphstream.ui.view.Viewer;
-import org.graphstream.ui.view.Viewer.CloseFramePolicy;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class GraphLinkedList{
 	protected LinkedList<Integer> adjLists[];
@@ -54,11 +51,11 @@ public class GraphLinkedList{
 	GraphLinkedList(int vertices) {
 		this.vertices = vertices;
 		stack = new ArrayList<Integer>();
-	    adjLists = new LinkedList[vertices + 1];
-	    visited = new boolean[vertices + 1];
-	    v = new Node[vertices + 1];
-	    for (int i = 0; i < vertices + 1; i++)
-	    	adjLists[i] = new LinkedList<Integer>();
+		adjLists = new LinkedList[vertices + 1];
+		visited = new boolean[vertices + 1];
+		v = new Node[vertices + 1];
+		for (int i = 0; i < vertices + 1; i++)
+			adjLists[i] = new LinkedList<Integer>();
 	}
 
 	GraphLinkedList(int vertices, Graph graph) {
@@ -94,10 +91,10 @@ public class GraphLinkedList{
 			}
 			v[i] = graph.getNode(iString);
 		}
-		
+
 		for (int i = 1; i <= vertices; ++i) {
 			v[i].setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
-			v[i].setAttribute("ui.label", Integer.toString(i)); 
+			v[i].setAttribute("ui.label", Integer.toString(i));
 		}
 		
 	}
@@ -115,21 +112,21 @@ public class GraphLinkedList{
 			v[i].setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
 			v[i].setAttribute("ui.label", Integer.toString(i)); 
 		}
-		
+
 	}
 	//xuất đồ thị dướng dạng file ảnh png
 	void graphShow() throws IOException {
 		graphDraw();
-		
-		
-		 FileSinkImages pic = new SwingFileSinkImages(OutputType.PNG, Resolutions.VGA);
-		 
-		 pic.setLayoutPolicy(LayoutPolicy.COMPUTED_FULLY_AT_NEW_IMAGE);
-		 try {
-		 pic.writeAll(graph, "pic_graph\\" + path + ".png");
-		 } catch (IOException e) {
+
+
+		FileSinkImages pic = new SwingFileSinkImages(OutputType.PNG, Resolutions.VGA);
+
+		pic.setLayoutPolicy(LayoutPolicy.COMPUTED_FULLY_AT_NEW_IMAGE);
+		try {
+			pic.writeAll(graph, "pic_graph\\" + path + ".png");
+		} catch (IOException e) {
 			// TODO: handle exception
-			 e.printStackTrace();
+			e.printStackTrace();
 		}
 
 	}
@@ -149,42 +146,42 @@ public class GraphLinkedList{
 		this.path = path;
 		graphShow();
 	}
-	private String styleSheet = 
- 			"graph {"+
-			"	canvas-color: black;"+
-			"		fill-mode: gradient-vertical;"+
-			"		fill-color: black, #004;"+
-			"		padding: 60px;"+
-			"	}"+
-			"node {"+
-			"	shape: circle;"+
-			"	size: 14px;"+
-			"	fill-mode: gradient-radial;"+
-			"	fill-color: #FFFA, #FFF0;"+
-			"	stroke-mode: none;"+
-			"	shadow-mode: gradient-radial;"+
-			"	shadow-color: #FFF9, #FFF0;"+
-			"	shadow-width: 10px;"+
-			"	shadow-offset: 0px, 0px;"+
-			"}"+
-			"node:clicked {"+
-			"	fill-color: #F00A, #F000;"+
-			"}"+
-			"node:selected {"+
-			"	fill-color: #00FA, #00F0;"+
-			"}"+
-			"edge {"+
-			"	shape: line;"+
-			"	size: 1px;"+
-			"	fill-color: #FFF3;"+
-			"	fill-mode: plain;"+
-			"	arrow-shape: none;"+
-			"}"+
-			"sprite {"+
-			"	shape: circle;"+
-			"	fill-mode: gradient-radial;"+
-			"	fill-color: #FFF8, #FFF0;"+
-			"}";
+	private String styleSheet =
+			"graph {"+
+					"	canvas-color: black;"+
+					"		fill-mode: gradient-vertical;"+
+					"		fill-color: black, #004;"+
+					"		padding: 60px;"+
+					"	}"+
+					"node {"+
+					"	shape: circle;"+
+					"	size: 14px;"+
+					"	fill-mode: gradient-radial;"+
+					"	fill-color: #FFFA, #FFF0;"+
+					"	stroke-mode: none;"+
+					"	shadow-mode: gradient-radial;"+
+					"	shadow-color: #FFF9, #FFF0;"+
+					"	shadow-width: 10px;"+
+					"	shadow-offset: 0px, 0px;"+
+					"}"+
+					"node:clicked {"+
+					"	fill-color: #F00A, #F000;"+
+					"}"+
+					"node:selected {"+
+					"	fill-color: #00FA, #00F0;"+
+					"}"+
+					"edge {"+
+					"	shape: line;"+
+					"	size: 1px;"+
+					"	fill-color: #FFF3;"+
+					"	fill-mode: plain;"+
+					"	arrow-shape: none;"+
+					"}"+
+					"sprite {"+
+					"	shape: circle;"+
+					"	fill-mode: gradient-radial;"+
+					"	fill-color: #FFF8, #FFF0;"+
+					"}";
 }
 
 

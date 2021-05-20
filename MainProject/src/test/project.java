@@ -120,6 +120,8 @@ public class project {
 	private static LinkedList<Integer> aIntegers = new LinkedList<Integer>();
 	private static ArrayList<String> hasNext=new ArrayList<>();
 	private static HashMap<String,String[]> adjEdge=new HashMap<>();
+
+	static boolean check=true; //D
 	
 	public static void main(String args[]) throws IOException {
 		SwingUtilities.invokeLater(new Runnable() {
@@ -1994,5 +1996,196 @@ public class project {
 		frame.dispose();
 		
 	}
+	protected static void AutoGo(){
+		// TODO Auto-generate method stub
+		JFrame AutoFrame = new JFrame ("Auto");
+		AutoFrame.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		AutoFrame.getContentPane().setLayout(new GridBagLayout());
 
+		JPanel Option = new JPanel();
+		JButton Stop = new JButton("Stop");
+		JButton Menu = new JButton("Menu");
+		JTextField textNode = new JTextField(3);
+		JLabel enterNode = new JLabel("Beginning Node");
+		JButton Finish = new JButton("Finish");
+		JButton Clear = new JButton("Clear");
+		Menu.setBounds(10, 10, 208, 29);
+		Menu.setBackground(Color.CYAN);
+
+		Option.add(Menu);
+		Option.add(Stop);
+		Option.add(enterNode);
+		Option.add(textNode);
+		Option.add(Finish);
+		Option.add(Clear);
+
+		AutoFrame.setTitle("Auto");
+		AutoFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+		GridBagConstraints c = new GridBagConstraints();
+		GridBagConstraints gc = new GridBagConstraints();
+		GridBagConstraints p = new GridBagConstraints();
+
+		JScrollPane textScroll = new JScrollPane();
+		JTextArea textArea = new JTextArea();
+		textScroll.setViewportView(textArea);
+		textArea.setText("Random Path:\n");
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
+
+		p.fill = GridBagConstraints.BOTH;
+		p.weightx = 0.5;
+		p.gridx = 0;
+		p.gridy = 1;
+		p.ipady = 10;
+		p.anchor = GridBagConstraints.WEST;
+		AutoFrame.getContentPane().add(textScroll, p);
+
+		gc.fill = GridBagConstraints.BOTH;
+		gc.weightx = 0.5;
+		gc.gridx = 1;
+		gc.gridy = 1;
+		gc.ipadx = 100;
+		gc.ipady = 750;
+		gc.anchor = GridBagConstraints.EAST;
+		AutoFrame.getContentPane().add(view,gc);
+
+		c.gridx = 0;
+		c.gridy = 2;
+		c.ipadx = 30;
+		c.ipady = 40;
+		AutoFrame.getContentPane().add(Option, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridwidth = 2;
+		c.gridx = 1;
+		c.anchor = GridBagConstraints.PAGE_END;
+		c.anchor = GridBagConstraints.CENTER;
+
+
+		AutoFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		AutoFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+		Menu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							omw.clearAuto();
+							AutoFrame.repaint();
+							AutoFrame.revalidate();
+							AutoFrame.setVisible(false);
+							frame.remove(view);
+							frame.add(view);
+							frame.repaint();
+							frame.revalidate();
+							frame.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
+
+		Finish.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed (ActionEvent e){
+				// TODO Auto-generated method stub
+				check=true;
+				if (graph.getNode(textNode.getText()) == null) {
+					JOptionPane.showMessageDialog(null, "Can't find node" + textNode.getText(), "ERROR", JOptionPane.ERROR_MESSAGE);
+				} else {
+					LinkedList<Integer> secAdjList[];
+					secAdjList = new LinkedList[max + 1];
+					for (int i = 1; i <= max; i++) {
+						secAdjList[i] = new LinkedList<Integer>();
+						secAdjList[i] = (LinkedList) omw.adjLists[i].clone();
+					}
+					omw.RandomPath = omw.RandomPath+"Random Path:" + "\n" +textNode.getText();
+					omw.graph.getNode(textNode.getText()).setAttribute("ui.style","shape:circle;fill-color: green;size: 30px;");
+					textArea.setText(omw.RandomPath);
+					new javax.swing.Timer(1500, new ActionListener(){
+						int begin =Integer.parseInt(textNode.getText());
+						int currentInt = begin;
+						int preInt;
+						Node currentNode = graph.getNode(begin - 1);
+
+						@Override
+						public void actionPerformed(ActionEvent e){
+							currentNode.setAttribute("ui.style","shape:circle;fill-color: green;size: 30px;");
+
+							if(secAdjList[currentInt].size()==0 || check == false){
+								((javax.swing.Timer) e.getSource()).stop();
+								return;
+							}
+							else{
+								omw.RandomPath = omw.RandomPath + " -> ";
+
+								Random rand = new Random();
+								int randNum = rand.nextInt(secAdjList[currentInt].size());
+
+								preInt = currentInt;
+
+								currentInt = secAdjList[currentInt].get(randNum);
+								currentNode = omw.graph.getNode(currentInt - 1);
+
+								secAdjList[preInt].remove(randNum);
+
+								String thisEdge = preInt + " " + currentInt;
+								omw.graph.getEdge(thisEdge).setAttribute("ui.style", "fill-color: purple; size: 3px;");
+
+
+								currentNode.setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
+
+								omw.RandomPath = omw.RandomPath + currentInt;
+								textArea.setText(omw.RandomPath);
+							}
+						}
+
+
+					}).start();
+
+					//omw.GraphAuto(Integer.parseInt(textNode.getText()));
+					//textArea.setText(textArea.getText() + omw.RandomPath);
+				}
+			}
+
+
+		});
+
+		Stop.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				check=false;
+			}
+		});
+
+		Clear.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				omw.clearAuto();
+				textArea.setText("Random Path:\n");
+			}
+		});
+
+		AutoFrame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent windowEvent) { // khi frame đóng, khôi phục lại đồ thị như ban đầu
+
+				textArea.setText("Random Path:\n");
+				omw.clearAuto();
+				AutoFrame.repaint();
+				AutoFrame.revalidate();
+			}
+		});
+
+
+		AutoFrame.getContentPane().add(view, gc);
+
+		AutoFrame.pack();
+		AutoFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		AutoFrame.setVisible(true);
+		frame.dispose();
+	}
 }
