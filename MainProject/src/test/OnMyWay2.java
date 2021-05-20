@@ -49,8 +49,6 @@ public class OnMyWay2 extends GraphLinkedList{
 		stack2.clear();
 		vertexStack.clear();
 		edgeStack.clear();
-		graph = new SingleGraph("Use");
-    	graphDraw();
 	}
 	void addOption(int i, int pl) throws IOException {
 		if(stack.size() > 0 && (i==1)) {

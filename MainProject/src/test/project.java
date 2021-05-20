@@ -1317,7 +1317,8 @@ public class project {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							//omw4.clear();
+							omw4.clear();
+							omw.graphPaint();
 							frame.getContentPane().add(view);
 							AllPathFrame.repaint();
 							AllPathFrame.revalidate();
@@ -1584,7 +1585,8 @@ public class project {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							//omw4.clear();
+							omw5.clear();
+							omw.graphPaint();
 							frame.getContentPane().add(view);
 							AllPathFrame.repaint();
 							AllPathFrame.revalidate();
