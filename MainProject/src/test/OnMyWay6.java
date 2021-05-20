@@ -530,6 +530,7 @@ public class OnMyWay6 extends project{
                     public void actionPerformed(ActionEvent e) {
                         if (cnt == arrayListTemp.size()-2) {
                             graph.getNode(Integer.toString(arrayListTemp.get(cnt))).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
+                            graph.getNode(Integer.toString(arrayListTemp.get(cnt+1))).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
                             graph.getEdge(String.valueOf(arrayListTemp.get(cnt)) + " " + String.valueOf(arrayListTemp.get(cnt+1))).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
                             String[] data1 = {String.valueOf(cnt+1),
                                     "Cạnh " + String.valueOf(arrayListTemp.get(cnt)) + " - " + String.valueOf(arrayListTemp.get(cnt+1)),
@@ -590,6 +591,7 @@ public class OnMyWay6 extends project{
                                         public void actionPerformed(ActionEvent e) {
                                             if (cnt == arrayListTemp.size()-2) {
                                                 graph.getNode(Integer.toString(arrayListTemp.get(cnt))).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
+                                                graph.getNode(Integer.toString(arrayListTemp.get(cnt+1))).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
                                                 graph.getEdge(String.valueOf(arrayListTemp.get(cnt)) + " " + String.valueOf(arrayListTemp.get(cnt+1))).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
                                                 String[] data1 = {String.valueOf(cnt+1),
                                                         "Cạnh " + String.valueOf(arrayListTemp.get(cnt)) + " - " + String.valueOf(arrayListTemp.get(cnt+1)),
