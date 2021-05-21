@@ -616,6 +616,7 @@ public class project {
 			public void actionPerformed(ActionEvent e) {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
+						check = false;
 						try {
 							omw.clear();
 							pathTxt.setText("Edge has passed:\n");
@@ -904,13 +905,35 @@ public class project {
 
 								currentNode.setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
 								pathTxt.setText(pathTxt.getText() + "(" + omw.getStack().get(omw.getStack().size()-1) + ") -> (" + currentInt + ") \n");
-
+								
 								try {
 									omw.addOption(1, currentInt);
 								} catch (IOException e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
 								}
+								for(int j = 0; j < max; ++j) { // khôi phục lại các buton, để khi xóa các button ta sẽ có các button được xếp sếp theo thứ tự tăng dần
+									
+									vPanel.add(vButtons[j]);
+								}
+								/*vertex = omw.getVertex();
+								for(int j = 0; j < max; ++j) {
+									if(!vertex.contains(j+1)) {
+										vPanel.remove(vButtons[j]);
+									}
+								}*/
+								
+								
+								aIntegers = omw.getPlaceAdj();
+								for(int j = 0; j < max; ++j) {
+									if(!aIntegers.contains(j+1)) { // những đỉnh nào mà không kề với đỉnh hiện tại sẽ xóa các button của các đỉnh đó đi
+										vPanel.remove(vButtons[j]);
+									}
+								}
+								splitGraph.repaint();
+								splitMenu.repaint();
+								AllPathFrame.repaint();
+								AllPathFrame.revalidate();
 								nodeText.setText(currentInt + "");
 								omw.RandomPath = omw.RandomPath + currentInt;
 							}
