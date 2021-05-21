@@ -29,6 +29,7 @@ import java.util.Timer;
 
 
 public class OnMyWay6 extends project{
+    int signal = 0;
 //    Graph graph = new SingleGraph("graph");
 
     // Các Swing UI dùng chung cho Bài 6 này.
@@ -41,9 +42,7 @@ public class OnMyWay6 extends project{
     JPanel panelEast = new JPanel();
     JFrame frameBai6 = new JFrame();
     JTable tableInScrollPane;
-    JButton nextButton = new JButton("Next path");
-
-	boolean a = false;
+    JButton nextButton;
 
     String[] columns = {"Số thứ tự","Đường đi", "Trọng số"};
     DefaultTableModel model = new DefaultTableModel(columns,0);
@@ -66,9 +65,6 @@ public class OnMyWay6 extends project{
     Stack<Integer> stack = new Stack<>(); // Dùng để lưu đường đi. Dùng CTDL này nhằm phục vụ cho việc "lùi lại"
     static int countTableOfAnyPath = 0;
     int xyz;
-    boolean excuted = false;
-    private boolean excuted2 = false;
-    private boolean excuted1 = false;
     public OnMyWay6(){
         // Đẩy dữ liệu vào HashMap adjacencyGraph
         for (int i = 0; i < size; ++i) {
@@ -102,12 +98,8 @@ public class OnMyWay6 extends project{
                 project.zoomGraphMouseWheelMoved(mwe, view);
             }
         });
-        if(!excuted) {
-            setWeightGraph();
-            setUI();
-
-        }
-
+        setWeightGraph();
+        setUI();
     }
 
     public void setInitialDrawGraph() {
@@ -242,10 +234,9 @@ public class OnMyWay6 extends project{
         panelInPanelWest.add(scrollPaneCenterInPanelWest, BorderLayout.CENTER);
         panelInPanelWest.add(panelFind, BorderLayout.SOUTH);
         //-------------------------1.3.Thanh cuối: chứa Menu, Clear,...-----------------------------//
-        //JButton clearButton = new JButton("Clear");
+        JButton clearButton = new JButton("Clear");
         JButton dataButton = new JButton("Data"); // khôi phục lại đồ thị ban đầu
         JButton menuButton = new JButton(); // quay lại frame chọn bài
-        JButton restartButton = new JButton();
         //JButton stopButton = new JButton("Stop"); // stop simulation graph
         menuButton.setBounds(10, 10, 208, 29);
         menuButton.setBackground(Color.CYAN);
@@ -259,21 +250,9 @@ public class OnMyWay6 extends project{
         Image menudImg = menuBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
         ImageIcon menuImg = new ImageIcon(menudImg);
         menuButton.setIcon(menuImg);
-        
-        BufferedImage restartBf = null;
-        try {
-            restartBf = ImageIO.read(new File("label_button\\restart.png"));
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-        Image restartdImg = restartBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-        ImageIcon restartImg = new ImageIcon(restartdImg);
-        restartButton.setIcon(restartImg);
         panelSouthInPanelWest.add(menuButton);
-        //panelSouthInPanelWest.add(clearButton);
+        panelSouthInPanelWest.add(clearButton);
         panelSouthInPanelWest.add(dataButton);
-        panelSouthInPanelWest.add(restartButton);
         panelSouthInPanelWest.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         //panelSouthInPanelWest.add(stopButton);
 
@@ -297,14 +276,12 @@ public class OnMyWay6 extends project{
         panelEast.add(view, BorderLayout.CENTER);
 
         /////////////////////////////COMPLETE 2.Panel East////////////////////////////////////
-
-        frameBai6.setPreferredSize(new Dimension(1600, 825));
-        frameBai6.setResizable(true);
-        frameBai6.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         frameBai6.getContentPane().add(panelWest,BorderLayout.WEST);
         frameBai6.getContentPane().add(panelEast);
 
+        frameBai6.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frameBai6.setResizable(true);
+        frameBai6.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameBai6.setVisible(false);
 
         //////////////////////////////SETUP BUTTON in Panel West//////////////////////////////
@@ -334,7 +311,6 @@ public class OnMyWay6 extends project{
                     }
                 }
 
-
                 frame.remove(view);
                 frame.add(view);
                 frame.repaint();
@@ -344,54 +320,46 @@ public class OnMyWay6 extends project{
             }
         });
 
-        restartButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-//				frameBai6.dispose();
-				 for (int i = 1; i <= max; ++i) {
-	                    flag[i] = false;
-	                }
-	                countPath = 0;
-	                currentPath.clear();
-	                dem = 0;
-	                countPath = 0;
-//	                allPathDFSBai6.
-	                // Khởi tạo ban đầu cho anyPath()
-	                stack.clear();
-	                countTableOfAnyPath = 0;
-	                for (int i = 1; i <= max; ++i) {
-	                    graph.getNode(String.valueOf(i)).setAttribute("ui.style", "shape:circle; fill-color: yellow; size: 25px;");
-	                }
-	                Set<Integer> set = adjacencyGraph.keySet();
-	                for (Integer key:set) {
-	                    for (int i = 0; i < adjacencyGraph.get(key).size(); ++i) {
-	                        graph.getEdge(Integer.toString(key) + " " +  Integer.toString(adjacencyGraph.get(key).get(i))).setAttribute("ui.style", "fill-color: black; size: 1px;");
-	                    }
-	                }
-
-//                frame.remove(view);
-//                frame.add(view);
-//                frame.repaint();
-//                frame.revalidate();
-//                frame.pack();
-//	                setUI();
-                twoSelection();
-			}
-		});
-        /*clearButton.addActionListener(new ActionListener() {
-
-=======
-/*        clearButton.addActionListener(new ActionListener() {
->>>>>>> 6298abdce3c54d71de4a6af25d30da213cc0d0c7
+        clearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
-                setUI();
+//				frameBai6.dispose();
+                model.setRowCount(0);
+                for (int i = 1; i <= max; ++i) {
+                    flag[i] = false;
+                }
+                countPath = 0;
+                currentPath.clear();
+
+                // Khởi tạo ban đầu cho anyPath()
+                stack.clear();
+                countTableOfAnyPath = 0;
+                for (int i = 1; i <= max; ++i) {
+                    graph.getNode(String.valueOf(i)).setAttribute("ui.style", "shape:circle; fill-color: yellow; size: 25px;");
+                }
+                Set<Integer> set = adjacencyGraph.keySet();
+                for (Integer key:set) {
+                    for (int i = 0; i < adjacencyGraph.get(key).size(); ++i) {
+                        graph.getEdge(Integer.toString(key) + " " +  Integer.toString(adjacencyGraph.get(key).get(i))).setAttribute("ui.style", "fill-color: black; size: 1px;");
+                    }
+                }
+
+                if (signal == 1) {
+                    panelSouthInPanelWest.remove(nextButton);
+                } else if (signal == 2) {
+                    panelSouthInPanelWest.remove(stopButton);
+                    panelSouthInPanelEast.removeAll();
+                    panelSouthInPanelWest.updateUI();
+                    panelSouthInPanelEast.updateUI();
+                } else {
+                    //do nothing
+                }
+                frameBai6.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 twoSelection();
             }
-        });*/
+        });
+
 
         dataButton.addActionListener(new ActionListener() {
             @Override
@@ -488,7 +456,7 @@ public class OnMyWay6 extends project{
                 dataFrame.add(panel, BorderLayout.SOUTH);
                 /*dataFrame.getContentPane().add(findLabel, BorderLayout.SOUTH);
                 dataFrame.add(dataFind, BorderLayout.SOUTH);*/
-                //dataFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                dataFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 dataFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 dataFrame.setVisible(true);
             }
@@ -500,6 +468,7 @@ public class OnMyWay6 extends project{
         frameBai6.revalidate();
         frameBai6.pack();
         frameBai6.setVisible(true);
+        frameBai6.setExtendedState(JFrame.MAXIMIZED_BOTH);
         String[] responses = {"Tự động", "Thủ công"};
         answer = JOptionPane.showOptionDialog(null,
                 "Bạn muốn thực hiện như thế nào?",
@@ -572,16 +541,11 @@ public class OnMyWay6 extends project{
                 //JOptionPane.showMessageDialog(null, "Hết đường đi rồi nhé!!!", "Thông báo", JOptionPane.PLAIN_MESSAGE);
 
                 if (countPath > 1) {
-                	if(excuted2) {
-                		panelSouthInPanelWest.remove(stopButton);
-                        panelSouthInPanelWest.add(nextButton);
-                	}
-                    if(!excuted1) {
-                        panelSouthInPanelWest.add(nextButton);
-                        excuted1 = true;
-                    }
+                    signal = 1;
+                    nextButton = new JButton("Next path");
+                    panelSouthInPanelWest.add(nextButton);
                     panelSouthInPanelWest.updateUI();
-
+                    frameBai6.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
                     nextButton.addActionListener(new ActionListener() {
                         @Override
@@ -699,55 +663,43 @@ public class OnMyWay6 extends project{
             }
         }
         else {  // Trường hợp: ans = 1: Thủ công
-        	a = false;
-        	if(excuted1) {
-            	panelSouthInPanelWest.remove(nextButton);
-            	panelSouthInPanelWest.add(stopButton);        		
-        	}
-            if(!excuted2) {
-                panelSouthInPanelWest.add(stopButton);
-                panelEast.add(panelScrollContainButton, BorderLayout.SOUTH);
-                excuted2 = true;
-            }
-
+            signal = 2;
+            panelSouthInPanelWest.add(stopButton);
+            panelEast.add(panelScrollContainButton, BorderLayout.SOUTH);
+            frameBai6.setExtendedState(JFrame.MAXIMIZED_BOTH);
             stopButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                	if(!a) {
-                		 String[] respon = {"Tiếp tục", "Dừng"};
-                         int thisOption = JOptionPane.showOptionDialog(null,
-                                 "Bạn thực sự muốn dừng ?",
-                                 "Thông báo",
-                                 JOptionPane.YES_NO_OPTION,
-                                 JOptionPane.QUESTION_MESSAGE,
-                                 null,
-                                 respon,
-                                 0);
+                    String[] respon = {"Tiếp tục", "Dừng"};
+                    int thisOption = JOptionPane.showOptionDialog(null,
+                            "Bạn thực sự muốn dừng ?",
+                            "Thông báo",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            respon,
+                            0);
 
-                         if (thisOption == 1) {
-                             panelSouthInPanelEast.removeAll();
-                             panelSouthInPanelEast.updateUI();
-                             JOptionPane.showMessageDialog(null, "Chi phí của đường đi là: " + Integer.toString(sumCost), "Thông báo", JOptionPane.PLAIN_MESSAGE);
-                             String[] data = {"------------------------------", "Tổng chi phí là: ", Integer.toString(sumCost)};
-                             model.addRow(data);
-                             // Xoá stopButton
-                             panelSouthInPanelWest.remove(stopButton);
-                             panelSouthInPanelWest.updateUI();
-
-                             // Tô màu đã đi cho đường đi vừa rồi
-                             int nodeTop1 = stack.pop();
-                             int nodeTop2 = stack.pop();
-                             graph.getNode(Integer.toString(nodeTop1)).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
-                             graph.getEdge(Integer.toString(nodeTop2) + " " + Integer.toString(nodeTop1)).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
-                         }
-                         a = true;
-                	}
-                   
+                    if (thisOption == 1) {
+                        panelSouthInPanelEast.removeAll();
+                        panelSouthInPanelEast.updateUI();
+                        JOptionPane.showMessageDialog(null, "Chi phí của đường đi là: " + Integer.toString(sumCost), "Thông báo", JOptionPane.PLAIN_MESSAGE);
+                        String[] data = {"------------------------------", "Tổng chi phí là: ", Integer.toString(sumCost)};
+                        model.addRow(data);
+                        // Xoá stopButton
+                        panelSouthInPanelWest.remove(stopButton);
+                        panelSouthInPanelWest.updateUI();
+                        frameBai6.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                        // Tô màu đã đi cho đường đi vừa rồi
+                        int nodeTop1 = stack.pop();
+                        int nodeTop2 = stack.pop();
+                        graph.getNode(Integer.toString(nodeTop1)).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
+                        graph.getEdge(Integer.toString(nodeTop2) + " " + Integer.toString(nodeTop1)).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
+                    }
                 }
             });
             JOptionPane.showMessageDialog(null, "Bắt đầu bằng cách chọn node", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             anyPath();
-            
         }
     }
 
