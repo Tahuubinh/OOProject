@@ -324,7 +324,7 @@ public class project {
         	buttonJPanel.add(unfreezeButton1);
         	buttonJPanel.remove(freezeButton1);
         }
-		buttonJPanel.add(Auto); //D
+//		buttonJPanel.add(Auto); //D
         buttonJPanel.setBackground(Color.orange);
         
         setLabel(frame);

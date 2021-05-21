@@ -355,7 +355,7 @@ public class OnMyWay6 extends project{
 	                }
 	                countPath = 0;
 	                currentPath.clear();
-
+	                dem = 0;
 
 	                // Khởi tạo ban đầu cho anyPath()
 	                stack.clear();
