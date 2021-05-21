@@ -284,6 +284,7 @@ public class project {
         JButton bai4 = new JButton("Bài 4* (Hamilton)");
         JButton bai5 = new JButton("Bài 5* (Euler)");
         JButton WeightGraph = new JButton("Bài 6"); // xử lý bài 6
+		JButton Auto = new JButton("Bài 7"); //D
         JButton freezeButton = new JButton("Freeze");
         JButton unfreezeButton = new JButton("Unfreeze");
         JButton homeButton = new JButton(); // quay trở về welcomeframe
@@ -323,6 +324,7 @@ public class project {
         	buttonJPanel.add(unfreezeButton1);
         	buttonJPanel.remove(freezeButton1);
         }
+		buttonJPanel.add(Auto); //D
         buttonJPanel.setBackground(Color.orange);
         
         setLabel(frame);
@@ -460,6 +462,13 @@ public class project {
 				frame.repaint();
 				frame.revalidate();
 							}
+		});
+        //D
+		Auto.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e){
+				AutoGo();
+			}
 		});
         frame.getContentPane().add(buttonJPanel, BorderLayout.SOUTH);
         frame.setTitle("Project OOPT");
