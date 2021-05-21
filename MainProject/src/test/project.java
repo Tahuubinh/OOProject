@@ -2112,6 +2112,9 @@ public class project {
 						secAdjList[i] = new LinkedList<Integer>();
 						secAdjList[i] = (LinkedList) omw.adjLists[i].clone();
 					}
+					if(omw.RandomPath!=""){
+						omw.RandomPath = omw.RandomPath+"\n";
+					}
 					omw.RandomPath = omw.RandomPath+"Random Path:" + "\n" +textNode.getText();
 					omw.graph.getNode(textNode.getText()).setAttribute("ui.style","shape:circle;fill-color: green;size: 30px;");
 					textArea.setText(omw.RandomPath);
