@@ -365,7 +365,7 @@ public class OnMyWay6 extends project{
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame dataFrame = new JFrame();
-                dataFrame.setSize(600,700);
+                dataFrame.setBounds(420,30,600,700);
                 dataFrame.setLayout(new BorderLayout());
                 dataFrame.setTitle("Data Graph");
                 // Label
@@ -456,7 +456,7 @@ public class OnMyWay6 extends project{
                 dataFrame.add(panel, BorderLayout.SOUTH);
                 /*dataFrame.getContentPane().add(findLabel, BorderLayout.SOUTH);
                 dataFrame.add(dataFind, BorderLayout.SOUTH);*/
-                dataFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                //dataFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 dataFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 dataFrame.setVisible(true);
             }
