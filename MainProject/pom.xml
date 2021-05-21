@@ -176,7 +176,7 @@
 						</tag>
 					</tags>
 					<author>true</author>
-					<failOnError>flase</failOnError>
+					<failOnError>false</failOnError>
 					<nodeprecated>false</nodeprecated>
 					<nodeprecatedlist>false</nodeprecatedlist>
 					<noindex>false</noindex>

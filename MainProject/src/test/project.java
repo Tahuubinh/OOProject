@@ -41,7 +41,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -120,6 +120,8 @@ public class project {
 	private static LinkedList<Integer> aIntegers = new LinkedList<Integer>();
 	private static ArrayList<String> hasNext=new ArrayList<>();
 	private static HashMap<String,String[]> adjEdge=new HashMap<>();
+
+	static boolean check=true; //D
 	
 	public static void main(String args[]) throws IOException {
 		SwingUtilities.invokeLater(new Runnable() {
@@ -282,6 +284,7 @@ public class project {
         JButton bai4 = new JButton("Bài 4* (Hamilton)");
         JButton bai5 = new JButton("Bài 5* (Euler)");
         JButton WeightGraph = new JButton("Bài 6"); // xử lý bài 6
+		JButton Auto = new JButton("Bài 7"); //D
         JButton freezeButton = new JButton("Freeze");
         JButton unfreezeButton = new JButton("Unfreeze");
         JButton homeButton = new JButton(); // quay trở về welcomeframe
@@ -321,6 +324,7 @@ public class project {
         	buttonJPanel.add(unfreezeButton1);
         	buttonJPanel.remove(freezeButton1);
         }
+		buttonJPanel.add(Auto); //D
         buttonJPanel.setBackground(Color.orange);
         
         setLabel(frame);
@@ -459,6 +463,13 @@ public class project {
 				frame.revalidate();
 							}
 		});
+        //D
+		Auto.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e){
+				AutoGo();
+			}
+		});
         frame.getContentPane().add(buttonJPanel, BorderLayout.SOUTH);
         frame.setTitle("Project OOPT");
         frame.setForeground(Color.YELLOW);
@@ -491,6 +502,7 @@ public class project {
 		JButton clearButton = new JButton("Clear"); // khôi phục lại đồ thị ban đầu
 		JButton btnNewButton = new JButton(); // quay lại frame chọn bài
 		JButton stopButton = new JButton("Stop"); // stop simulation graph
+		JButton autoRandomButton = new JButton("Auto");
 		JButton freezeButton = new JButton("Freeze");
         JButton unfreezeButton = new JButton("Unfreeze");
         BufferedImage menuBf = ImageIO.read(new File("label_button\\menu.png"));
@@ -550,6 +562,7 @@ public class project {
 		nPanel.add(nodeLabel);
 		nPanel.add(nodeComboBox);
 		nPanel.add(finishButton);
+		nPanel.add(autoRandomButton);
 		nPanel.add(freezeButton);
 		nPanel.add(unfreezeButton);
 
@@ -639,22 +652,46 @@ public class project {
 			vButtons[i] = new JButton(Integer.toString(i+1));
 			vPanel.add(vButtons[i]);
 		}
+		JSplitPane splitGraph = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, showPathScroll, view);
+		splitGraph.setOneTouchExpandable(true);
+		splitGraph.setContinuousLayout(true);
+		splitGraph.setDividerLocation(625);
+		JSplitPane splitMenu = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, vnScrollPane, vPanelScoll);
+		splitMenu.setOneTouchExpandable(true);
+		splitMenu.setContinuousLayout(true);
+		splitMenu.setDividerLocation(625);
+		LinkedList<Integer> secAdjList[];
+		secAdjList = new LinkedList[max + 1];
+
+		for (int i = 1; i <= max; i++) {
+			secAdjList[i] = new LinkedList<Integer>();
+			secAdjList[i] = (LinkedList) omw.adjLists[i].clone();
+			
+		}
 		
         finishButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(graph.getNode(nodeText.getText()) == null) {
+				if(Integer.parseInt(nodeText.getText()) > max) {
 					JOptionPane.showMessageDialog(null, "Can't find node " + nodeText.getText(), "ERROR", JOptionPane.ERROR_MESSAGE);
+					AllPathFrame.repaint();
+					AllPathFrame.revalidate();
 				}
-				else {
+				else  if(omw.getStack().contains(nodeText.getText())) {
+					JOptionPane.showMessageDialog(null, "Node has chosen before", "ERROR", JOptionPane.ERROR_MESSAGE);
+
+				}
+				else if (omw.getPlaceAdj().contains(Integer.parseInt(nodeText.getText())) || omw.getStack().size() == 0){
+					System.out.println("?");
 					try {
 						omw.addOption(1, Integer.parseInt(nodeText.getText()));
 					}  catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} // đi tới đỉnh đó
+					vPanel.removeAll();
 					for(int j = 0; j < max; ++j) { // khôi phục lại các buton, để khi xóa các button ta sẽ có các button được xếp sếp theo thứ tự tăng dần
 						
 						vPanel.add(vButtons[j]);
@@ -665,7 +702,13 @@ public class project {
 							vPanel.remove(vButtons[j]);
 						}
 					}*/
-					
+					for(int j = 1; j <= max; ++j) {
+						for(int k = 0; k < secAdjList[j].size(); ++k) {
+							if(Integer.parseInt(nodeText.getText()) == secAdjList[j].get(k)) {
+								secAdjList[j].remove(k);
+							}
+						}
+					}
 					
 					aIntegers = omw.getPlaceAdj();
 					for(int j = 0; j < max; ++j) {
@@ -676,17 +719,22 @@ public class project {
 					vPanel.repaint();
 					String a = omw.getLabel();
 					pathTxt.setText(pathTxt.getText() + a);
-					AllPathFrame.getContentPane().add(vPanelScoll, c);
+//					AllPathFrame.getContentPane().add(vPanelScoll, c);
 //					AllPathFrame.getContentPane().remove(view);
 ////					view = omw.getViewer();
 //					
 //					AllPathFrame.getContentPane().add(view, gc);
+					splitGraph.repaint();
+					splitMenu.repaint();
 					AllPathFrame.repaint();
 					AllPathFrame.revalidate();
 //					AllPathFrame.pack();
 //					AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 //					AllPathFrame.setVisible(true);
 					frame.dispose();
+				} else {
+					JOptionPane.showMessageDialog(null, "No path", "ERROR", JOptionPane.ERROR_MESSAGE);
+
 				}
 			}
 		});
@@ -743,18 +791,11 @@ public class project {
 			}
 		});
 
-		JSplitPane splitGraph = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, showPathScroll, view);
-		splitGraph.setOneTouchExpandable(true);
-		splitGraph.setContinuousLayout(true);
-		splitGraph.setDividerLocation(625);
-		JSplitPane splitMenu = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, vnScrollPane, vPanelScoll);
-		splitMenu.setOneTouchExpandable(true);
-		splitMenu.setContinuousLayout(true);
-		splitMenu.setDividerLocation(625);
+		
 		AllPathFrame.add(splitMenu, gc);
 		AllPathFrame.add(splitGraph, sc);
 //		AllPathFrame.getContentPane().add(view, gc);
-
+	
 		for(int i = 0; i < max; ++i) {
 			vButtons[i].addActionListener(new ActionListener() {
 				
@@ -765,6 +806,13 @@ public class project {
 						if(e.getActionCommand().equals(Integer.toString(i))) {// xem đỉnh nào được nhấn hiện tại
 							try {
 								i3 = i;
+								for(int j = 1; j <= max; ++j) {
+									for(int k = 0; k < secAdjList[j].size(); ++k) {
+										if(i == secAdjList[j].get(k)) {
+											secAdjList[j].remove(k);
+										}
+									}
+								}
 								omw.addOption(1, i3); // đi tới đỉnh đó
 								for(int j = 0; j < max; ++j) { // khôi phục lại các buton, để khi xóa các button ta sẽ có các button được xếp sếp theo thứ tự tăng dần
 									
@@ -791,6 +839,7 @@ public class project {
 //////								view = omw.getViewer();
 ////								
 ////								AllPathFrame.getContentPane().add(view, gc);
+								nodeText.setText(i +"");
 								splitGraph.repaint();
 								splitMenu.repaint();
 								AllPathFrame.repaint();
@@ -810,12 +859,81 @@ public class project {
 			
 		}
 		
-	
+		autoRandomButton.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed (ActionEvent e){
+				// TODO Auto-generated method stub
+				check=true;
+				if (graph.getNode(nodeText.getText()) == null) {
+					JOptionPane.showMessageDialog(null, "Can't find node" + nodeText.getText(), "ERROR", JOptionPane.ERROR_MESSAGE);
+				} else {
+					
+					omw.RandomPath = omw.RandomPath+"Random Path:" + "\n" +nodeText.getText();
+					omw.graph.getNode(nodeText.getText()).setAttribute("ui.style","shape:circle;fill-color: green;size: 30px;");
+					new javax.swing.Timer(1500, new ActionListener(){
+						int begin =Integer.parseInt(nodeText.getText());
+						int currentInt = begin;
+						int preInt;
+						Node currentNode = graph.getNode(begin - 1);
+
+						@Override
+						public void actionPerformed(ActionEvent e){
+							currentNode.setAttribute("ui.style","shape:circle;fill-color: green;size: 30px;");
+
+							if(secAdjList[currentInt].size()==0 || check == false){
+								((javax.swing.Timer) e.getSource()).stop();
+								return;
+							}
+							else{
+								omw.RandomPath = omw.RandomPath + " -> ";
+
+								Random rand = new Random();
+								int randNum = rand.nextInt(secAdjList[currentInt].size());
+
+								preInt = currentInt;
+
+								currentInt = secAdjList[currentInt].get(randNum);
+								currentNode = omw.graph.getNode(currentInt - 1);
+								
+								secAdjList[preInt].remove(randNum);
+								i3 = currentInt;
+								String thisEdge = preInt + " " + currentInt;
+								omw.graph.getEdge(thisEdge).setAttribute("ui.style", "fill-color: purple; size: 3px;");
+
+
+								currentNode.setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
+								pathTxt.setText(pathTxt.getText() + "(" + omw.getStack().get(omw.getStack().size()-1) + ") -> (" + currentInt + ") \n");
+
+								try {
+									omw.addOption(1, currentInt);
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								nodeText.setText(currentInt + "");
+								omw.RandomPath = omw.RandomPath + currentInt;
+							}
+						}
+
+
+					}).start();
+
+					//omw.GraphAuto(Integer.parseInt(nodeText.getText()));
+					//textArea.setText(textArea.getText() + omw.RandomPath);
+				}
+			}
+
+
+		});
+
+		
 		clearButton.addActionListener(new ActionListener() { // khôi phục lại đồ thị
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				check = false;
 				omw.clear();
 				y1 = 0;
 				for(int j = 0; j < max; ++j) {
@@ -831,6 +949,7 @@ public class project {
 //				AllPathFrame.getContentPane().remove(view);
 ////				view = omw.getViewer();
 //				AllPathFrame.add(view, gc);
+				nodeText.setText("");
 				AllPathFrame.repaint();
 				AllPathFrame.revalidate();
 //				AllPathFrame.pack();
@@ -845,6 +964,7 @@ public class project {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				check=false;
 				aIntegers = omw.getPlaceAdj();
 				for(int j = 0; j < max; ++j) {
 					if(aIntegers.contains(j+1)) { // những đỉnh nào mà không kề với đỉnh hiện tại sẽ xóa các button của các đỉnh đó đi
@@ -1994,5 +2114,198 @@ public class project {
 		frame.dispose();
 		
 	}
+	protected static void AutoGo(){
+		// TODO Auto-generate method stub
+		JFrame AutoFrame = new JFrame ("Auto");
+		AutoFrame.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		AutoFrame.getContentPane().setLayout(new GridBagLayout());
 
+		JPanel Option = new JPanel();
+		JButton Stop = new JButton("Stop");
+		JButton Menu = new JButton("Menu");
+		JTextField textNode = new JTextField(3);
+		JLabel enterNode = new JLabel("Beginning Node");
+		JButton Finish = new JButton("Finish");
+		JButton Clear = new JButton("Clear");
+		Menu.setBounds(10, 10, 208, 29);
+		Menu.setBackground(Color.CYAN);
+
+		Option.add(Menu);
+		Option.add(Stop);
+		Option.add(enterNode);
+		Option.add(textNode);
+		Option.add(Finish);
+		Option.add(Clear);
+
+		AutoFrame.setTitle("Auto");
+		AutoFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+		GridBagConstraints c = new GridBagConstraints();
+		GridBagConstraints gc = new GridBagConstraints();
+		GridBagConstraints p = new GridBagConstraints();
+
+		JScrollPane textScroll = new JScrollPane();
+		JTextArea textArea = new JTextArea();
+		textScroll.setViewportView(textArea);
+		textArea.setText("Random Path:\n");
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
+
+		p.fill = GridBagConstraints.BOTH;
+		p.weightx = 0.5;
+		p.gridx = 0;
+		p.gridy = 1;
+		p.ipady = 10;
+		p.anchor = GridBagConstraints.WEST;
+		AutoFrame.getContentPane().add(textScroll, p);
+
+		gc.fill = GridBagConstraints.BOTH;
+		gc.weightx = 0.5;
+		gc.gridx = 1;
+		gc.gridy = 1;
+		gc.ipadx = 100;
+		gc.ipady = 750;
+		gc.anchor = GridBagConstraints.EAST;
+		AutoFrame.getContentPane().add(view,gc);
+
+		c.gridx = 0;
+		c.gridy = 2;
+		c.ipadx = 30;
+		c.ipady = 40;
+		AutoFrame.getContentPane().add(Option, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridwidth = 2;
+		c.gridx = 1;
+		c.anchor = GridBagConstraints.PAGE_END;
+		c.anchor = GridBagConstraints.CENTER;
+
+
+		AutoFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		AutoFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+		Menu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							omw.clear();
+							AutoFrame.repaint();
+							AutoFrame.revalidate();
+							AutoFrame.setVisible(false);
+							frame.remove(view);
+							frame.add(view);
+							frame.repaint();
+							frame.revalidate();
+							frame.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
+
+		Finish.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed (ActionEvent e){
+				// TODO Auto-generated method stub
+				check=true;
+				if (graph.getNode(textNode.getText()) == null) {
+					JOptionPane.showMessageDialog(null, "Can't find node" + textNode.getText(), "ERROR", JOptionPane.ERROR_MESSAGE);
+				} else {
+					LinkedList<Integer> secAdjList[];
+					secAdjList = new LinkedList[max + 1];
+					for (int i = 1; i <= max; i++) {
+						secAdjList[i] = new LinkedList<Integer>();
+						secAdjList[i] = (LinkedList) omw.adjLists[i].clone();
+					}
+					omw.RandomPath = omw.RandomPath+"Random Path:" + "\n" +textNode.getText();
+					omw.graph.getNode(textNode.getText()).setAttribute("ui.style","shape:circle;fill-color: green;size: 30px;");
+					textArea.setText(omw.RandomPath);
+					new javax.swing.Timer(1500, new ActionListener(){
+						int begin =Integer.parseInt(textNode.getText());
+						int currentInt = begin;
+						int preInt;
+						Node currentNode = graph.getNode(begin - 1);
+
+						@Override
+						public void actionPerformed(ActionEvent e){
+							currentNode.setAttribute("ui.style","shape:circle;fill-color: green;size: 30px;");
+
+							if(secAdjList[currentInt].size()==0 || check == false){
+								((javax.swing.Timer) e.getSource()).stop();
+								return;
+							}
+							else{
+								omw.RandomPath = omw.RandomPath + " -> ";
+
+								Random rand = new Random();
+								int randNum = rand.nextInt(secAdjList[currentInt].size());
+
+								preInt = currentInt;
+
+								currentInt = secAdjList[currentInt].get(randNum);
+								currentNode = omw.graph.getNode(currentInt - 1);
+
+								secAdjList[preInt].remove(randNum);
+
+								String thisEdge = preInt + " " + currentInt;
+								omw.graph.getEdge(thisEdge).setAttribute("ui.style", "fill-color: purple; size: 3px;");
+
+
+								currentNode.setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
+
+								omw.RandomPath = omw.RandomPath + currentInt;
+								textArea.setText(omw.RandomPath);
+							}
+						}
+
+
+					}).start();
+
+					//omw.GraphAuto(Integer.parseInt(textNode.getText()));
+					//textArea.setText(textArea.getText() + omw.RandomPath);
+				}
+			}
+
+
+		});
+
+		Stop.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				check=false;
+			}
+		});
+
+		Clear.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				omw.clear();
+				AutoFrame.repaint();
+				AutoFrame.revalidate();
+				textArea.setText("Random Path:\n");
+			}
+		});
+
+		AutoFrame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent windowEvent) { // khi frame đóng, khôi phục lại đồ thị như ban đầu
+
+				textArea.setText("Random Path:\n");
+				omw.clear();
+				AutoFrame.repaint();
+				AutoFrame.revalidate();
+			}
+		});
+
+
+		AutoFrame.getContentPane().add(view, gc);
+
+		AutoFrame.pack();
+		AutoFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		AutoFrame.setVisible(true);
+		frame.dispose();
+	}
 }

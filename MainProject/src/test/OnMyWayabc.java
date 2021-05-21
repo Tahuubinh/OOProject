@@ -52,6 +52,7 @@ public class OnMyWayabc extends DFS{
 	private static int countDFS1;
 	private static ViewPanel view;
 	HashMap<String, Integer> count = new HashMap<>(); // Count the times of edge that went
+	public String RandomPath=""; //D
 	
 	
 	OnMyWayabc(int vertices) {
@@ -72,6 +73,8 @@ public class OnMyWayabc extends DFS{
 		//graph = new SingleGraph("Use");
     	//graphDraw();
 		graph = new SingleGraph("Use");
+		graph.setAttribute( "ui.antialias" );
+		graph.setAttribute( "ui.quality" );
 		for (int i = 1; i <= vertices; ++i) {
 			graph.addNode(Integer.toString(i));
 		}
@@ -198,20 +201,19 @@ public class OnMyWayabc extends DFS{
 		}
 		stack.clear();
 		
-		for (String tempEdgeString: stack2) {
-			Edge edge=graph.getEdge(tempEdgeString);
-			edge.setAttribute("ui.style", "fill-color: black; size: 1px;");
-		}
-		
 		stack2.clear();
 		vertexStack.clear();
 		edgeStack.clear();
-		for(int i = 1; i <= vertices; ++i) {
 
-        	v[i] = graph.getNode(Integer.toString(i));
-        	v[i].setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
-    		
-        }
+		graph.edges().forEach(edge -> {
+			edge.setAttribute("ui.style", "fill-color: black; size: 1px;");
+		});
+
+		for(Node node: graph){
+			node.setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
+		}
+		RandomPath = "";
+
 	}
 	void addOption(int i, int pl) throws IOException { // i có 2 trạng thái là 1 và 0, 1 là đi tới, 0 là đi lùi, "pl" là tên đỉnh cần tiến tới
 		if(stack.size() > 0) { //stack là mảng stack lưu các đỉnh đã ấn 
@@ -474,6 +476,26 @@ public class OnMyWayabc extends DFS{
 		}
 		
 	}
+    public ArrayList<Integer> getStack() {
+    	return this.stack;
+    }
+    
+    public void setStack(int node) {
+    	String edge = stack.get(stack.size() -1 ) + " " + node;
+    	this.stack.add(node);
+    	this.stack2.add(edge);
+    }
+	//D
+//	void clearAuto(){
+//		graph.edges().forEach(edge -> {
+//			edge.setAttribute("ui.style", "fill-color: black; size: 1px;");
+//		});
+//
+//		for(Node node: graph){
+//			node.setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
+//		}
+//		RandomPath = "";
+//	}
 }
 
 
