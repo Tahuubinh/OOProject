@@ -869,7 +869,17 @@ public class project {
 				if (graph.getNode(nodeText.getText()) == null) {
 					JOptionPane.showMessageDialog(null, "Can't find node" + nodeText.getText(), "ERROR", JOptionPane.ERROR_MESSAGE);
 				} else {
-					
+					if(omw.stack.size() == 0) {
+						try {
+							omw.addOption(1, Integer.parseInt(nodeText.getText()));
+						} catch (NumberFormatException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
 					omw.RandomPath = omw.RandomPath+"Random Path:" + "\n" +nodeText.getText();
 					omw.graph.getNode(nodeText.getText()).setAttribute("ui.style","shape:circle;fill-color: green;size: 30px;");
 					new javax.swing.Timer(1500, new ActionListener(){
@@ -904,7 +914,6 @@ public class project {
 
 
 								currentNode.setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
-								pathTxt.setText(pathTxt.getText() + "(" + omw.getStack().get(omw.getStack().size()-1) + ") -> (" + currentInt + ") \n");
 								
 								try {
 									omw.addOption(1, currentInt);
@@ -912,10 +921,13 @@ public class project {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
 								}
+								pathTxt.setText(pathTxt.getText() + "(" + omw.getStack().get(omw.getStack().size()-1) + ") -> (" + currentInt + ") \n");
+
 								for(int j = 0; j < max; ++j) { // khôi phục lại các buton, để khi xóa các button ta sẽ có các button được xếp sếp theo thứ tự tăng dần
 									
 									vPanel.add(vButtons[j]);
 								}
+
 								/*vertex = omw.getVertex();
 								for(int j = 0; j < max; ++j) {
 									if(!vertex.contains(j+1)) {
