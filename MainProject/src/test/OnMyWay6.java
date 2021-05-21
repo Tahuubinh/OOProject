@@ -42,6 +42,7 @@ public class OnMyWay6 extends project{
     JFrame frameBai6 = new JFrame();
     JTable tableInScrollPane;
     JButton nextButton;
+	boolean a = false;
 
     String[] columns = {"Số thứ tự","Đường đi", "Trọng số"};
     DefaultTableModel model = new DefaultTableModel(columns,0);
@@ -696,8 +697,10 @@ public class OnMyWay6 extends project{
             }
         }
         else {  // Trường hợp: ans = 1: Thủ công
+        	a = false;
+        	panelSouthInPanelWest.add(stopButton);
         	if(!excuted2) {
-        		panelSouthInPanelWest.add(stopButton);
+        		
                 panelEast.add(panelScrollContainButton, BorderLayout.SOUTH);
                 excuted2 = true;
         	}
@@ -705,32 +708,36 @@ public class OnMyWay6 extends project{
             stopButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    String[] respon = {"Tiếp tục", "Dừng"};
-                    int thisOption = JOptionPane.showOptionDialog(null,
-                            "Bạn thực sự muốn dừng ?",
-                            "Thông báo",
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE,
-                            null,
-                            respon,
-                            0);
+                	if(!a) {
+                		 String[] respon = {"Tiếp tục", "Dừng"};
+                         int thisOption = JOptionPane.showOptionDialog(null,
+                                 "Bạn thực sự muốn dừng ?",
+                                 "Thông báo",
+                                 JOptionPane.YES_NO_OPTION,
+                                 JOptionPane.QUESTION_MESSAGE,
+                                 null,
+                                 respon,
+                                 0);
 
-                    if (thisOption == 1) {
-                        panelSouthInPanelEast.removeAll();
-                        panelSouthInPanelEast.updateUI();
-                        JOptionPane.showMessageDialog(null, "Chi phí của đường đi là: " + Integer.toString(sumCost), "Thông báo", JOptionPane.PLAIN_MESSAGE);
-                        String[] data = {"------------------------------", "Tổng chi phí là: ", Integer.toString(sumCost)};
-                        model.addRow(data);
-                        // Xoá stopButton
-                        panelSouthInPanelWest.remove(stopButton);
-                        panelSouthInPanelWest.updateUI();
+                         if (thisOption == 1) {
+                             panelSouthInPanelEast.removeAll();
+                             panelSouthInPanelEast.updateUI();
+                             JOptionPane.showMessageDialog(null, "Chi phí của đường đi là: " + Integer.toString(sumCost), "Thông báo", JOptionPane.PLAIN_MESSAGE);
+                             String[] data = {"------------------------------", "Tổng chi phí là: ", Integer.toString(sumCost)};
+                             model.addRow(data);
+                             // Xoá stopButton
+                             panelSouthInPanelWest.remove(stopButton);
+                             panelSouthInPanelWest.updateUI();
 
-                        // Tô màu đã đi cho đường đi vừa rồi
-                        int nodeTop1 = stack.pop();
-                        int nodeTop2 = stack.pop();
-                        graph.getNode(Integer.toString(nodeTop1)).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
-                        graph.getEdge(Integer.toString(nodeTop2) + " " + Integer.toString(nodeTop1)).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
-                    }
+                             // Tô màu đã đi cho đường đi vừa rồi
+                             int nodeTop1 = stack.pop();
+                             int nodeTop2 = stack.pop();
+                             graph.getNode(Integer.toString(nodeTop1)).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
+                             graph.getEdge(Integer.toString(nodeTop2) + " " + Integer.toString(nodeTop1)).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
+                         }
+                         a = true;
+                	}
+                   
                 }
             });
             JOptionPane.showMessageDialog(null, "Bắt đầu bằng cách chọn node", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
