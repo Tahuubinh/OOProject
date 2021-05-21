@@ -914,14 +914,14 @@ public class project {
 
 
 								currentNode.setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
-								
+								pathTxt.setText(pathTxt.getText() + "(" + omw.getStack().get(omw.getStack().size()-1) + ") -> (" + currentInt + ") \n");
+
 								try {
 									omw.addOption(1, currentInt);
 								} catch (IOException e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
 								}
-								pathTxt.setText(pathTxt.getText() + "(" + omw.getStack().get(omw.getStack().size()-1) + ") -> (" + currentInt + ") \n");
 
 								for(int j = 0; j < max; ++j) { // khôi phục lại các buton, để khi xóa các button ta sẽ có các button được xếp sếp theo thứ tự tăng dần
 									

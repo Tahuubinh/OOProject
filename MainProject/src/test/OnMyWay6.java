@@ -356,7 +356,8 @@ public class OnMyWay6 extends project{
 	                countPath = 0;
 	                currentPath.clear();
 	                dem = 0;
-
+	                countPath = 0;
+//	                allPathDFSBai6.
 	                // Khởi tạo ban đầu cho anyPath()
 	                stack.clear();
 	                countTableOfAnyPath = 0;
