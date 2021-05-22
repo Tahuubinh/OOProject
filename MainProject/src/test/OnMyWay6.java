@@ -686,9 +686,6 @@ public class OnMyWay6 extends project{
                             0);
 
                     if (thisOption == 1) {
-                        while (((JButton) e.getSource()).getActionListeners().length > 0) {
-                            stopButton.removeActionListener(this);
-                        }
                         panelSouthInPanelEast.removeAll();
                         panelSouthInPanelEast.updateUI();
                         JOptionPane.showMessageDialog(null, "Chi phí của đường đi là: " + Integer.toString(sumCost), "Thông báo", JOptionPane.PLAIN_MESSAGE);
@@ -703,6 +700,9 @@ public class OnMyWay6 extends project{
                         // Xoá stopButton
                         panelSouthInPanelWest.remove(stopButton);
                         panelSouthInPanelWest.updateUI();
+                    }
+                    while (((JButton) e.getSource()).getActionListeners().length > 0) {
+                        stopButton.removeActionListener(this);
                     }
                 }
             });
