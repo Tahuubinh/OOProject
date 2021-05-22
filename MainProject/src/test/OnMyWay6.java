@@ -673,9 +673,7 @@ public class OnMyWay6 extends project{
             stopButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    while (((JButton) e.getSource()).getActionListeners().length > 0) {
-                        stopButton.removeActionListener(this);
-                    }
+
                     System.out.println("Count of listeners: " + ((JButton) e.getSource()).getActionListeners().length);
                     String[] respon = {"Tiếp tục", "Dừng"};
                     int thisOption = JOptionPane.showOptionDialog(null,
@@ -688,6 +686,9 @@ public class OnMyWay6 extends project{
                             0);
 
                     if (thisOption == 1) {
+                        while (((JButton) e.getSource()).getActionListeners().length > 0) {
+                            stopButton.removeActionListener(this);
+                        }
                         panelSouthInPanelEast.removeAll();
                         panelSouthInPanelEast.updateUI();
                         JOptionPane.showMessageDialog(null, "Chi phí của đường đi là: " + Integer.toString(sumCost), "Thông báo", JOptionPane.PLAIN_MESSAGE);
