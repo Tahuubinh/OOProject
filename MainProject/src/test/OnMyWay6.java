@@ -333,6 +333,7 @@ public class OnMyWay6 extends project{
                 currentPath.clear();
 
                 // Khởi tạo ban đầu cho anyPath()
+                sumCost = 0;
                 stack.clear();
                 countTableOfAnyPath = 0;
                 for (int i = 1; i <= max; ++i) {
@@ -666,10 +667,16 @@ public class OnMyWay6 extends project{
             signal = 2;
             panelSouthInPanelWest.add(stopButton);
             panelEast.add(panelScrollContainButton, BorderLayout.SOUTH);
+            panelSouthInPanelWest.updateUI();
             frameBai6.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
             stopButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    while (((JButton) e.getSource()).getActionListeners().length > 0) {
+                        stopButton.removeActionListener(this);
+                    }
+                    System.out.println("Count of listeners: " + ((JButton) e.getSource()).getActionListeners().length);
                     String[] respon = {"Tiếp tục", "Dừng"};
                     int thisOption = JOptionPane.showOptionDialog(null,
                             "Bạn thực sự muốn dừng ?",
@@ -686,18 +693,19 @@ public class OnMyWay6 extends project{
                         JOptionPane.showMessageDialog(null, "Chi phí của đường đi là: " + Integer.toString(sumCost), "Thông báo", JOptionPane.PLAIN_MESSAGE);
                         String[] data = {"------------------------------", "Tổng chi phí là: ", Integer.toString(sumCost)};
                         model.addRow(data);
-                        // Xoá stopButton
-                        panelSouthInPanelWest.remove(stopButton);
-                        panelSouthInPanelWest.updateUI();
                         frameBai6.setExtendedState(JFrame.MAXIMIZED_BOTH);
                         // Tô màu đã đi cho đường đi vừa rồi
                         int nodeTop1 = stack.pop();
                         int nodeTop2 = stack.pop();
                         graph.getNode(Integer.toString(nodeTop1)).setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
                         graph.getEdge(Integer.toString(nodeTop2) + " " + Integer.toString(nodeTop1)).setAttribute("ui.style", "fill-color: rgb(102, 0, 255); size: 2px;");
+                        // Xoá stopButton
+                        panelSouthInPanelWest.remove(stopButton);
+                        panelSouthInPanelWest.updateUI();
                     }
                 }
             });
+
             JOptionPane.showMessageDialog(null, "Bắt đầu bằng cách chọn node", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             anyPath();
         }
