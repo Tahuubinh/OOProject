@@ -1639,6 +1639,7 @@ public class project {
 			}
 		});
 		
+		//Enter node
 		JLabel nodeLabel = new JLabel("Enter node");
 		DefaultComboBoxModel nodeComboBoxModel = new DefaultComboBoxModel();
 		nodeComboBoxModel.addElement("");
@@ -1665,7 +1666,37 @@ public class project {
 				}
 			}
 		});
+		
+		//Aim to
+		JLabel nodeLabel2 = new JLabel("Aim to");
+		DefaultComboBoxModel nodeComboBoxModel2 = new DefaultComboBoxModel();
+		nodeComboBoxModel2.addElement("");
+		for(int i = 1; i <= max; ++i) {
+			nodeComboBoxModel2.addElement(i+"");
+		}
+		JComboBox nodeComboBox2 = new JComboBox(nodeComboBoxModel2);
+		nodeComboBox2.setEditable(true);
+		final JTextField nodeText2 = (JTextField) nodeComboBox2.getEditor().getEditorComponent();
+		nodeText2.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent ke) {
+				LinkedList<String> filterNode2 = new LinkedList<String>();
+				for(int i = 0; i < nodeComboBoxModel2.getSize(); ++i) {
+					if((nodeComboBoxModel2.getElementAt(i)+"").contains(nodeText2.getText())) {
+						filterNode2.add(nodeComboBoxModel2.getElementAt(i)+"");
+					}
+				}
+				if(filterNode2.size() >0) {
+					nodeComboBox2.setModel(new DefaultComboBoxModel(filterNode2.toArray()));
+					nodeComboBox2.setSelectedItem(nodeText2.getText());
+					nodeComboBox2.showPopup();
+				} else {
+					nodeComboBox2.hidePopup();
+				}
+			}
+		});
+		
 		JButton finishButton = new JButton("Finish");
+		JButton hintButton = new JButton("Hint");
 //		BufferedImage finishBf = ImageIO.read(new File("label_button\\find.png"));
 //		Image finishdImg = finishBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 //		ImageIcon finishImg = new ImageIcon(finishdImg);
@@ -1676,6 +1707,9 @@ public class project {
 		vPanel.add(nodeLabel);
 		vPanel.add(nodeComboBox);
 		vPanel.add(finishButton);
+		vPanel.add(nodeLabel2);
+		vPanel.add(nodeComboBox2);
+		vPanel.add(hintButton);
 		
 		JButton[] vButtons = new JButton[max];
 		for(int i = 0; i < max; ++i) {
@@ -1717,6 +1751,48 @@ public class project {
 					try {
 
 						omw4.addOption(1, Integer.parseInt(nodeText.getText()));
+					}  catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} // đi tới đỉnh đó
+					for(int j = 0; j < max; ++j) {
+						
+						vPanel.add(vButtons[j]);
+					}
+					vertex = omw4.getVertex();
+					for(int j = 0; j < max; ++j) {
+						if(!vertex.contains(j+1)) {
+							vPanel.remove(vButtons[j]);
+						}
+					}
+					vPanel.repaint();
+					AllPathFrame.getContentPane().add(vPanelScoll);
+					AllPathFrame.getContentPane().remove(view4);
+//					view = omw.getViewer();
+					
+					AllPathFrame.getContentPane().add(view4);
+					AllPathFrame.repaint();
+					AllPathFrame.revalidate();
+//					AllPathFrame.pack();
+//					AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+//					AllPathFrame.setVisible(true);
+					frame.dispose();
+				}
+			}
+		});
+		
+		hintButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if(graph.getNode(nodeText2.getText()) == null) {
+					JOptionPane.showMessageDialog(null, "Can't move to this node " + nodeText.getText(), "ERROR", JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					try {
+
+						omw4.addOption(1, Integer.parseInt(nodeText2.getText()));
 					}  catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
