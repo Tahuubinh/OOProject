@@ -51,6 +51,7 @@ public class OnMyWayabc extends DFS{
 	private String path1;
 	private static int countDFS1;
 	private static ViewPanel view;
+	private static SwingViewer viewer;
 	HashMap<String, Integer> count = new HashMap<>(); // Count the times of edge that went
 	public String RandomPath=""; //D
 	
@@ -91,7 +92,7 @@ public class OnMyWayabc extends DFS{
 			v[i].setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
 			v[i].setAttribute("ui.label", Integer.toString(i)); 
 		}
-    	SwingViewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+    	viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
     	viewer.enableAutoLayout();
         view = (ViewPanel) viewer.addDefaultView(false);
 //        
@@ -197,6 +198,12 @@ public class OnMyWayabc extends DFS{
         
         return view;
 	}
+	
+	public SwingViewer getSwingViewer() { //cập nhật đồ thị mới vào frame
+        
+        return viewer;
+	}
+	
 	public SingleGraph getGraph() {
 		return graph;
 	}

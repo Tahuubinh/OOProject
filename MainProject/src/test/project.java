@@ -57,6 +57,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
@@ -234,6 +235,7 @@ public class project {
 						}
 						else {
 						welcomeFrame.setVisible(false);
+						view.setMouseManager(manager1);
 						frame.setVisible(true);
 						try {
 							console();
@@ -297,6 +299,7 @@ public class project {
         JButton freezeButton = new JButton("Freeze");
         JButton unfreezeButton = new JButton("Unfreeze");
         JButton homeButton = new JButton(); // quay trở về welcomeframe
+        JRadioButton radioButton=new JRadioButton("Stop autoLayout");    
        
         BufferedImage homeBf = ImageIO.read(new File("label_button\\home.png"));
 		Image homedImg = homeBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
@@ -325,6 +328,8 @@ public class project {
         buttonJPanel.add(bai4);
         buttonJPanel.add(bai5);
         buttonJPanel.add(WeightGraph);
+
+        buttonJPanel.add(radioButton);
         if (freeze) {
         	buttonJPanel.add(freezeButton1);
         	buttonJPanel.remove(unfreezeButton1);
@@ -470,6 +475,23 @@ public class project {
 		        }
 				frame.repaint();
 				frame.revalidate();
+							}
+		});
+        radioButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (radioButton.isSelected()) {
+					 
+				    omw.getSwingViewer().disableAutoLayout();
+				    view.setMouseManager(manager1);
+				 
+				} else {
+				 
+					omw.getSwingViewer().enableAutoLayout();
+					view.setMouseManager(manager1);
+				 
+				}
 							}
 		});
         //D
