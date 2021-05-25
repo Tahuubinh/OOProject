@@ -357,10 +357,10 @@ public class project {
 				// TODO Auto-generated method stub
 				
 				try {
-					frame.setVisible(false);
 					frame = new JFrame();
 					prepare();
 					console();
+					frame.setVisible(true);
 //					g.graphString("Bai1"); // thực hiện bài 1
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -1873,11 +1873,11 @@ public class project {
 						}
 					}
 					vPanel.repaint();
-					AllPathFrame.getContentPane().add(vPanelScoll);
-					AllPathFrame.getContentPane().remove(view4);
-//					view = omw.getViewer();
-					
-					AllPathFrame.getContentPane().add(view4);
+//					AllPathFrame.getContentPane().add(vPanelScoll);
+//					AllPathFrame.getContentPane().remove(view4);
+////					view = omw.getViewer();
+//					
+//					AllPathFrame.getContentPane().add(view4);
 					AllPathFrame.repaint();
 					AllPathFrame.revalidate();
 //					AllPathFrame.pack();
