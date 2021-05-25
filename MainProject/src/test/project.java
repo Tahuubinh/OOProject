@@ -484,12 +484,20 @@ public class project {
 				if (radioButton.isSelected()) {
 					 
 				    omw.getSwingViewer().disableAutoLayout();
-				    view.setMouseManager(manager1);
+				    if (freeze)
+				    	view.setMouseManager(manager1);
+				    else {
+				    	view.setMouseManager(manager);
+					}
 				 
 				} else {
 				 
 					omw.getSwingViewer().enableAutoLayout();
-					view.setMouseManager(manager1);
+					if (freeze)
+				    	view.setMouseManager(manager1);
+				    else {
+				    	view.setMouseManager(manager);
+					}
 				 
 				}
 							}
