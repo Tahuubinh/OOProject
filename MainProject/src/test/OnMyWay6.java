@@ -333,6 +333,10 @@ public class OnMyWay6 extends project{
                 currentPath.clear();
                 dem = 1;
                 allPathDFSBai6.clear();
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4db3c7b042ed86a9ab48f47d43e20c6281bb8e3c
                 // Khởi tạo ban đầu cho anyPath()
                 sumCost = 0;
                 stack.clear();
