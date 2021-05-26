@@ -945,7 +945,7 @@ public class project {
 
 
 								currentNode.setAttribute("ui.style", "shape:circle;fill-color: green;size: 30px;");
-								pathTxt.setText(pathTxt.getText() + "(" + omw.getStack().get(omw.getStack().size()-1) + ") -> (" + currentInt + ") \n");
+								
 
 								try {
 									omw.addOption(1, currentInt);
@@ -953,7 +953,8 @@ public class project {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
 								}
-
+//								System.out.println(omw.getLabel());
+								pathTxt.setText(pathTxt.getText() + omw.getLabel());
 								for(int j = 0; j < max; ++j) { // khôi phục lại các buton, để khi xóa các button ta sẽ có các button được xếp sếp theo thứ tự tăng dần
 									
 									vPanel.add(vButtons[j]);
@@ -1570,15 +1571,8 @@ public class project {
 	                }
 	            }
 	        }                     
-	    }
-		
-//		public static void MouseDraggedGraph(MouseEvent mouseEvent, ViewPanel view) {
-//			if(!freeze) {
-//				
-//			}
-//		
-//		}
-		
+	    }		
+
 		public static void MouseMoveGrapg(MouseEvent mouseEvent, ViewPanel view) {
 			
 		}
@@ -1781,7 +1775,8 @@ public class project {
 				}
 			}
 		});
-		
+		nodeText.setText(1+"");
+		nodeText2.setText(max +"");
 		JButton finishButton = new JButton("Finish");
 		JButton hintButton = new JButton("Hint");
 //		BufferedImage finishBf = ImageIO.read(new File("label_button\\find.png"));
@@ -1838,56 +1833,34 @@ public class project {
 					try {
 
 						omw4.addOption(1, Integer.parseInt(nodeText.getText()));
+						omw4.predictPath(Integer.parseInt(nodeText2.getText()));
 					}  catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} // đi tới đỉnh đó
 					for(int j = 0; j < max; ++j) {
 						
 						vPanel.add(vButtons[j]);
 					}
-					vertex = omw4.getVertex();
-					for(int j = 0; j < max; ++j) {
-						if(!vertex.contains(j+1)) {
-							vPanel.remove(vButtons[j]);
+					new Timer(3000, new ActionListener() {
+						private int cnt = 0;
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							// TODO Auto-generated method stub
+							
+								omw4.clearPredictPath();
+									
+//								System.out.println("???");
+								AllPathFrame.repaint();
+								AllPathFrame.revalidate();
+								((javax.swing.Timer) e.getSource()).stop();
+								return;						
+							
+//								AllPathFrame.repaint();
+//								AllPathFrame.revalidate();
+								
+							
 						}
-					}
-					vPanel.repaint();
-					AllPathFrame.getContentPane().add(vPanelScoll);
-					AllPathFrame.getContentPane().remove(view4);
-//					view = omw.getViewer();
-					
-					AllPathFrame.getContentPane().add(view4);
-					AllPathFrame.repaint();
-					AllPathFrame.revalidate();
-//					AllPathFrame.pack();
-//					AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-//					AllPathFrame.setVisible(true);
-					frame.dispose();
-				}
-			}
-		});
-		
-		hintButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				if(graph.getNode(nodeText2.getText()) == null) {
-					JOptionPane.showMessageDialog(null, "Can't move to this node " + nodeText.getText(), "ERROR", JOptionPane.ERROR_MESSAGE);
-				}
-				else {
-					try {
-
-						omw4.addOption(1, Integer.parseInt(nodeText2.getText()));
-					}  catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} // đi tới đỉnh đó
-					for(int j = 0; j < max; ++j) {
-						
-						vPanel.add(vButtons[j]);
-					}
+					}).start();
 					vertex = omw4.getVertex();
 					for(int j = 0; j < max; ++j) {
 						if(!vertex.contains(j+1)) {
@@ -1906,6 +1879,46 @@ public class project {
 //					AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 //					AllPathFrame.setVisible(true);
 					frame.dispose();
+					i3 = Integer.parseInt(nodeText.getText());
+				}
+			}
+		});
+		
+		hintButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if(graph.getNode(nodeText2.getText()) == null) {
+//					JOptionPane.showMessageDialog(null, "Can't move to this node " + nodeText.getText(), "ERROR", JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					omw4.predictPath(Integer.parseInt(nodeText2.getText()));
+//					System.out.println(nodeText2.getText());
+					new Timer(3000, new ActionListener() {
+						private int cnt = 0;
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							// TODO Auto-generated method stub
+							
+								omw4.clearPredictPath();
+									
+//								System.out.println("???");
+								AllPathFrame.repaint();
+								AllPathFrame.revalidate();
+								((javax.swing.Timer) e.getSource()).stop();
+								return;						
+							
+//								AllPathFrame.repaint();
+//								AllPathFrame.revalidate();
+								
+							
+						}
+					}).start();
+
+					AllPathFrame.repaint();
+					AllPathFrame.revalidate();
+					frame.dispose();
 				}
 			}
 		});
@@ -1920,7 +1933,30 @@ public class project {
 						if(e.getActionCommand().equals(Integer.toString(i))) {
 							try {
 								i3 = i;
+								nodeText.setText(i3+"");
 								omw4.addOption(1, i3);
+								omw4.predictPath(Integer.parseInt(nodeText2.getText()));
+								new Timer(3000, new ActionListener() {
+									private int cnt = 0;
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										// TODO Auto-generated method stub
+										
+											omw4.clearPredictPath();
+												
+//											System.out.println("???");
+											AllPathFrame.repaint();
+											AllPathFrame.revalidate();
+											((javax.swing.Timer) e.getSource()).stop();
+											return;						
+										
+//											AllPathFrame.repaint();
+//											AllPathFrame.revalidate();
+											
+										
+									}
+								}).start();
+//								omw4.addOption(2, Integer.parseInt(nodeText2.getText()));
 								for(int j = 0; j < max; ++j) {
 									
 									vPanel.add(vButtons[j]);
@@ -1931,17 +1967,18 @@ public class project {
 										vPanel.remove(vButtons[j]);
 									}
 								}
-
-								AllPathFrame.getContentPane().add(vPanelScoll, BorderLayout.SOUTH);
-								AllPathFrame.getContentPane().remove(view4);
-								//view = omw4.getViewer();
-								AllPathFrame.add(view4);
+//
+//								AllPathFrame.getContentPane().add(vPanelScoll, BorderLayout.SOUTH);
+//								AllPathFrame.getContentPane().remove(view4);
+//								//view = omw4.getViewer();
+//								AllPathFrame.add(view4);
 								AllPathFrame.repaint();
 								AllPathFrame.revalidate();
 								//AllPathFrame.pack();
 								//AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 								//AllPathFrame.setVisible(true);
 								//frame.dispose();
+								i3 = i;
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -1960,8 +1997,29 @@ public class project {
 				// TODO Auto-generated method stub
 				try {
 					omw4.addOption(0, i3);
-
+					omw4.predictPath(Integer.parseInt(nodeText2.getText()));
+					nodeText.setText(i3+"");
 					vertex = omw4.getVertex();
+					new Timer(3000, new ActionListener() {
+						private int cnt = 0;
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							// TODO Auto-generated method stub
+							
+								omw4.clearPredictPath();
+									
+//								System.out.println("???");
+								AllPathFrame.repaint();
+								AllPathFrame.revalidate();
+								((javax.swing.Timer) e.getSource()).stop();
+								return;						
+							
+//								AllPathFrame.repaint();
+//								AllPathFrame.revalidate();
+								
+							
+						}
+					}).start();
 					for(int j = 0; j < max; ++j) {
 						if(vertex.contains(j+1)) {
 							vPanel.remove(vButtons[j]);
@@ -1975,10 +2033,10 @@ public class project {
 							vPanel.remove(vButtons[j]);
 						}
 					}
-					AllPathFrame.getContentPane().add(vPanelScoll, BorderLayout.SOUTH);
-					AllPathFrame.getContentPane().remove(view4);
-					//view = omw4.getViewer();
-					AllPathFrame.add(view4);
+//					AllPathFrame.getContentPane().add(vPanelScoll, BorderLayout.SOUTH);
+//					AllPathFrame.getContentPane().remove(view4);
+//					//view = omw4.getViewer();
+//					AllPathFrame.add(view4);
 					AllPathFrame.repaint();
 					AllPathFrame.revalidate();
 					//AllPathFrame.pack();
@@ -1998,16 +2056,36 @@ public class project {
 				// TODO Auto-generated method stub
 				omw4.clear();
 				y1 = 0;
+				new Timer(3000, new ActionListener() {
+					private int cnt = 0;
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						
+							omw4.clearPredictPath();
+								
+//							System.out.println("???");
+							AllPathFrame.repaint();
+							AllPathFrame.revalidate();
+							((javax.swing.Timer) e.getSource()).stop();
+							return;						
+						
+//							AllPathFrame.repaint();
+//							AllPathFrame.revalidate();
+							
+						
+					}
+				}).start();
 				for(int j = 0; j < max; ++j) {
 					if(vertex.contains(j+1)) {
 						vPanel.remove(vButtons[j]);
 					}
 					vPanel.add(vButtons[j]);
 				}
-				AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
-				AllPathFrame.getContentPane().remove(view);
-				//view = omw4.getViewer();
-				AllPathFrame.add(view);
+//				AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
+//				AllPathFrame.getContentPane().remove(view);
+//				//view = omw4.getViewer();
+//				AllPathFrame.add(view);
 				AllPathFrame.repaint();
 				AllPathFrame.revalidate();
 				//AllPathFrame.pack();
@@ -2312,7 +2390,7 @@ public class project {
 		frame.dispose();
 		
 	}
-//	protected static void AutoGo(){
+	protected static void AutoGo(){
 //		// TODO Auto-generate method stub
 //		JFrame AutoFrame = new JFrame ("Auto");
 //		AutoFrame.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
@@ -2508,5 +2586,5 @@ public class project {
 //		AutoFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 //		AutoFrame.setVisible(true);
 //		frame.dispose();
-//	}
+	}
 }

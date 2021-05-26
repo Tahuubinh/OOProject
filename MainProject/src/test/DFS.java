@@ -22,7 +22,8 @@ import org.graphstream.ui.view.Viewer.CloseFramePolicy;
 public class DFS extends GraphLinkedList{
        private int countpic = 0;
        private int countpath = 0;
-        private String path;
+       private String path;
+       private int countend = 0;
 	DFS (int vertices) {
 		super(vertices);
 		// TODO Auto-generated constructor stub
@@ -95,6 +96,66 @@ public class DFS extends GraphLinkedList{
 	    visited[vertex] = false;
 	    stack.remove(stack.size() - 1);
     }  
+    
+    // Them moi
+//    void DFSForOMW(int vertex, int end){
+//          visited[vertex] = true;
+//	    stack.add(vertex);	    	    
+//	    if (vertex == end) {
+//	       
+//	    	   for (int i = 1; i <= vertices; ++i) {
+//	   			String iString = Integer.toString(i);
+//	   			if (adjLists[i].size() > 0) {
+//	   				for (int j: adjLists[i]) {
+//	   					Edge edge=graph.getEdge(iString + " " + Integer.toString(j));
+//	   					edge.setAttribute("ui.style", "fill-color: black; size: 1px;");
+//	   				}
+//	   			}
+//	   			v[i] = graph.getNode(iString);
+//	   		}
+//	   		
+//	   		for (int i = 1; i <= vertices; ++i) {
+//	   			v[i].setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
+//	   			v[i].setAttribute("ui.label", Integer.toString(i)); 
+//	   		}
+//	       
+//               
+//                
+//	    	for (int i = 0; i < stack.size(); ++i) {
+//	    		
+//	    		//take the node
+//	    		int node_index_temp = stack.get(i);
+//	    		
+//	    		v[node_index_temp].setAttribute("ui.style", "shape:circle;fill-color: purple;size: 30px; stroke-mode: plain;");
+//	    		
+//	    		if (i == stack.size() - 1)
+//	    			continue;
+//	    		int node_index_next = stack.get(i + 1);
+//	    		String a = Integer.toString(node_index_temp);
+//	    		String b = Integer.toString(node_index_next);
+//	    		Edge edge=graph.getEdge(a + " " + b);
+//	    		edge.setAttribute("ui.style", "fill-color: purple; size: 3px;");
+//	    	}
+//	    	
+//	    	System.out.println();
+//	    	visited[vertex] = false;
+//		stack.remove(stack.size() - 1);
+//              countend = 1;
+//	    	return;
+//	    }
+//	    //--------------------------------------------------------------------------------------------------------------------
+//	    Iterator<Integer> ite = adjLists[vertex].listIterator();
+//	    while (ite.hasNext()) {
+//	        int adj = ite.next();
+//	        if (!visited[adj])
+//	               DFSForOMW(adj, end);
+//                       if(countend == 1)
+//                            break;
+//	    }
+//	    visited[vertex] = false;
+//	    stack.remove(stack.size() - 1);
+//    }
+
     // ch?y thu?t DFS
     void runDFS(int vertex, int end) {
     	runDFS(vertex, end, true);
