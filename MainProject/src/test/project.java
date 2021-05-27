@@ -847,13 +847,13 @@ public class project {
 						if(e.getActionCommand().equals(Integer.toString(i))) {// xem đỉnh nào được nhấn hiện tại
 							try {
 								i3 = i;
-								for(int j = 1; j <= max; ++j) {
+								/*for(int j = 1; j <= max; ++j) {
 									for(int k = 0; k < secAdjList[j].size(); ++k) {
 										if(i == secAdjList[j].get(k)) {
 											secAdjList[j].remove(k);
 										}
 									}
-								}
+								}*/
 								omw.addOption(1, i3); // đi tới đỉnh đó
 								for(int j = 0; j < max; ++j) { // khôi phục lại các buton, để khi xóa các button ta sẽ có các button được xếp sếp theo thứ tự tăng dần
 									
