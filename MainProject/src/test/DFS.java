@@ -70,8 +70,7 @@ public class DFS extends GraphLinkedList{
 	    		Edge edge=graph.getEdge(a + " " + b);
 	    		edge.setAttribute("ui.style", "fill-color: purple; size: 3px;");
 	    	}
-	    	 FileSinkImages pic = new SwingFileSinkImages(OutputType.PNG, Resolutions.VGA);
-			 
+	    	 FileSinkImages pic = new SwingFileSinkImages(OutputType.PNG, Resolutions.VGA);			 
 			 pic.setLayoutPolicy(LayoutPolicy.COMPUTED_FULLY_AT_NEW_IMAGE);
 			 try {
 			 pic.writeAll(graph, "pic_graph\\" + path + "_" + Integer.toString(count) +".png");
