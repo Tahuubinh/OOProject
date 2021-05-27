@@ -292,8 +292,8 @@ public class project {
         JButton AllPAthButton = new JButton("Bài 2"); // xử lý bài 2
         JButton AllPAthButton2 = new JButton("Bài 2#"); // xử lý bài 2z
         JButton QuestionsPathButton = new JButton("Bài 3");  // xử lý bài 3
-        JButton bai4 = new JButton("Bài 4* (Hamilton)");
-        JButton bai5 = new JButton("Bài 5* (Euler)");
+        JButton bai4 = new JButton("Bài 4*");
+        JButton bai5 = new JButton("Bài 5*");
         JButton WeightGraph = new JButton("Bài 6"); // xử lý bài 6
 //		JButton Auto = new JButton("Bài 7"); //D
         JButton freezeButton = new JButton("Freeze");
