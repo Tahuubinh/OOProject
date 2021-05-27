@@ -52,6 +52,21 @@ public class DFS extends GraphLinkedList{
 	   			v[i].setAttribute("ui.label", Integer.toString(i)); 
 	   		}
 	       }
+	       for (int i = 1; i <= vertices; ++i) {
+				String iString = Integer.toString(i);
+				if (adjLists[i].size() > 0) {
+					for (int j: adjLists[i]) {
+						Edge edge=graph.getEdge(iString + " " + Integer.toString(j));
+						edge.setAttribute("ui.style", "fill-color: black; size: 1px;");
+					}
+				}
+				v[i] = graph.getNode(iString);
+			}
+			
+			for (int i = 1; i <= vertices; ++i) {
+				v[i].setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
+				v[i].setAttribute("ui.label", Integer.toString(i)); 
+			}
                countpic++;
                countpath++;
                 count++;

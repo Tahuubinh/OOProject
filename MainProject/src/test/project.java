@@ -362,6 +362,7 @@ public class project {
 				// TODO Auto-generated method stub
 				
 				try {
+					frame.dispose();
 					frame = new JFrame();
 					prepare();
 					console();
@@ -510,7 +511,7 @@ public class project {
 //			}
 //		});
         frame.getContentPane().add(buttonJPanel, BorderLayout.SOUTH);
-        frame.setTitle("Project OOPT");
+        frame.setTitle("Project OOP team 3");
         frame.setForeground(Color.YELLOW);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -946,7 +947,7 @@ public class project {
 								currentInt = secAdjList[currentInt].get(randNum);
 								currentNode = omw.graph.getNode(currentInt - 1);
 								
-								secAdjList[preInt].remove(randNum);
+								//secAdjList[preInt].remove(randNum);
 								i3 = currentInt;
 								String thisEdge = preInt + " " + currentInt;
 								omw.graph.getEdge(thisEdge).setAttribute("ui.style", "fill-color: purple; size: 3px;");
@@ -1176,6 +1177,7 @@ public class project {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				omw.graphPaint();
 				String t1 = nodeText1.getText(), t2 = nodeText2.getText(); 
 				if(graph.getNode(t1) == null || graph.getNode(t2) == null) {
 					if(graph.getNode(t1) == null && graph.getNode(t2) != null) {
@@ -1202,7 +1204,7 @@ public class project {
 
 		AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
 		AllPathFrame.getContentPane().add(view);
-		AllPathFrame.setPreferredSize(new Dimension(1600, 825));
+		AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		AllPathFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		AllPathFrame.pack();

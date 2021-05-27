@@ -23,7 +23,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import org.graphstream.algorithm.APSP.APSPInfo;
+
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
