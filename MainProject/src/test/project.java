@@ -151,7 +151,7 @@ public class project {
 		///welcome: hiện thị ra tên các thành viên trong nhóm và chọn file txt để chạy đồ thị
 	}
 	
-	public static void welcome() throws IOException {
+	public static void welcome() throws IOException { 
 		welcomeFrame = new JFrame();
 		BufferedImage myPicture = ImageIO.read(new File("project.jpg")); // ảnh logo đại học bách khoa
 		JLabel picLabel = new JLabel(new ImageIcon(myPicture));
@@ -1211,7 +1211,7 @@ public class project {
 		
 	}
 	
-	public static void AllPathButton2() { // ài 2
+	public static void AllPathButton2() { // bài 2
 		// TODO Auto-generated method stub
 		 c = new Integer[max + 1];
 		JFrame AllPathFrame = new JFrame();
@@ -1505,9 +1505,9 @@ public class project {
                 project.zoomGraphMouseWheelMoved(mwe, view5);
             }
         });
-    	view.addKeyListener(new KeyListener() {
+    	view.addKeyListener(new KeyListener() { // save pic
             @Override
-            public void keyTyped(KeyEvent mwe) {
+            public void keyTyped(KeyEvent mwe) { // save pic with new layout
             	if (mwe.getKeyChar() == 'c') {
 	            	String result;
 	        		result = JOptionPane.showInputDialog("Saved as: ");
@@ -1517,7 +1517,7 @@ public class project {
 	        		}
 	        		
             	}
-            	else if (mwe.getKeyChar() == 's') {
+            	else if (mwe.getKeyChar() == 's') { // save screen graph
             		
             		String result;
 	        		result = JOptionPane.showInputDialog("Saved as: ");
@@ -1567,7 +1567,7 @@ public class project {
 	      
 	        frame.add(showGraphLabel, BorderLayout.NORTH);
 		}
-		public static void zoomGraphMouseWheelMoved(MouseWheelEvent mwe, ViewPanel view){
+		public static void zoomGraphMouseWheelMoved(MouseWheelEvent mwe, ViewPanel view){// zoom view
 	        if (Event.ALT_MASK != 0) {            
 	            if (mwe.getWheelRotation() > 0) {
 	                double new_view_percent = view.getCamera().getViewPercent() + 0.05;

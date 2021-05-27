@@ -23,6 +23,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import org.graphstream.algorithm.APSP.APSPInfo;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
@@ -76,6 +77,8 @@ public class OnMyWayabc extends DFS{
 		graph = new SingleGraph("Use");
 		graph.setAttribute( "ui.antialias" );
 		graph.setAttribute( "ui.quality" );
+//		graph.setAttribute( "ui.stylesheet", styleSheet );
+		
 		for (int i = 1; i <= vertices; ++i) {
 			graph.addNode(Integer.toString(i));
 		}
@@ -94,6 +97,7 @@ public class OnMyWayabc extends DFS{
 		}
     	viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
     	viewer.enableAutoLayout();
+    	
         view = (ViewPanel) viewer.addDefaultView(false);
 //        
         
@@ -113,6 +117,7 @@ public class OnMyWayabc extends DFS{
 		graph.edges().forEach(edge -> {
 			edge.setAttribute("ui.style", "fill-color: black; size: 1px;");
 		});
+//		graph.setAttribute( "ui.stylesheet", styleSheet );
 
 		for(Node node: graph){
 			node.setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
@@ -407,6 +412,42 @@ public class OnMyWayabc extends DFS{
 //		}
 //		RandomPath = "";
 //	}
+    public static String styleSheet = 
+ 			"graph {"+
+			"	canvas-color: black;"+
+			"		fill-mode: gradient-vertical;"+
+			"		fill-color: black, #004;"+
+			"		padding: 60px;"+
+			"	}"+
+			"node {"+
+			"	shape: circle;"+
+			"	size: 14px;"+
+			"	fill-mode: gradient-radial;"+
+			"	fill-color: #FFFA, #FFF0;"+
+			"	stroke-mode: none;"+
+			"	shadow-mode: gradient-radial;"+
+			"	shadow-color: #FFF9, #FFF0;"+
+			"	shadow-width: 10px;"+
+			"	shadow-offset: 0px, 0px;"+
+			"}"+
+			"node:clicked {"+
+			"	fill-color: #F00A, #F000;"+
+			"}"+
+			"node:selected {"+
+			"	fill-color: #00FA, #00F0;"+
+			"}"+
+			"edge {"+
+			"	shape: line;"+
+			"	size: 1px;"+
+			"	fill-color: #FFF3;"+
+			"	fill-mode: plain;"+
+			"	arrow-shape: none;"+
+			"}"+
+			"sprite {"+
+			"	shape: circle;"+
+			"	fill-mode: gradient-radial;"+
+			"	fill-color: #FFF8, #FFF0;"+
+			"}";
 }
 
 
