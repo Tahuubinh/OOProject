@@ -106,7 +106,7 @@ import org.graphstream.ui.view.util.MouseManager;
 
 public class project {
 	
-	private static OnMyWayabc omw;
+	protected static OnMyWayabc omw;
 	private static OnMyWay omw4;
 	private static OnMyWay2 omw5;
 	private static DFS g;
@@ -682,7 +682,119 @@ public class project {
 //		stopButton.setIcon(stopImg);
         freezeButton.setBackground(Color.BLUE);
         unfreezeButton.setBackground(Color.LIGHT_GRAY);
-        
+        JMenuBar menuBar = new JMenuBar();
+        JMenu file = new JMenu("File");
+        JMenu edit = new JMenu("Edit");
+        JMenu help = new JMenu("Help");
+        menuBar.add(file);
+        menuBar.add(edit);
+        menuBar.add(help);
+        JMenuItem screen1 = new JMenuItem("Take picture");
+        JMenuItem screen2 = new JMenuItem("Take screen shot");
+        JMenuItem pictureFile = new JMenuItem("Open picture file");
+        file.add(screen1);
+        file.add(screen2);
+        file.add(pictureFile);
+        screen1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String result;
+                result = JOptionPane.showInputDialog("Saved as: ");
+                if(result != null) {
+                    omw.takePicture(result);
+                    JOptionPane.showMessageDialog(null, "Your image has been saved as "+result+".png");
+                }
+            }
+        });
+        screen2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                String result;
+                result = JOptionPane.showInputDialog("Saved as: ");
+                if(result != null) {
+                    BufferedImage bi = new BufferedImage(view.getWidth(), view.getHeight(), BufferedImage.TYPE_INT_RGB);
+                    Graphics g = bi.createGraphics();
+                    view.print(g);
+                    g.dispose();
+                    try {
+                        ImageIO.write(bi, "png", new File("pic_graph\\"+result+".png"));
+                        JOptionPane.showMessageDialog(null, "Your image has been saved as "+result+".png");
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        pictureFile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                try
+                {
+
+                    File file = new File("pic_graph");
+                    if(!Desktop.isDesktopSupported())
+                    {
+                        System.out.println("not supported");
+                        return;
+                    }
+                    Desktop desktop = Desktop.getDesktop();
+                    if(file.exists())
+                        desktop.open(file);
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        JCheckBoxMenuItem styleItem = new JCheckBoxMenuItem("StyleSheet");
+        JMenuItem freezeItem = new JMenuItem("Freeze");
+        JCheckBoxMenuItem stopItem = new JCheckBoxMenuItem("Stop auto layout");
+        edit.add(styleItem);
+        edit.add(freezeItem);
+        edit.add(stopItem);
+        freezeItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (freezeItem.getText() == "Freeze") {
+                	view.setMouseManager(manager);
+                    freezeItem.setText("Unfreeze");
+                }
+                else {
+                	view.setMouseManager(manager1);
+                    freezeItem.setText("Freeze");
+                }
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        stopItem.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (stopItem.getState()) {
+                    omw.getSwingViewer().disableAutoLayout();
+                }
+                else {
+                    omw.getSwingViewer().enableAutoLayout();
+                }
+            }
+        });
+        styleItem.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				if(styleItem.getState()) {
+					omw.addStyleSheet(1);
+				} else {
+					omw.addStyleSheet(0);
+				}
+			}
+		});
 		btnNewButton.setBounds(10, 10, 208, 29);
 		btnNewButton.setBackground(Color.CYAN);
 		JLabel nodeLabel = new JLabel("Enter node");
@@ -915,13 +1027,13 @@ public class project {
         sc.weightx = 0.5;
         sc.gridx = 0;
         sc.gridy = 1;
-        sc.ipady = 750;
+        sc.ipady = 680;
         sc.anchor = GridBagConstraints.WEST;
         
 //        
 		c.gridx = 0;
 		c.gridy = 0;
-		c.anchor = GridBagConstraints.NORTHEAST;
+		c.anchor = GridBagConstraints.NORTHWEST;
 //		
 //		AllPathFrame.getContentPane().add(nPanel, c);
 //		c.fill = GridBagConstraints.HORIZONTAL;
@@ -955,6 +1067,8 @@ public class project {
 		
 		AllPathFrame.add(splitMenu, gc);
 		AllPathFrame.add(splitGraph, sc);
+        AllPathFrame.add(menuBar, c);
+
 //		AllPathFrame.getContentPane().add(view, gc);
 	
 		for(int i = 0; i < max; ++i) {
@@ -1286,6 +1400,119 @@ public class project {
 		}
 		Image finishdImg = finishBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		ImageIcon finishImg = new ImageIcon(finishdImg);
+		JMenuBar menuBar = new JMenuBar();
+        JMenu file = new JMenu("File");
+        JMenu edit = new JMenu("Edit");
+        JMenu help = new JMenu("Help");
+        menuBar.add(file);
+        menuBar.add(edit);
+        menuBar.add(help);
+        JMenuItem screen1 = new JMenuItem("Take picture");
+        JMenuItem screen2 = new JMenuItem("Take screen shot");
+        JMenuItem pictureFile = new JMenuItem("Open picture file");
+        file.add(screen1);
+        file.add(screen2);
+        file.add(pictureFile);
+        screen1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String result;
+                result = JOptionPane.showInputDialog("Saved as: ");
+                if(result != null) {
+                    omw.takePicture(result);
+                    JOptionPane.showMessageDialog(null, "Your image has been saved as "+result+".png");
+                }
+            }
+        });
+        screen2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                String result;
+                result = JOptionPane.showInputDialog("Saved as: ");
+                if(result != null) {
+                    BufferedImage bi = new BufferedImage(view.getWidth(), view.getHeight(), BufferedImage.TYPE_INT_RGB);
+                    Graphics g = bi.createGraphics();
+                    view.print(g);
+                    g.dispose();
+                    try {
+                        ImageIO.write(bi, "png", new File("pic_graph\\"+result+".png"));
+                        JOptionPane.showMessageDialog(null, "Your image has been saved as "+result+".png");
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        pictureFile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                try
+                {
+
+                    File file = new File("pic_graph");
+                    if(!Desktop.isDesktopSupported())
+                    {
+                        System.out.println("not supported");
+                        return;
+                    }
+                    Desktop desktop = Desktop.getDesktop();
+                    if(file.exists())
+                        desktop.open(file);
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        JCheckBoxMenuItem styleItem = new JCheckBoxMenuItem("StyleSheet");
+        JMenuItem freezeItem = new JMenuItem("Freeze");
+        JCheckBoxMenuItem stopItem = new JCheckBoxMenuItem("Stop auto layout");
+        edit.add(styleItem);
+        edit.add(freezeItem);
+        edit.add(stopItem);
+        freezeItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (freezeItem.getText() == "Freeze") {
+                	view.setMouseManager(manager);
+                    freezeItem.setText("Unfreeze");
+                }
+                else {
+                	view.setMouseManager(manager1);
+                    freezeItem.setText("Freeze");
+                }
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        stopItem.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (stopItem.getState()) {
+                    omw.getSwingViewer().disableAutoLayout();
+                }
+                else {
+                    omw.getSwingViewer().enableAutoLayout();
+                }
+            }
+        });
+        styleItem.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				if(styleItem.getState()) {
+					omw.addStyleSheet(1);
+				} else {
+					omw.addStyleSheet(0);
+				}
+			}
+		});
 		finishButton.setIcon(finishImg);
 		vPanel.add(nodeLabel1);
 		vPanel.add(nodeComboBox1);
@@ -1320,12 +1547,12 @@ public class project {
 				AllPathFrame.dispose();
 			}
 		});
-		setLabel(AllPathFrame);
-
+//		setLabel(AllPathFrame);
+		AllPathFrame.add(menuBar, BorderLayout.NORTH);
 		AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
 		AllPathFrame.getContentPane().add(view);
 		AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+//		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		AllPathFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		AllPathFrame.pack();
 		AllPathFrame.setVisible(true);
@@ -1434,6 +1661,121 @@ public class project {
 		Image finishdImg = finishBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		ImageIcon finishImg = new ImageIcon(finishdImg);
 		finishButton.setIcon(finishImg);
+		
+		JMenuBar menuBar = new JMenuBar();
+        JMenu file = new JMenu("File");
+        JMenu edit = new JMenu("Edit");
+        JMenu help = new JMenu("Help");
+        menuBar.add(file);
+        menuBar.add(edit);
+        menuBar.add(help);
+        JMenuItem screen1 = new JMenuItem("Take picture");
+        JMenuItem screen2 = new JMenuItem("Take screen shot");
+        JMenuItem pictureFile = new JMenuItem("Open picture file");
+        file.add(screen1);
+        file.add(screen2);
+        file.add(pictureFile);
+        screen1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String result;
+                result = JOptionPane.showInputDialog("Saved as: ");
+                if(result != null) {
+                    omw.takePicture(result);
+                    JOptionPane.showMessageDialog(null, "Your image has been saved as "+result+".png");
+                }
+            }
+        });
+        screen2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                String result;
+                result = JOptionPane.showInputDialog("Saved as: ");
+                if(result != null) {
+                    BufferedImage bi = new BufferedImage(view.getWidth(), view.getHeight(), BufferedImage.TYPE_INT_RGB);
+                    Graphics g = bi.createGraphics();
+                    view.print(g);
+                    g.dispose();
+                    try {
+                        ImageIO.write(bi, "png", new File("pic_graph\\"+result+".png"));
+                        JOptionPane.showMessageDialog(null, "Your image has been saved as "+result+".png");
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        pictureFile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                try
+                {
+
+                    File file = new File("pic_graph");
+                    if(!Desktop.isDesktopSupported())
+                    {
+                        System.out.println("not supported");
+                        return;
+                    }
+                    Desktop desktop = Desktop.getDesktop();
+                    if(file.exists())
+                        desktop.open(file);
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        JCheckBoxMenuItem styleItem = new JCheckBoxMenuItem("StyleSheet");
+        JMenuItem freezeItem = new JMenuItem("Freeze");
+        JCheckBoxMenuItem stopItem = new JCheckBoxMenuItem("Stop auto layout");
+        edit.add(styleItem);
+        edit.add(freezeItem);
+        edit.add(stopItem);
+        freezeItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (freezeItem.getText() == "Freeze") {
+                	view.setMouseManager(manager);
+                    freezeItem.setText("Unfreeze");
+                }
+                else {
+                	view.setMouseManager(manager1);
+                    freezeItem.setText("Freeze");
+                }
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        stopItem.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (stopItem.getState()) {
+                    omw.getSwingViewer().disableAutoLayout();
+                }
+                else {
+                    omw.getSwingViewer().enableAutoLayout();
+                }
+            }
+        });
+        styleItem.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				if(styleItem.getState()) {
+					omw.addStyleSheet(1);
+				} else {
+					omw.addStyleSheet(0);
+				}
+			}
+		});
+        
 		vPanel.add(nodeLabel1);
 		vPanel.add(nodeComboBox1);
 		vPanel.add(nodeLabel2);
@@ -1461,6 +1803,7 @@ public class project {
 				}
 			}
 		});
+		AllPathFrame.add(menuBar, BorderLayout.NORTH);
 		AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		AllPathFrame.getContentPane().add(vPanel, BorderLayout.SOUTH);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
@@ -1471,11 +1814,11 @@ public class project {
 				AllPathFrame.dispose();
 			}
 		});
-		setLabel(AllPathFrame);
+//		setLabel(AllPathFrame);
+		AllPathFrame.getContentPane().add(view);
 		AllPathFrame.pack();
 		AllPathFrame.setVisible(true);
 		frame.dispose();
-		AllPathFrame.getContentPane().add(view);
 		
 	}
 		
@@ -1909,6 +2252,119 @@ public class project {
 		nodeText2.setText(max +"");
 		JButton finishButton = new JButton("Finish");
 		JButton hintButton = new JButton("Hint");
+		JMenuBar menuBar = new JMenuBar();
+        JMenu file = new JMenu("File");
+        JMenu edit = new JMenu("Edit");
+        JMenu help = new JMenu("Help");
+        menuBar.add(file);
+        menuBar.add(edit);
+        menuBar.add(help);
+        JMenuItem screen1 = new JMenuItem("Take picture");
+        JMenuItem screen2 = new JMenuItem("Take screen shot");
+        JMenuItem pictureFile = new JMenuItem("Open picture file");
+        file.add(screen1);
+        file.add(screen2);
+        file.add(pictureFile);
+        screen1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String result;
+                result = JOptionPane.showInputDialog("Saved as: ");
+                if(result != null) {
+                    omw.takePicture(result);
+                    JOptionPane.showMessageDialog(null, "Your image has been saved as "+result+".png");
+                }
+            }
+        });
+        screen2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                String result;
+                result = JOptionPane.showInputDialog("Saved as: ");
+                if(result != null) {
+                    BufferedImage bi = new BufferedImage(view.getWidth(), view.getHeight(), BufferedImage.TYPE_INT_RGB);
+                    Graphics g = bi.createGraphics();
+                    view.print(g);
+                    g.dispose();
+                    try {
+                        ImageIO.write(bi, "png", new File("pic_graph\\"+result+".png"));
+                        JOptionPane.showMessageDialog(null, "Your image has been saved as "+result+".png");
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        pictureFile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                try
+                {
+
+                    File file = new File("pic_graph");
+                    if(!Desktop.isDesktopSupported())
+                    {
+                        System.out.println("not supported");
+                        return;
+                    }
+                    Desktop desktop = Desktop.getDesktop();
+                    if(file.exists())
+                        desktop.open(file);
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        JCheckBoxMenuItem styleItem = new JCheckBoxMenuItem("StyleSheet");
+        JMenuItem freezeItem = new JMenuItem("Freeze");
+        JCheckBoxMenuItem stopItem = new JCheckBoxMenuItem("Stop auto layout");
+        edit.add(styleItem);
+        edit.add(freezeItem);
+        edit.add(stopItem);
+        freezeItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (freezeItem.getText() == "Freeze") {
+                	view.setMouseManager(manager);
+                    freezeItem.setText("Unfreeze");
+                }
+                else {
+                	view.setMouseManager(manager1);
+                    freezeItem.setText("Freeze");
+                }
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        stopItem.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (stopItem.getState()) {
+                    omw.getSwingViewer().disableAutoLayout();
+                }
+                else {
+                    omw.getSwingViewer().enableAutoLayout();
+                }
+            }
+        });
+        styleItem.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				if(styleItem.getState()) {
+					omw.addStyleSheet(1);
+				} else {
+					omw.addStyleSheet(0);
+				}
+			}
+		});
 //		BufferedImage finishBf = ImageIO.read(new File("label_button\\find.png"));
 //		Image finishdImg = finishBf.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 //		ImageIcon finishImg = new ImageIcon(finishdImg);
@@ -1944,7 +2400,7 @@ public class project {
 				AllPathFrame.revalidate();
 			}
 		});
-		setLabel(AllPathFrame);
+//		setLabel(AllPathFrame);
 		
 		//getView(AllPathFrame);
 		
@@ -2225,7 +2681,7 @@ public class project {
 			}
 		});
 		
-		
+		AllPathFrame.add(menuBar, BorderLayout.NORTH);
 		AllPathFrame.pack();
 		AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		AllPathFrame.setVisible(true);
@@ -2307,6 +2763,119 @@ public class project {
 			}
 		});
 		JButton finishButton = new JButton("Finish");
+		JMenuBar menuBar = new JMenuBar();
+        JMenu file = new JMenu("File");
+        JMenu edit = new JMenu("Edit");
+        JMenu help = new JMenu("Help");
+        menuBar.add(file);
+        menuBar.add(edit);
+        menuBar.add(help);
+        JMenuItem screen1 = new JMenuItem("Take picture");
+        JMenuItem screen2 = new JMenuItem("Take screen shot");
+        JMenuItem pictureFile = new JMenuItem("Open picture file");
+        file.add(screen1);
+        file.add(screen2);
+        file.add(pictureFile);
+        screen1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String result;
+                result = JOptionPane.showInputDialog("Saved as: ");
+                if(result != null) {
+                    omw.takePicture(result);
+                    JOptionPane.showMessageDialog(null, "Your image has been saved as "+result+".png");
+                }
+            }
+        });
+        screen2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                String result;
+                result = JOptionPane.showInputDialog("Saved as: ");
+                if(result != null) {
+                    BufferedImage bi = new BufferedImage(view.getWidth(), view.getHeight(), BufferedImage.TYPE_INT_RGB);
+                    Graphics g = bi.createGraphics();
+                    view.print(g);
+                    g.dispose();
+                    try {
+                        ImageIO.write(bi, "png", new File("pic_graph\\"+result+".png"));
+                        JOptionPane.showMessageDialog(null, "Your image has been saved as "+result+".png");
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        pictureFile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                try
+                {
+
+                    File file = new File("pic_graph");
+                    if(!Desktop.isDesktopSupported())
+                    {
+                        System.out.println("not supported");
+                        return;
+                    }
+                    Desktop desktop = Desktop.getDesktop();
+                    if(file.exists())
+                        desktop.open(file);
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        JCheckBoxMenuItem styleItem = new JCheckBoxMenuItem("StyleSheet");
+        JMenuItem freezeItem = new JMenuItem("Freeze");
+        JCheckBoxMenuItem stopItem = new JCheckBoxMenuItem("Stop auto layout");
+        edit.add(styleItem);
+        edit.add(freezeItem);
+        edit.add(stopItem);
+        freezeItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (freezeItem.getText() == "Freeze") {
+                	view.setMouseManager(manager);
+                    freezeItem.setText("Unfreeze");
+                }
+                else {
+                	view.setMouseManager(manager1);
+                    freezeItem.setText("Freeze");
+                }
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        stopItem.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (stopItem.getState()) {
+                    omw.getSwingViewer().disableAutoLayout();
+                }
+                else {
+                    omw.getSwingViewer().enableAutoLayout();
+                }
+            }
+        });
+        styleItem.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				if(styleItem.getState()) {
+					omw.addStyleSheet(1);
+				} else {
+					omw.addStyleSheet(0);
+				}
+			}
+		});
 //		BufferedImage finishBf = null;
 //		try {
 //			finishBf = ImageIO.read(new File("label_button\\find.png"));
@@ -2331,7 +2900,7 @@ public class project {
 		}
 		
 		vPanel.setForeground(Color.GREEN);
-		
+		AllPathFrame.add(menuBar, BorderLayout.NORTH);
 		AllPathFrame.getContentPane().add(vPanelScoll, BorderLayout.SOUTH);
 		AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
@@ -2345,7 +2914,7 @@ public class project {
 				AllPathFrame.revalidate();
 			}
 		});
-		setLabel(AllPathFrame);
+//		setLabel(AllPathFrame);
 		
 		//getview5(AllPathFrame);
 		
@@ -2513,7 +3082,7 @@ public class project {
 			}
 		});
 		
-		
+//		AllPathFrame.add(menuBar);
 		AllPathFrame.pack();
 		AllPathFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		AllPathFrame.setVisible(true);

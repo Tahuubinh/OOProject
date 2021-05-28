@@ -155,6 +155,119 @@ public class OnMyWay6 extends project{
         frameBai6.setLayout(new BorderLayout());
 
         ////////////////////////////// 1.Setup Panel West//////////////////////////////////
+        JMenuBar menuBar = new JMenuBar();
+        JMenu file = new JMenu("File");
+        JMenu edit = new JMenu("Edit");
+        JMenu help = new JMenu("Help");
+        menuBar.add(file);
+        menuBar.add(edit);
+        menuBar.add(help);
+        JMenuItem screen1 = new JMenuItem("Take picture");
+        JMenuItem screen2 = new JMenuItem("Take screen shot");
+        JMenuItem pictureFile = new JMenuItem("Open picture file");
+        file.add(screen1);
+        file.add(screen2);
+        file.add(pictureFile);
+        screen1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String result;
+                result = JOptionPane.showInputDialog("Saved as: ");
+                if(result != null) {
+                    omw.takePicture(result);
+                    JOptionPane.showMessageDialog(null, "Your image has been saved as "+result+".png");
+                }
+            }
+        });
+        screen2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                String result;
+                result = JOptionPane.showInputDialog("Saved as: ");
+                if(result != null) {
+                    BufferedImage bi = new BufferedImage(view.getWidth(), view.getHeight(), BufferedImage.TYPE_INT_RGB);
+                    Graphics g = bi.createGraphics();
+                    view.print(g);
+                    g.dispose();
+                    try {
+                        ImageIO.write(bi, "png", new File("pic_graph\\"+result+".png"));
+                        JOptionPane.showMessageDialog(null, "Your image has been saved as "+result+".png");
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        pictureFile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                try
+                {
+
+                    File file = new File("pic_graph");
+                    if(!Desktop.isDesktopSupported())
+                    {
+                        System.out.println("not supported");
+                        return;
+                    }
+                    Desktop desktop = Desktop.getDesktop();
+                    if(file.exists())
+                        desktop.open(file);
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        JCheckBoxMenuItem styleItem = new JCheckBoxMenuItem("StyleSheet");
+        JMenuItem freezeItem = new JMenuItem("Freeze");
+        JCheckBoxMenuItem stopItem = new JCheckBoxMenuItem("Stop auto layout");
+        edit.add(styleItem);
+        edit.add(freezeItem);
+        edit.add(stopItem);
+        freezeItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (freezeItem.getText() == "Freeze") {
+                	view.setMouseManager(manager);
+                    freezeItem.setText("Unfreeze");
+                }
+                else {
+                	view.setMouseManager(manager1);
+                    freezeItem.setText("Freeze");
+                }
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        stopItem.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (stopItem.getState()) {
+                    omw.getSwingViewer().disableAutoLayout();
+                }
+                else {
+                    omw.getSwingViewer().enableAutoLayout();
+                }
+            }
+        });
+        styleItem.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				if(styleItem.getState()) {
+					omw.addStyleSheet(1);
+				} else {
+					omw.addStyleSheet(0);
+				}
+			}
+		});
         JPanel panelWest = new JPanel();
         panelWest.setLayout(new BorderLayout());
         Toolkit tk = Toolkit.getDefaultToolkit();
@@ -272,7 +385,7 @@ public class OnMyWay6 extends project{
         panelScrollContainButton.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         //panelSouthInPanelEast.setBackground(Color.GRAY);
-
+        frameBai6.add(menuBar, BorderLayout.NORTH);
         panelEast.add(view, BorderLayout.CENTER);
 
         /////////////////////////////COMPLETE 2.Panel East////////////////////////////////////

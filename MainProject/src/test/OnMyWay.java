@@ -141,7 +141,7 @@ public class OnMyWay extends GraphLinkedList{
 	    		String a = Integer.toString(node_index_temp);
 	    		String b = Integer.toString(node_index_next);
 	    		Edge edge=graph.getEdge(a + " " + b);
-	    		edge.setAttribute("ui.style", "fill-color: blue; size: 0.8px;");
+	    		edge.setAttribute("ui.style", "fill-color: red; size: 1px;");
 	    		predictEdge.add(a+" "+b);
 	    	}
 	    	
