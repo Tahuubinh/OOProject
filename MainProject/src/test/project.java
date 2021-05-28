@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.EventQueue;
@@ -21,6 +22,8 @@ import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -51,13 +54,18 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
@@ -318,7 +326,120 @@ public class project {
         freezeButton1.setBackground(Color.BLUE);
         unfreezeButton1.setBackground(Color.LIGHT_GRAY);
         
-        
+        JMenuBar menuBar = new JMenuBar();
+        frame.add(menuBar, BorderLayout.NORTH);
+        JMenu file = new JMenu("File");
+        JMenu edit = new JMenu("Edit");
+        JMenu help = new JMenu("Help");
+        menuBar.add(file);
+        menuBar.add(edit);
+        menuBar.add(help);
+        JMenuItem screen1 = new JMenuItem("Take picture");
+        JMenuItem screen2 = new JMenuItem("Take screen shot");
+        JMenuItem pictureFile = new JMenuItem("Open picture file");
+        file.add(screen1);
+        file.add(screen2);
+        file.add(pictureFile);
+        screen1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String result;
+                result = JOptionPane.showInputDialog("Saved as: ");
+                if(result != null) {
+                    omw.takePicture(result);
+                    JOptionPane.showMessageDialog(null, "Your image has been saved as "+result+".png");
+                }
+            }
+        });
+        screen2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                String result;
+                result = JOptionPane.showInputDialog("Saved as: ");
+                if(result != null) {
+                    BufferedImage bi = new BufferedImage(view.getWidth(), view.getHeight(), BufferedImage.TYPE_INT_RGB);
+                    Graphics g = bi.createGraphics();
+                    view.print(g);
+                    g.dispose();
+                    try {
+                        ImageIO.write(bi, "png", new File("pic_graph\\"+result+".png"));
+                        JOptionPane.showMessageDialog(null, "Your image has been saved as "+result+".png");
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        pictureFile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                try
+                {
+
+                    File file = new File("pic_graph");
+                    if(!Desktop.isDesktopSupported())
+                    {
+                        System.out.println("not supported");
+                        return;
+                    }
+                    Desktop desktop = Desktop.getDesktop();
+                    if(file.exists())
+                        desktop.open(file);
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        JCheckBoxMenuItem styleItem = new JCheckBoxMenuItem("StyleSheet");
+        JMenuItem freezeItem = new JMenuItem("Freeze");
+        JCheckBoxMenuItem stopItem = new JCheckBoxMenuItem("Stop auto layout");
+        edit.add(styleItem);
+        edit.add(freezeItem);
+        edit.add(stopItem);
+        freezeItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (freezeItem.getText() == "Freeze") {
+                	view.setMouseManager(manager);
+                    freezeItem.setText("Unfreeze");
+                }
+                else {
+                	view.setMouseManager(manager1);
+                    freezeItem.setText("Freeze");
+                }
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        stopItem.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (stopItem.getState()) {
+                    omw.getSwingViewer().disableAutoLayout();
+                }
+                else {
+                    omw.getSwingViewer().enableAutoLayout();
+                }
+            }
+        });
+        styleItem.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				if(styleItem.getState()) {
+					omw.addStyleSheet(1);
+				} else {
+					omw.addStyleSheet(0);
+				}
+			}
+		});
         buttonJPanel = new JPanel();
         buttonJPanel.add(homeButton);
         buttonJPanel.add(showButton);
@@ -329,19 +450,19 @@ public class project {
         buttonJPanel.add(bai5);
         buttonJPanel.add(WeightGraph);
 
-        buttonJPanel.add(radioButton);
-        if (freeze) {
-        	buttonJPanel.add(freezeButton1);
-        	buttonJPanel.remove(unfreezeButton1);
-        }
-        else {
-        	buttonJPanel.add(unfreezeButton1);
-        	buttonJPanel.remove(freezeButton1);
-        }
+//        buttonJPanel.add(radioButton);
+//        if (freeze) {
+//        	buttonJPanel.add(freezeButton1);
+//        	buttonJPanel.remove(unfreezeButton1);
+//        }
+//        else {
+//        	buttonJPanel.add(unfreezeButton1);
+//        	buttonJPanel.remove(freezeButton1);
+//        }
 //		buttonJPanel.add(Auto); //D
         buttonJPanel.setBackground(Color.orange);
         
-        setLabel(frame);
+//        setLabel(frame);
         
        
         homeButton.addActionListener(new ActionListener() {
@@ -785,7 +906,7 @@ public class project {
 		gc.fill = GridBagConstraints.BOTH; // mở rộng panel cho khít với khoảng trống với cả chiều rộng và chiều cao
         gc.weightx = 0.5; // khoảng cách tương đối giữa các đối tượng
 		gc.gridx = 0; // tọa độ (x, y) = 1, 1
-		gc.gridy = 1;
+		gc.gridy = 2;
 		gc.ipadx =400;
 		gc.ipady = 50; // mở rộng theo chiều dọc cả trên và dưới 
 //        gc.anchor = GridBagConstraints.EAST; // vị trí tương đối của panel trong tọa độ đó
@@ -793,15 +914,14 @@ public class project {
         sc.fill = GridBagConstraints.BOTH;
         sc.weightx = 0.5;
         sc.gridx = 0;
-        sc.gridy = 0;
+        sc.gridy = 1;
         sc.ipady = 750;
         sc.anchor = GridBagConstraints.WEST;
         
 //        
-//		c.gridx = 0;
-//		c.gridy = 2;
-//		c.ipadx = 30; 
-//		c.ipady = 40;
+		c.gridx = 0;
+		c.gridy = 0;
+		c.anchor = GridBagConstraints.NORTHEAST;
 //		
 //		AllPathFrame.getContentPane().add(nPanel, c);
 //		c.fill = GridBagConstraints.HORIZONTAL;

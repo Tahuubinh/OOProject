@@ -77,8 +77,13 @@ public class OnMyWayabc extends DFS{
 		graph = new SingleGraph("Use");
 		graph.setAttribute( "ui.antialias" );
 		graph.setAttribute( "ui.quality" );
-//		graph.setAttribute( "ui.stylesheet", styleSheet );
-		
+//		graph.setAttribute( "ui.stylesheet", styleSheet1 );
+//		graph.setAttribute( "ui.stylesheet", oldStyleSheet );
+//		graph.setAttribute( "ui.stylesheet", styleSheet2 );
+//		graph.setAttribute( "ui.stylesheet", styleSheet3 );
+//		graph.setAttribute( "ui.stylesheet", styleSheet4	 );
+
+
 		for (int i = 1; i <= vertices; ++i) {
 			graph.addNode(Integer.toString(i));
 		}
@@ -103,7 +108,21 @@ public class OnMyWayabc extends DFS{
         
 
 	}
-	
+	void addStyleSheet(int a) {
+		if(a == 1) {
+			graph.setAttribute( "ui.stylesheet", styleSheet );
+		} else {
+			graph.removeAttribute("ui.stylesheet");
+			graph.edges().forEach(edge -> {
+				edge.setAttribute("ui.style", "fill-color: black; size: 1px;");
+			});
+//			graph.setAttribute( "ui.stylesheet", styleSheet );
+
+			for(Node node: graph){
+				node.setAttribute("ui.style", "shape:circle;fill-color: yellow;size: 30px;");
+			}
+		}
+	}
 	void clear() {
 		for(int i = 1; i <= vertices; ++i) {
 			visited[i] = false;
@@ -438,6 +457,217 @@ public class OnMyWayabc extends DFS{
 			"}"+
 			"edge {"+
 			"	shape: line;"+
+			"	size: 1px;"+
+			"	fill-color: #FFF3;"+
+			"	fill-mode: plain;"+
+			"	arrow-shape: none;"+
+			"}"+
+			"sprite {"+
+			"	shape: circle;"+
+			"	fill-mode: gradient-radial;"+
+			"	fill-color: #FFF8, #FFF0;"+
+			"}";
+    private String styleSheet1 =
+			"graph {"+
+ 				"fill-mode: gradient-radial;"+
+ 				"fill-color: white, gray;"+
+ 				"padding: 60px;"+
+ 			"}"+
+			"node {"+
+				"shape: circle;"+
+				"size: 10px;"+
+				"fill-mode: gradient-vertical;"+
+				"fill-color: white, rgb(200,200,200);"+
+				"stroke-mode: plain;"+
+				"stroke-color: rgba(255,255,0,255);"+
+				"stroke-width: 2px;"+
+				"shadow-mode: plain;"+
+				"shadow-width: 0px;"+
+				"shadow-offset: 3px, -3px;"+
+				"shadow-color: rgba(0,0,0,100);"+
+				"text-visibility-mode: zoom-range;"+
+				"text-visibility: 0, 0.9;"+
+				//icon-mode: at-left;
+				//icon: url('file:///home/antoine/GSLogo11d24.png');
+			"}"+
+			"node:clicked {"+
+				"stroke-mode: plain;"+
+				"stroke-color: red;"+
+			"}"+
+			"node:selected {"+
+				"stroke-mode: plain;"+
+				"stroke-width: 4px;"+
+				"stroke-color: blue;"+
+			"}"+
+			"edge {"+
+				"size: 1px;"+
+				"shape: cubic-curve;"+
+				"fill-color: rgb(128,128,128);"+
+				"fill-mode: plain;"+
+				"stroke-mode: plain;"+
+				"stroke-color: rgb(80,80,80);"+
+				"stroke-width: 1px;"+
+				"shadow-mode: none;"+
+				"shadow-color: rgba(0,0,0,50);"+
+				"shadow-offset: 3px, -3px;"+
+				"shadow-width: 0px;"+
+				"arrow-shape: diamond;"+
+				"arrow-size: 14px, 7px;"+
+			"}";
+    private String oldStyleSheet =
+			"graph {"+
+ 				"fill-mode: gradient-radial;"+
+ 				"fill-color: white, gray;"+
+ 				"padding: 60px;"+
+ 			"}"+
+			"node {"+
+				"shape: box;"+
+				"size: 10px, 10px;"+
+				"fill-mode: gradient-vertical;"+
+				"fill-color: white, rgb(200,200,200);"+
+				"stroke-mode: plain;"+
+				"stroke-color: rgba(255,255,0,255);"+
+				"stroke-width: 2px;"+
+				"shadow-mode: plain;"+
+				"shadow-width: 0px;"+
+				"shadow-offset: 3px, -3px;"+
+				"shadow-color: rgba(0,0,0,100);"+
+				"text-visibility-mode: zoom-range;"+
+				"text-visibility: 0, 0.9;"+
+				//icon-mode: at-left;
+				//icon: url('file:///home/antoine/GSLogo11d24.png');
+			"}"+
+			"node:clicked {"+
+				"stroke-mode: plain;"+
+				"stroke-color: red;"+
+			"}"+
+			"node:selected {"+
+				"stroke-mode: plain;"+
+				"stroke-width: 4px;"+
+				"stroke-color: blue;"+
+			"}"+
+			"edge {"+
+				"size: 2px;"+
+				"shape: blob;"+
+				"fill-color: rgb(128,128,128);"+
+				"fill-mode: plain;"+
+				"stroke-mode: plain;"+
+				"stroke-color: rgb(80,80,80);"+
+				"stroke-width: 2px;"+
+				"shadow-mode: plain;"+
+				"shadow-color: rgba(0,0,0,50);"+
+				"shadow-offset: 3px, -3px;"+
+				"shadow-width: 0px;"+
+				"arrow-shape: arrow;"+
+				"arrow-size: 20px, 6px;"+
+			"}";
+    private String styleSheet2 = ""
+ 			+ "graph {"
+ 			+ "	canvas-color: white;  "
+ 			+ "	fill-mode: gradient-radial; "
+ 			+ "	fill-color: white, #EEEEEE; 	"
+ 			+ "	padding: 60px; "
+ 			+ "}"
+ 			+ ""	
+ 			+ "node {shape: circle;"
+ 			+ " size: 30px;"
+ 			+ " fill-mode: plain;"
+ 			+ " fill-color: #CCCC;"
+ 			+ " stroke-mode: plain; "
+ 			+ " stroke-color: black; "
+ 			+ " stroke-width: 1px; } "
+ 			+ ""
+ 			+ "node:clicked { "
+ 			+ "	stroke-mode: plain;"
+ 			+ "	stroke-color: red;"
+ 			+ "}"
+ 			+ ""
+ 			+ "node:selected { "
+ 			+ "	stroke-mode: plain; "
+ 			+ "	stroke-color: blue; "
+ 			+ "}"
+ 			+ ""
+ 			+ "node#A { "
+ 			+ "	shape: rounded-box; "
+ 			+ "	size-mode: dyn-size;"
+ 			+ " size: 10px; } "
+ 			+ ""
+ 			+ "node#B { "
+ 			+ "	shape: circle;"
+ 			+ " size-mode: fit; "
+ 			+ "	size: 50px; "
+ 			+ "	padding: 10px; "
+ 			+ "} "
+ 			+ ""
+ 			+ "node#C { 	"
+ 			+ " shape: box; 	"
+ 			+ " size: 50px; "
+ 			+ "} "
+ 			+ ""
+ 			+ "node#D { "
+ 			+ " shape: box; "
+ 			+ " size-mode: fit; "
+ 			+ " padding: 5px;"
+ 			+ "}"
+ 			+ ""
+ 			+ "node#E {"
+ 			+ "	shape: circle; "
+ 			+ "	size-mode: fit;"
+ 			+ "	size: 20px, 10px;"
+ 			+ "	padding: 6px;"
+ 			+ " }"
+ 			+ ""
+ 			+ "edge { 	shape: line; size: 1px; fill-color: grey; 	fill-mode: plain; 	arrow-shape: arrow; arrow-size: 20px, 5px; } "
+ 			  ;
+    private String styleSheet3 = 
+			"graph {"+
+				"fill-mode: plain;"+
+				"fill-color: white, gray;"+
+				"padding: 60px;"+
+			"}"+
+			"node {"+
+				"shape: circle;"+
+				"size: 4px;"+
+				"fill-mode: plain;"+
+				"fill-color: grey;"+
+				"stroke-mode: none;"+
+				"text-visibility-mode: zoom-range;"+
+				"text-visibility: 0, 0.9;"+
+			"}"+
+			"edge {"+
+				"size: 1px;"+
+				"shape: line;"+
+				"fill-color: grey;"+
+				"fill-mode: plain;"+
+				"stroke-mode: none;"+
+			"}";
+    private String styleSheet4 = 
+			"graph {"+
+			"	canvas-color: black;"+
+			"	fill-mode: gradient-vertical;"+
+			"	fill-color: black, #004;"+
+			"	padding: 20px;"+
+			"}"+ 
+			"node {"+
+			"	shape: circle;"+
+			"	size-mode: dyn-size;"+
+			"	size: 10px;"+
+			"	fill-mode: gradient-radial;"+
+			"	fill-color: #FFFC, #FFF0;"+
+			"	stroke-mode: none;"+ 
+			"	shadow-mode: gradient-radial;"+
+			"	shadow-color: #FFF5, #FFF0;"+
+			"	shadow-width: 5px;"+
+			"	shadow-offset: 0px, 0px;"+
+			"}"+
+			"node:clicked {"+
+			"	fill-color: #F00A, #F000;"+
+			"}"+
+			"node:selected {"+
+			"	fill-color: #00FA, #00F0;"+
+			"}"+
+			"edge {"+
+			"	shape: L-square-line;"+
 			"	size: 1px;"+
 			"	fill-color: #FFF3;"+
 			"	fill-mode: plain;"+
